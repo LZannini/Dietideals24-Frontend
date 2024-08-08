@@ -2,6 +2,9 @@ plugins {
     id 'com.android.application'
 }
 android {
+    lintOptions {
+        baseline file("lint-baseline.xml")
+    }
     namespace 'com.example.dietideals24'
     compileSdk 33
 
