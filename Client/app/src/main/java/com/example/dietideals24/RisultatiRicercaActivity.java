@@ -37,7 +37,7 @@ public class RisultatiRicercaActivity extends AppCompatActivity implements Aucti
     private Utente utente;
     private String criterioRicerca;
     private List<Asta> listaAste;
-    private LinearLayout layout_attributi;
+    private LinearLayout layoutAttributi;
     private boolean fromHome;
 
     @Override
@@ -46,9 +46,9 @@ public class RisultatiRicercaActivity extends AppCompatActivity implements Aucti
         setContentView(R.layout.activity_risultati_ricerca);
 
         TextView noResultsText = findViewById(R.id.no_results_text);
-        ImageButton back_button = findViewById(R.id.back_button);
-        layout_attributi = findViewById(R.id.layout_attributi);
-        ImageButton home_button = findViewById(R.id.home_button);
+        ImageButton backButton = findViewById(R.id.back_button);
+        layoutAttributi = findViewById(R.id.layout_attributi);
+        ImageButton homeButton = findViewById(R.id.home_button);
 
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
@@ -65,7 +65,7 @@ public class RisultatiRicercaActivity extends AppCompatActivity implements Aucti
         else
             risultatiRicerca.setText("Risultati per "+ criterioRicerca);
 
-        back_button.setOnClickListener(new View.OnClickListener() {
+        backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openActivityCercaAsta();
@@ -73,7 +73,7 @@ public class RisultatiRicercaActivity extends AppCompatActivity implements Aucti
             }
         });
 
-        home_button.setOnClickListener(new View.OnClickListener() {
+        homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openActivityHome(utente);
@@ -91,9 +91,9 @@ public class RisultatiRicercaActivity extends AppCompatActivity implements Aucti
         if(listaAste == null || listaAste.isEmpty()) {
             noResultsText.setVisibility(View.VISIBLE);
             risultatiRicerca.setText(" ");
-            int childCount = layout_attributi.getChildCount();
+            int childCount = layoutAttributi.getChildCount();
             for (int i = 0; i < childCount; i++) {
-                View child = layout_attributi.getChildAt(i);
+                View child = layoutAttributi.getChildAt(i);
                 child.setVisibility(View.INVISIBLE);
             }
         }else

@@ -48,8 +48,8 @@ public class NotificaActivity extends AppCompatActivity implements NotificaAdapt
     private List<NotificaDTO> listaNotifiche;
     private Utente utente;
     private Utente UtenteCreatore;
-    private Asta asta_ricevuta;
-    private ImageButton back_button;
+    private Asta astaRicevuta;
+    private ImageButton backButton;
     private TextView noResultsText;
     private ApiService apiService;
     private Button btnSegnaTutte, btnRimuoviLette, btnRimuoviTutte;
@@ -61,16 +61,16 @@ public class NotificaActivity extends AppCompatActivity implements NotificaAdapt
         setContentView(R.layout.activity_notifica);
 
         utente = (Utente) getIntent().getSerializableExtra("utente");
-        asta_ricevuta = (Asta) getIntent().getSerializableExtra("asta_ricevuta");
+        astaRicevuta = (Asta) getIntent().getSerializableExtra("asta_ricevuta");
 
         noResultsText = findViewById(R.id.no_results_text);
 
-        back_button = findViewById(R.id.back_button);
+        backButton = findViewById(R.id.back_button);
         btnSegnaTutte = findViewById(R.id.btnSegna);
         btnRimuoviLette = findViewById(R.id.btnRmvRead);
         btnRimuoviTutte = findViewById(R.id.btnRmvAll);
 
-        back_button.setOnClickListener(new View.OnClickListener() {
+        backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openActivityHome(utente);
@@ -270,22 +270,22 @@ public class NotificaActivity extends AppCompatActivity implements NotificaAdapt
     }
 
     private void RecuperaAsta(NotificaDTO notifica, ApiService apiService) {
-            int id_asta = notifica.getId_Asta();
-            apiService.recuperaAsta(id_asta).enqueue(new Callback<AstaDTO>() {
+            int idAsta = notifica.getId_Asta();
+            apiService.recuperaAsta(idAsta).enqueue(new Callback<AstaDTO>() {
                 @Override
                 public void onResponse(@NonNull Call<AstaDTO> call, @NonNull Response<AstaDTO> response) {
                     if (response.isSuccessful() && response.body() != null) {
                         AstaDTO astadto = response.body();
                         Asta asta = converteToModel(astadto);
-                        asta_ricevuta = asta;
+                        astaRicevuta = asta;
                         if (asta instanceof Asta_Inversa) {
-                            apiService.recuperaDettagliAstaInversa(id_asta).enqueue(new Callback<Asta_InversaDTO>() {
+                            apiService.recuperaDettagliAstaInversa(idAsta).enqueue(new Callback<Asta_InversaDTO>() {
                                 @Override
                                 public void onResponse(@NonNull Call<Asta_InversaDTO> call, @NonNull Response<Asta_InversaDTO> response) {
                                     if (response.isSuccessful() && response.body() != null) {
                                         String nome_asta = asta.getNome();
                                         notifica.setNome_asta(nome_asta);
-                                        asta_ricevuta = (Asta_Inversa) asta;
+                                        astaRicevuta = (Asta_Inversa) asta;
                                         adapter.notifyDataSetChanged();
                                     } else
                                         Toast.makeText(NotificaActivity.this, "Asta Inversa non trovata", Toast.LENGTH_SHORT).show();
@@ -299,13 +299,13 @@ public class NotificaActivity extends AppCompatActivity implements NotificaAdapt
                                 }
                             });
                         } else if (asta instanceof Asta_Ribasso) {
-                            apiService.recuperaDettagliAstaRibasso(id_asta).enqueue(new Callback<Asta_RibassoDTO>() {
+                            apiService.recuperaDettagliAstaRibasso(idAsta).enqueue(new Callback<Asta_RibassoDTO>() {
                                 @Override
                                 public void onResponse(@NonNull Call<Asta_RibassoDTO> call, @NonNull Response<Asta_RibassoDTO> response) {
                                     if (response.isSuccessful() && response.body() != null) {
                                         String nome_asta = asta.getNome();
                                         notifica.setNome_asta(nome_asta);
-                                        asta_ricevuta = (Asta_Ribasso) asta;
+                                        astaRicevuta = (Asta_Ribasso) asta;
                                         adapter.notifyDataSetChanged();
                                     } else
                                         Toast.makeText(NotificaActivity.this, "Asta Ribasso non trovata", Toast.LENGTH_SHORT).show();
@@ -319,13 +319,13 @@ public class NotificaActivity extends AppCompatActivity implements NotificaAdapt
                                 }
                             });
                         } else if (asta instanceof Asta_Silenziosa) {
-                            apiService.recuperaDettagliAstaSilenziosa(id_asta).enqueue(new Callback<Asta_SilenziosaDTO>() {
+                            apiService.recuperaDettagliAstaSilenziosa(idAsta).enqueue(new Callback<Asta_SilenziosaDTO>() {
                                 @Override
                                 public void onResponse(@NonNull Call<Asta_SilenziosaDTO> call, @NonNull Response<Asta_SilenziosaDTO> response) {
                                     if (response.isSuccessful() && response.body() != null) {
                                         String nome_asta = asta.getNome();
                                         notifica.setNome_asta(nome_asta);
-                                        asta_ricevuta = (Asta_Silenziosa) asta;
+                                        astaRicevuta = (Asta_Silenziosa) asta;
                                         adapter.notifyDataSetChanged();
                                     } else
                                         Toast.makeText(NotificaActivity.this, "Asta Silenziosa non trovata", Toast.LENGTH_SHORT).show();
@@ -353,9 +353,9 @@ public class NotificaActivity extends AppCompatActivity implements NotificaAdapt
 
     }
 
-    private void recuperaUtenteCreatore(int id_creatore,ApiService apiService) {
+    private void recuperaUtenteCreatore(int idCreatore,ApiService apiService) {
         Call<UtenteDTO> call;
-        call = apiService.recuperaUtente(id_creatore);
+        call = apiService.recuperaUtente(idCreatore);
         call.enqueue(new Callback<UtenteDTO>() {
             @Override
             public void onResponse(@NonNull Call<UtenteDTO> call, @NonNull Response<UtenteDTO> response) {
@@ -461,8 +461,8 @@ public class NotificaActivity extends AppCompatActivity implements NotificaAdapt
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (asta_ricevuta != null)
-                    recuperaUtenteCreatore(asta_ricevuta.getId_creatore(),apiService);
+                if (astaRicevuta != null)
+                    recuperaUtenteCreatore(astaRicevuta.getId_creatore(),apiService);
                 else
                     handler.postDelayed(this, 100);
             }
@@ -501,7 +501,7 @@ public class NotificaActivity extends AppCompatActivity implements NotificaAdapt
 
     private void openActivityDettagliAsta() {
             Intent intent = new Intent(this, DettagliAstaActivity.class);
-            intent.putExtra("asta", asta_ricevuta);
+            intent.putExtra("asta", astaRicevuta);
             intent.putExtra("utenteCreatore",UtenteCreatore);
             intent.putExtra("utente", utente);
             intent.putExtra("fromNotifica",true);

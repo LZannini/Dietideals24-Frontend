@@ -18,7 +18,7 @@ public class TipoAstaActivity extends AppCompatActivity {
     private LinearLayout buttonSilenziosa;
     private LinearLayout buttonRibasso;
     private LinearLayout buttonInversa;
-    private ImageButton back_button;
+    private ImageButton backButton;
     private Utente utente;
     private Asta asta;
     private boolean fromHome;
@@ -31,7 +31,7 @@ public class TipoAstaActivity extends AppCompatActivity {
         buttonSilenziosa = findViewById(R.id.button_silenziosa);
         buttonRibasso = findViewById(R.id.button_ribasso);
         buttonInversa = findViewById(R.id.button_inversa);
-        back_button = findViewById(R.id.back_button);
+        backButton = findViewById(R.id.back_button);
         ImageButton home_button = findViewById(R.id.home_button);
 
         ActionBar actionBar = getSupportActionBar();
@@ -47,7 +47,7 @@ public class TipoAstaActivity extends AppCompatActivity {
             configuraBottoni(tipoUtente.toString(), buttonInversa, buttonRibasso, buttonSilenziosa);
         }
 
-        back_button.setOnClickListener(new View.OnClickListener() {
+        backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openActivityCreaAsta(asta, utente);

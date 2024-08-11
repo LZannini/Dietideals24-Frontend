@@ -45,13 +45,13 @@ public class OfferteFatteActivity extends AppCompatActivity implements AuctionAd
 
     private Utente utente;
     private List<Asta> listaAste;
-    private List<Asta> aste_attive, aste_vinte, aste_rifiutate, aste_perse;
+    private List<Asta> asteAttive, asteVinte, asteRifiutate, astePerse;
     private TextView noAuctionsText;
     private RecyclerView recyclerView;
-    private ImageButton back_button;
+    private ImageButton backButton;
     private MaterialButton btnAttive, btnVinte, btnRifiutate, btnPerse;
     private Button btnCrea;
-    private LinearLayout layout_attributi;
+    private LinearLayout layoutAttributi;
     private Asta astaSelezionata;
     private Boolean fromDettagli;
     private Boolean modificaAvvenuta;
@@ -71,10 +71,10 @@ public class OfferteFatteActivity extends AppCompatActivity implements AuctionAd
         modificaAvvenuta = getIntent().getBooleanExtra("modificaAvvenuta", false);
 
 
-        aste_attive = new ArrayList<>();
-        aste_vinte = new ArrayList<>();
-        aste_rifiutate = new ArrayList<>();
-        aste_perse = new ArrayList<>();
+        asteAttive = new ArrayList<>();
+        asteVinte = new ArrayList<>();
+        asteRifiutate = new ArrayList<>();
+        astePerse = new ArrayList<>();
         attiva = true;
         rifiutata = false;
 
@@ -98,35 +98,35 @@ public class OfferteFatteActivity extends AppCompatActivity implements AuctionAd
                                     for(Offerta o : offerte) {
                                         if(o.getId_asta() == a.getId()) {
                                             if(o.getStato().toString().equals("ATTESA")) {
-                                                aste_attive.add(a);
+                                                asteAttive.add(a);
                                             } else if(o.getStato().toString().equals("RIFIUTATA")) {
-                                                aste_rifiutate.add(a);
+                                                asteRifiutate.add(a);
                                             } else {
-                                                aste_perse.add(a);
+                                                astePerse.add(a);
                                             }
                                             break;
                                         }
                                     }
                                 } else if(a.getStato().toString().equals("VENDUTA") && utente.getId() == a.getVincitore()) {
-                                    aste_vinte.add(a);
+                                    asteVinte.add(a);
                                 } else {
-                                    aste_perse.add(a);
+                                    astePerse.add(a);
                                 }
                             }
                         }
-                        if(attiva && (aste_attive == null || aste_attive.isEmpty())) {
+                        if(attiva && (asteAttive == null || asteAttive.isEmpty())) {
                             noAuctionsText.setVisibility(View.VISIBLE);
                             btnCrea.setVisibility(View.VISIBLE);
-                            int childCount = layout_attributi.getChildCount();
+                            int childCount = layoutAttributi.getChildCount();
                             for (int i = 0; i < childCount; i++) {
-                                View child = layout_attributi.getChildAt(i);
+                                View child = layoutAttributi.getChildAt(i);
                                 child.setVisibility(View.INVISIBLE);
                             }
                         }else {
                             noAuctionsText.setVisibility(View.GONE);
                         }
                         recyclerView.setLayoutManager(new LinearLayoutManager(OfferteFatteActivity.this));
-                        adapter = new AuctionAdapter(aste_attive,OfferteFatteActivity.this, true, false);
+                        adapter = new AuctionAdapter(asteAttive,OfferteFatteActivity.this, true, false);
                         recyclerView.setAdapter(adapter);
                     }
 
@@ -138,15 +138,15 @@ public class OfferteFatteActivity extends AppCompatActivity implements AuctionAd
                 });
 
         noAuctionsText = findViewById(R.id.no_auctions_text);
-        back_button = findViewById(R.id.back_button);
+        backButton = findViewById(R.id.back_button);
         btnCrea = findViewById(R.id.cerca_button);
         btnAttive = findViewById(R.id.btn_aste_attive);
         btnVinte = findViewById(R.id.btn_aste_vinte);
         btnRifiutate = findViewById(R.id.btn_aste_rifiutate);
         btnPerse = findViewById(R.id.btn_aste_perse);
-        layout_attributi = findViewById(R.id.layout_attributi);
+        layoutAttributi = findViewById(R.id.layout_attributi);
         recyclerView = findViewById(R.id.risultati_recycler_view);
-        ImageButton home_button = findViewById(R.id.home_button);
+        ImageButton homeButton = findViewById(R.id.home_button);
 
         btnAttive.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,14 +157,14 @@ public class OfferteFatteActivity extends AppCompatActivity implements AuctionAd
                 btnVinte.setBackgroundColor(Color.parseColor("#0E4273"));
                 btnRifiutate.setBackgroundColor(Color.parseColor("#0E5273"));
                 btnPerse.setBackgroundColor(Color.parseColor("#0E4273"));
-                adapter.setAste(aste_attive, attiva);
+                adapter.setAste(asteAttive, attiva);
                 adapter.notifyDataSetChanged();
-                if(aste_attive == null || aste_attive.isEmpty()) {
+                if(asteAttive == null || asteAttive.isEmpty()) {
                     noAuctionsText.setVisibility(View.VISIBLE);
                     btnCrea.setVisibility(View.VISIBLE);
-                    int childCount = layout_attributi.getChildCount();
+                    int childCount = layoutAttributi.getChildCount();
                     for (int i = 0; i < childCount; i++) {
-                        View child = layout_attributi.getChildAt(i);
+                        View child = layoutAttributi.getChildAt(i);
                         child.setVisibility(View.INVISIBLE);
                     }
                 }
@@ -178,16 +178,16 @@ public class OfferteFatteActivity extends AppCompatActivity implements AuctionAd
                 rifiutata = false;
                 noAuctionsText.setVisibility(View.GONE);
                 btnCrea.setVisibility(View.GONE);
-                int childCount = layout_attributi.getChildCount();
+                int childCount = layoutAttributi.getChildCount();
                 for (int i = 0; i < childCount; i++) {
-                    View child = layout_attributi.getChildAt(i);
+                    View child = layoutAttributi.getChildAt(i);
                     child.setVisibility(View.VISIBLE);
                 }
                 btnVinte.setBackgroundColor(Color.parseColor("#FF0000"));
                 btnAttive.setBackgroundColor(Color.parseColor("#0E4273"));
                 btnRifiutate.setBackgroundColor(Color.parseColor("#0E5273"));
                 btnPerse.setBackgroundColor(Color.parseColor("#0E4273"));
-                adapter.setAste(aste_vinte, attiva);
+                adapter.setAste(asteVinte, attiva);
                 adapter.notifyDataSetChanged();
             }
         });
@@ -199,16 +199,16 @@ public class OfferteFatteActivity extends AppCompatActivity implements AuctionAd
                 rifiutata = true;
                 noAuctionsText.setVisibility(View.GONE);
                 btnCrea.setVisibility(View.GONE);
-                int childCount = layout_attributi.getChildCount();
+                int childCount = layoutAttributi.getChildCount();
                 for (int i = 0; i < childCount; i++) {
-                    View child = layout_attributi.getChildAt(i);
+                    View child = layoutAttributi.getChildAt(i);
                     child.setVisibility(View.VISIBLE);
                 }
                 btnRifiutate.setBackgroundColor(Color.parseColor("#FF0000"));
                 btnAttive.setBackgroundColor(Color.parseColor("#0E4273"));
                 btnVinte.setBackgroundColor(Color.parseColor("#0E5273"));
                 btnPerse.setBackgroundColor(Color.parseColor("#0E4273"));
-                adapter.setAste(aste_rifiutate, rifiutata);
+                adapter.setAste(asteRifiutate, rifiutata);
                 adapter.notifyDataSetChanged();
             }
         });
@@ -220,16 +220,16 @@ public class OfferteFatteActivity extends AppCompatActivity implements AuctionAd
                 rifiutata = false;
                 noAuctionsText.setVisibility(View.GONE);
                 btnCrea.setVisibility(View.GONE);
-                int childCount = layout_attributi.getChildCount();
+                int childCount = layoutAttributi.getChildCount();
                 for (int i = 0; i < childCount; i++) {
-                    View child = layout_attributi.getChildAt(i);
+                    View child = layoutAttributi.getChildAt(i);
                     child.setVisibility(View.VISIBLE);
                 }
                 btnPerse.setBackgroundColor(Color.parseColor("#FF0000"));
                 btnAttive.setBackgroundColor(Color.parseColor("#0E4273"));
                 btnRifiutate.setBackgroundColor(Color.parseColor("#0E5273"));
                 btnVinte.setBackgroundColor(Color.parseColor("#0E4273"));
-                adapter.setAste(aste_perse, attiva);
+                adapter.setAste(astePerse, attiva);
                 adapter.notifyDataSetChanged();
             }
         });
@@ -238,7 +238,7 @@ public class OfferteFatteActivity extends AppCompatActivity implements AuctionAd
         assert actionBar != null;
         actionBar.hide();
 
-        back_button.setOnClickListener(new View.OnClickListener() {
+        backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openActivityProfilo();
@@ -246,7 +246,7 @@ public class OfferteFatteActivity extends AppCompatActivity implements AuctionAd
             }
         });
 
-        home_button.setOnClickListener(new View.OnClickListener() {
+        homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openActivityHome(utente);
@@ -278,7 +278,7 @@ public class OfferteFatteActivity extends AppCompatActivity implements AuctionAd
     private void openActivityProfilo() {
         Intent intentP = new Intent(this, ProfiloActivity.class);
         intentP.putExtra("utente", utente);
-        intentP.putExtra("utente_home", utente);
+        intentP.putExtra("utenteHome", utente);
         intentP.putExtra("fromDettagli", fromDettagli);
         intentP.putExtra("modificaAvvenuta", modificaAvvenuta);
         intentP.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -314,10 +314,10 @@ public class OfferteFatteActivity extends AppCompatActivity implements AuctionAd
     public void onAstaClick(int position, boolean isAttive) {
         if (isAttive) {
             if(rifiutata) {
-                astaSelezionata = aste_rifiutate.get(position);
-                aste_rifiutate.remove(position);
+                astaSelezionata = asteRifiutate.get(position);
+                asteRifiutate.remove(position);
             } else {
-                astaSelezionata = aste_attive.get(position);
+                astaSelezionata = asteAttive.get(position);
             }
             showNewOfferDialog(astaSelezionata);
         }
@@ -352,7 +352,7 @@ public class OfferteFatteActivity extends AppCompatActivity implements AuctionAd
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                aste_rifiutate.add(asta);
+                asteRifiutate.add(asta);
             }
         });
 
@@ -382,7 +382,7 @@ public class OfferteFatteActivity extends AppCompatActivity implements AuctionAd
                     public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
                         Toast.makeText(OfferteFatteActivity.this, "Offerta presentata con successo!", Toast.LENGTH_SHORT).show();
                         if(rifiutata) {
-                            aste_attive.add(asta);
+                            asteAttive.add(asta);
                         }
                     }
 

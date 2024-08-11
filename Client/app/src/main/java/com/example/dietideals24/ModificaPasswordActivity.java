@@ -29,7 +29,7 @@ public class ModificaPasswordActivity extends AppCompatActivity {
     private EditText nuovaPassword;
     private EditText confermaPassword;
     private Button salvaButton;
-    private ImageButton back_button;
+    private ImageButton backButton;
     private Utente utente;
 
     @Override
@@ -38,22 +38,22 @@ public class ModificaPasswordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_modifica_password);
 
         utente = (Utente) getIntent().getSerializableExtra("utente");
-        int id_utente = utente.getId();
+        int idUtente = utente.getId();
         String pass_utente = utente.getPassword();
 
         vecchiaPassword = findViewById(R.id.vecchia_password);
         nuovaPassword = findViewById(R.id.nuova_password);
         confermaPassword = findViewById(R.id.conferma_password);
         salvaButton = findViewById(R.id.salva_button);
-        back_button = findViewById(R.id.back_button);
-        ImageButton home_button = findViewById(R.id.home_button);
+        backButton = findViewById(R.id.back_button);
+        ImageButton homeButton = findViewById(R.id.home_button);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(ModificaPasswordActivity.this);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-        back_button.setOnClickListener(new View.OnClickListener() {
+        backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openActivityProfilo(utente);
@@ -61,7 +61,7 @@ public class ModificaPasswordActivity extends AppCompatActivity {
             }
         });
 
-        home_button.setOnClickListener(new View.OnClickListener() {
+        homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openActivityHome(utente);
@@ -75,7 +75,7 @@ public class ModificaPasswordActivity extends AppCompatActivity {
                 if(nuovaPassword.getText().toString().equals(confermaPassword.getText().toString()) && vecchiaPassword.getText().toString().equals(pass_utente)) {
                     try {
                         UtenteDTO utente = new UtenteDTO();
-                        utente.setId(id_utente);
+                        utente.setId(idUtente);
                         utente.setPassword(nuovaPassword.getText().toString());
 
                         ApiService apiService = RetrofitService.getRetrofit(ModificaPasswordActivity.this).create(ApiService.class);

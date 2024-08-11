@@ -44,14 +44,14 @@ public class SceltaAccountActivity extends AppCompatActivity {
         venditoreButt = findViewById(R.id.button_vendi);
         compratoreButt = findViewById(R.id.button_compra);
         completoButt = findViewById(R.id.button_completo);
-        ImageButton back_button = findViewById(R.id.back_button);
-        ImageButton home_button = findViewById(R.id.home_button);
+        ImageButton backButton = findViewById(R.id.back_button);
+        ImageButton homeButton = findViewById(R.id.home_button);
 
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.hide();
 
-        back_button.setOnClickListener(new View.OnClickListener() {
+        backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (fromLogin) {
@@ -64,9 +64,9 @@ public class SceltaAccountActivity extends AppCompatActivity {
         });
 
         if(fromLogin) {
-            home_button.setVisibility(View.INVISIBLE);
+            homeButton.setVisibility(View.INVISIBLE);
         } else {
-            home_button.setOnClickListener(new View.OnClickListener() {
+            homeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     openActivityHome(utente);

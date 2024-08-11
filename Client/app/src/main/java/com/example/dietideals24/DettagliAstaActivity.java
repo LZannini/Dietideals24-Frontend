@@ -135,8 +135,7 @@ public class DettagliAstaActivity extends AppCompatActivity implements OfferAdap
         etOffer = findViewById(R.id.etOffer);
         btnSubmitOffer = findViewById(R.id.btnSubmitOffer);
         btnBack = findViewById(R.id.back_button);
-        ImageButton home_button = findViewById(R.id.home_button);
-
+        ImageButton homeButton = findViewById(R.id.home_button);
 
         if (asta.getId_creatore() == utente.getId()) {
             creatorSection.setVisibility(View.VISIBLE);
@@ -147,7 +146,6 @@ public class DettagliAstaActivity extends AppCompatActivity implements OfferAdap
         }
 
         ApiService apiService = RetrofitService.getRetrofit(this).create(ApiService.class);
-
 
         byte[] fotoBytes = asta.getFoto();
         if (fotoBytes != null) {
@@ -285,7 +283,7 @@ public class DettagliAstaActivity extends AppCompatActivity implements OfferAdap
             }
         });
 
-        home_button.setOnClickListener(new View.OnClickListener() {
+        homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openActivityHome();
@@ -382,7 +380,7 @@ public class DettagliAstaActivity extends AppCompatActivity implements OfferAdap
         Intent intent = new Intent(DettagliAstaActivity.this,NotificaActivity.class);
         intent.putExtra("listaNotifiche", (Serializable) notifiche);
         intent.putExtra("utente",utente);
-        intent.putExtra("asta_ricevuta",asta);
+        intent.putExtra("astaRicevuta",asta);
         startActivity(intent);
 
     }
@@ -396,7 +394,7 @@ public class DettagliAstaActivity extends AppCompatActivity implements OfferAdap
     private void openActivityAsteCreate(List<Asta> listaAste, boolean offertaAccettata) {
         Intent intent = new Intent(this, AsteCreateActivity.class);
         intent.putExtra("listaAste", (Serializable) listaAste);
-        intent.putExtra("utente_home", utente);
+        intent.putExtra("utenteHome", utente);
         intent.putExtra("utente", utenteCreatore);
         intent.putExtra("utenteCreatore", utenteCreatore);
         intent.putExtra("fromDettagli", fromDettagli);
@@ -411,7 +409,7 @@ public class DettagliAstaActivity extends AppCompatActivity implements OfferAdap
 
     private void openActivityProfilo() {
         Intent intentR = new Intent(this, ProfiloActivity.class);
-        intentR.putExtra("utente_home", utente);
+        intentR.putExtra("utenteHome", utente);
         intentR.putExtra("utente", utenteCreatore);
         intentR.putExtra("fromDettagli", true);
         intentR.putExtra("fromHome", fromHome);

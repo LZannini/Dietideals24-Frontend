@@ -60,11 +60,11 @@ public class ProfiloActivity extends AppCompatActivity {
     private Button buttonSalva, buttonAsteCreate, buttonOfferteFatte;
     private Utente utenteOriginale;
     private Utente utenteModificato;
-    private Boolean info_mod = false;
+    private Boolean infoMod = false;
     private byte[] imageBytes;
     private boolean fromDettagli, fromHome;
     private boolean modificaAvvenuta;
-    private ImageButton back_button, home_button;
+    private ImageButton backButton, homeButton;
 
     @SuppressLint({"SuspiciousIndentation", "WrongViewCast", "MissingInflatedId"})
     @Override
@@ -83,8 +83,8 @@ public class ProfiloActivity extends AppCompatActivity {
         countryEditText = findViewById(R.id.paese);
         pulsantiAste = findViewById(R.id.pulsanti_aste);
         buttonSalva = findViewById(R.id.salva_button);
-        back_button = findViewById(R.id.back_button);
-        home_button = findViewById(R.id.home_button);
+        backButton = findViewById(R.id.back_button);
+        homeButton = findViewById(R.id.home_button);
         buttonAsteCreate = findViewById(R.id.asteCreate_button);
         buttonOfferteFatte = findViewById(R.id.leTueOfferte_button);
         textUsername = findViewById((R.id.text_nomeProfilo));
@@ -98,7 +98,7 @@ public class ProfiloActivity extends AppCompatActivity {
             utenteOriginale = (Utente) getIntent().getSerializableExtra("utente");
             menuButton.setVisibility(View.INVISIBLE);
             buttonOfferteFatte.setVisibility(View.GONE);
-            home_button.setVisibility(View.VISIBLE);
+            homeButton.setVisibility(View.VISIBLE);
         } else {
             modificaAvvenuta = getIntent().getBooleanExtra("modificaAvvenuta", modificaAvvenuta);
             if (modificaAvvenuta) {
@@ -129,7 +129,7 @@ public class ProfiloActivity extends AppCompatActivity {
             }
         });
 
-        back_button.setOnClickListener(new View.OnClickListener() {
+        backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(!fromDettagli)
@@ -138,7 +138,7 @@ public class ProfiloActivity extends AppCompatActivity {
             }
         });
 
-        home_button.setOnClickListener(new View.OnClickListener() {
+        homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openActivityHome();
@@ -174,37 +174,37 @@ public class ProfiloActivity extends AppCompatActivity {
                     utenteModificato.setTipo(utenteOriginale.getTipo());
                     if (imageBytes != null) {
                         utenteModificato.setAvatar(imageBytes);
-                        info_mod = true;
+                        infoMod = true;
                     } else if(utenteOriginale.getAvatar() != null){
                         utenteModificato.setAvatar(utenteOriginale.getAvatar());
                     }
                     if (!textUsername.getText().toString().equals(utenteOriginale.getUsername())) {
                         utenteModificato.setUsername(textUsername.getText().toString());
-                        info_mod = true;
+                        infoMod = true;
                     } else {
                         utenteModificato.setUsername(utenteOriginale.getUsername());
                     }
                     if (!emailEditText.getText().toString().equals(utenteOriginale.getEmail())) {
                         utenteModificato.setEmail(emailEditText.getText().toString());
-                        info_mod = true;
+                        infoMod = true;
                     } else {
                         utenteModificato.setEmail(utenteOriginale.getEmail());
                     }
                     if (!bioEditText.getText().toString().equals(utenteOriginale.getBiografia()) && !bioEditText.getText().toString().equals("")) {
                         utenteModificato.setBiografia(bioEditText.getText().toString());
-                        info_mod = true;
+                        infoMod = true;
                     } else if(utenteOriginale.getBiografia() != null) {
                         utenteModificato.setBiografia(utenteOriginale.getBiografia());
                     }
                     if (!webSiteEditText.getText().toString().equals(utenteOriginale.getSitoweb()) && !webSiteEditText.getText().toString().equals("")) {
                         utenteModificato.setSitoweb(webSiteEditText.getText().toString());
-                        info_mod = true;
+                        infoMod = true;
                     } else if(utenteOriginale.getSitoweb() != null) {
                         utenteModificato.setSitoweb(utenteOriginale.getSitoweb());
                     }
                     if (!countryEditText.getText().toString().equals(utenteOriginale.getPaese()) && !countryEditText.getText().toString().equals("")) {
                         utenteModificato.setPaese(countryEditText.getText().toString());
-                        info_mod = true;
+                        infoMod = true;
                     } else if(utenteOriginale.getPaese() != null) {
                         utenteModificato.setPaese(utenteOriginale.getPaese());
                     }
@@ -378,7 +378,7 @@ public class ProfiloActivity extends AppCompatActivity {
                     intent.putExtra("utente_home", utenteModificato);
                     intent.putExtra("utente", utenteOriginale);
                     intent.putExtra("fromDettagli", fromDettagli);
-                    intent.putExtra("modificaAvvenuta", info_mod);
+                    intent.putExtra("modificaAvvenuta", infoMod);
                     intent.putExtra("fromHome", fromHome);
                     startActivity(intent);
                     finish();

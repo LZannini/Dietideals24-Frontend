@@ -47,7 +47,7 @@ public class CreaAstaRibassoActivity extends AppCompatActivity {
     private ImageButton decrMinuti, incrMinuti;
     private ImageButton decrSecondi, incrSecondi;
 
-    private ImageButton back_button;
+    private ImageButton backButton;
     private Button creaButton;
     private boolean fromHome;
 
@@ -84,7 +84,7 @@ public class CreaAstaRibassoActivity extends AppCompatActivity {
         decrSecondi = findViewById(R.id.decr_secondi);
         incrSecondi = findViewById(R.id.incr_secondi);
 
-        back_button = findViewById(R.id.back_button);
+        backButton = findViewById(R.id.back_button);
         creaButton = findViewById(R.id.crea_button);
         ImageButton home_button = findViewById(R.id.home_button);
 
@@ -92,7 +92,7 @@ public class CreaAstaRibassoActivity extends AppCompatActivity {
         valoreInizialeFormattato(prezzoMinimo, 1.00f);
         valoreInizialeFormattato(decrementoPrezzo, 1.00f);
 
-        back_button.setOnClickListener(new View.OnClickListener() {
+        backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openActivityTipoAsta(utente, asta);

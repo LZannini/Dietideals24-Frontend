@@ -42,7 +42,7 @@ public class RegistrazioneActivity extends AppCompatActivity {
     private CheckBox tipoVenditore;
     private List<TipoUtente> selezioneAccount = new ArrayList<>();
     private TextView buttonLogin;
-    private ImageButton back_button;
+    private ImageButton backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +55,9 @@ public class RegistrazioneActivity extends AppCompatActivity {
         confPasswordEditText = findViewById(R.id.conferma_password_input);
         tipoCompratore = findViewById(R.id.checkbox_compratore);
         tipoVenditore = findViewById(R.id.checkbox_venditore);
-        back_button = findViewById(R.id.back_button);
+        backButton = findViewById(R.id.back_button);
 
-        back_button.setOnClickListener(new View.OnClickListener() {
+        backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openActivityLogin();

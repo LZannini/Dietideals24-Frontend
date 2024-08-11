@@ -45,7 +45,7 @@ public class CercaAstaActivity extends AppCompatActivity {
     private boolean fromHome;
     private boolean modificaAvvenuta;
     private List<Asta> listaAste;
-    private ImageButton back_button, home_button;
+    private ImageButton backButton, homeButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,15 +70,15 @@ public class CercaAstaActivity extends AppCompatActivity {
 
         modificaAvvenuta = getIntent().getBooleanExtra("modificaAvvenuta", false);
 
-        back_button = findViewById(R.id.back_button);
+        backButton = findViewById(R.id.back_button);
 
-        home_button = findViewById(R.id.home_button);
+        homeButton = findViewById(R.id.home_button);
 
         if(!fromHome) {
-            home_button.setVisibility(View.VISIBLE);
+            homeButton.setVisibility(View.VISIBLE);
         }
 
-        back_button.setOnClickListener(new View.OnClickListener() {
+        backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(fromHome) {
@@ -90,7 +90,7 @@ public class CercaAstaActivity extends AppCompatActivity {
             }
         });
 
-        home_button.setOnClickListener(new View.OnClickListener() {
+        homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openActivityHome(utente);
@@ -144,7 +144,7 @@ public class CercaAstaActivity extends AppCompatActivity {
     private void openActivityOfferteFatte() {
         Intent intent = new Intent(this, OfferteFatteActivity.class);
         intent.putExtra("utente", utente);
-        intent.putExtra("utente_home", utente);
+        intent.putExtra("utenteHome", utente);
         intent.putExtra("modificaAvvenuta", modificaAvvenuta);
         if(listaAste != null) {
             intent.putExtra("listaAste", (Serializable) listaAste);

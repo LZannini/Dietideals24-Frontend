@@ -42,7 +42,7 @@ public class CreaAstaActivity extends AppCompatActivity {
     private AutoCompleteTextView categoriaProdotto;
     private Button btnAvanti;
     private byte[] imageBytes;
-    private ImageButton back_button, home_button;
+    private ImageButton backButton, homeButton;
     private Utente utente;
     private boolean fromHome, modificaAvvenuta;
     private List<Asta> listaAste;
@@ -66,11 +66,11 @@ public class CreaAstaActivity extends AppCompatActivity {
         descrizioneProdotto = findViewById(R.id.descrizione);
         categoriaProdotto = findViewById(R.id.auto_complete_txt);
         btnAvanti = findViewById(R.id.avanti_button);
-        back_button = findViewById(R.id.back_button);
-        home_button = findViewById(R.id.home_button);
+        backButton = findViewById(R.id.back_button);
+        homeButton = findViewById(R.id.home_button);
 
         if(!fromHome) {
-            home_button.setVisibility(View.VISIBLE);
+            homeButton.setVisibility(View.VISIBLE);
         }
 
         if (asta != null) {
@@ -92,7 +92,7 @@ public class CreaAstaActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, nomiCategorie);
         categoriaProdotto.setAdapter(adapter);
 
-        back_button.setOnClickListener(new View.OnClickListener() {
+        backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(fromHome) {
@@ -104,7 +104,7 @@ public class CreaAstaActivity extends AppCompatActivity {
             }
         });
 
-        home_button.setOnClickListener(new View.OnClickListener() {
+        homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openActivityHome(utente);
@@ -196,7 +196,7 @@ public class CreaAstaActivity extends AppCompatActivity {
     private void openActivityAsteCreate() {
         Intent intent = new Intent(this, AsteCreateActivity.class);
         intent.putExtra("utente", utente);
-        intent.putExtra("utente_home", utente);
+        intent.putExtra("utenteHome", utente);
         intent.putExtra("modificaAvvenuta", modificaAvvenuta);
         if(listaAste != null) {
             intent.putExtra("listaAste", (Serializable) listaAste);
