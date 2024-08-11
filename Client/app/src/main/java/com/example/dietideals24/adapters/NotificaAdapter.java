@@ -61,7 +61,7 @@ public class NotificaAdapter extends ArrayAdapter<NotificaDTO> {
         NotificaDTO notifica = getItem(position);
 
         String testo = notifica.getTesto() + " ";
-        String nomeAsta = notifica.getNome_asta() != null ? notifica.getNome_asta() : "";
+        String nomeAsta = notifica.getNomeAsta() != null ? notifica.getNomeAsta() : "";
         String data = FormattaData.formatta(notifica.getData());
         String nomeAstaData = nomeAsta + "\n" + data;
         int nomeAstaLength = nomeAsta.length();
