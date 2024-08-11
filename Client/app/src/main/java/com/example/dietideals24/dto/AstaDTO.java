@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class AstaDTO implements Serializable {
 
     private int id;
-    private int id_creatore;
+    private int idCreatore;
     private Integer vincitore;
     private String nome;
     private String descrizione;
@@ -25,8 +25,8 @@ public class AstaDTO implements Serializable {
         this.id = id;
     }
 
-    public int getId_creatore(){
-        return id_creatore;
+    public int getIdCreatore(){
+        return idCreatore;
     }
 
     public String getNome(){

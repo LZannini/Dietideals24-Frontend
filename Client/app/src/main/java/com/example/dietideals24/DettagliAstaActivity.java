@@ -137,7 +137,7 @@ public class DettagliAstaActivity extends AppCompatActivity implements OfferAdap
         btnBack = findViewById(R.id.back_button);
         ImageButton homeButton = findViewById(R.id.home_button);
 
-        if (asta.getId_creatore() == utente.getId()) {
+        if (asta.getIdCreatore() == utente.getId()) {
             creatorSection.setVisibility(View.VISIBLE);
             userSection.setVisibility(View.GONE);
         } else {
@@ -236,7 +236,7 @@ public class DettagliAstaActivity extends AppCompatActivity implements OfferAdap
                     });
         }
 
-        if (asta.getId_creatore() == utente.getId() && !isRibasso) {
+        if (asta.getIdCreatore() == utente.getId() && !isRibasso) {
             RecyclerView recyclerView = findViewById(R.id.recyclerViewOfferte);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             recyclerView.setVisibility(View.VISIBLE);
@@ -291,7 +291,7 @@ public class DettagliAstaActivity extends AppCompatActivity implements OfferAdap
             }
         });
 
-        if (asta.getId_creatore() != utente.getId() && !fromAsteCreate) {
+        if (asta.getIdCreatore() != utente.getId() && !fromAsteCreate) {
             tvCreatorValue.setTypeface(tvCreatorValue.getTypeface(), Typeface.BOLD);
             tvCreatorValue.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -310,8 +310,8 @@ public class DettagliAstaActivity extends AppCompatActivity implements OfferAdap
                         .setPositiveButton("Si", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 OffertaDTO offerta = new OffertaDTO();
-                                offerta.setId_asta(asta.getId());
-                                offerta.setId_utente(utente.getId());
+                                offerta.setIdAsta(asta.getId());
+                                offerta.setIdUtente(utente.getId());
                                 offerta.setValore(Float.parseFloat(etOffer.getText().toString()));
                                 offerta.setStato(StatoOfferta.ATTESA);
 
@@ -530,9 +530,9 @@ public class DettagliAstaActivity extends AppCompatActivity implements OfferAdap
         for (OffertaDTO dto : listaDto) {
             Offerta offerta = new Offerta();
             offerta.setId(dto.getId());
-            offerta.setId_asta(dto.getId_asta());
+            offerta.setIdAsta(dto.getIdAsta());
             offerta.setData(dto.getData());
-            offerta.setId_utente(dto.getId_utente());
+            offerta.setIdUtente(dto.getIdUtente());
             offerta.setValore(dto.getValore());
             offerta.setOfferente(dto.getOfferente());
             offerteList.add(offerta);

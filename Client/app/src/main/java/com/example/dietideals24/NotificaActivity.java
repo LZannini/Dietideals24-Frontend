@@ -120,7 +120,7 @@ public class NotificaActivity extends AppCompatActivity implements NotificaAdapt
             listView.setAdapter(adapter);
 
             for (NotificaDTO notifica : listaNotifiche) {
-                if(notifica.getId_Asta()!=0)
+                if(notifica.getIdAsta()!=0)
                 RecuperaAsta(notifica, apiService);
             }
 
@@ -270,7 +270,7 @@ public class NotificaActivity extends AppCompatActivity implements NotificaAdapt
     }
 
     private void RecuperaAsta(NotificaDTO notifica, ApiService apiService) {
-            int idAsta = notifica.getId_Asta();
+            int idAsta = notifica.getIdAsta();
             apiService.recuperaAsta(idAsta).enqueue(new Callback<AstaDTO>() {
                 @Override
                 public void onResponse(@NonNull Call<AstaDTO> call, @NonNull Response<AstaDTO> response) {
@@ -284,7 +284,7 @@ public class NotificaActivity extends AppCompatActivity implements NotificaAdapt
                                 public void onResponse(@NonNull Call<Asta_InversaDTO> call, @NonNull Response<Asta_InversaDTO> response) {
                                     if (response.isSuccessful() && response.body() != null) {
                                         String nome_asta = asta.getNome();
-                                        notifica.setNome_asta(nome_asta);
+                                        notifica.setNomeAsta(nome_asta);
                                         astaRicevuta = (Asta_Inversa) asta;
                                         adapter.notifyDataSetChanged();
                                     } else
@@ -304,7 +304,7 @@ public class NotificaActivity extends AppCompatActivity implements NotificaAdapt
                                 public void onResponse(@NonNull Call<Asta_RibassoDTO> call, @NonNull Response<Asta_RibassoDTO> response) {
                                     if (response.isSuccessful() && response.body() != null) {
                                         String nome_asta = asta.getNome();
-                                        notifica.setNome_asta(nome_asta);
+                                        notifica.setNomeAsta(nome_asta);
                                         astaRicevuta = (Asta_Ribasso) asta;
                                         adapter.notifyDataSetChanged();
                                     } else
@@ -324,7 +324,7 @@ public class NotificaActivity extends AppCompatActivity implements NotificaAdapt
                                 public void onResponse(@NonNull Call<Asta_SilenziosaDTO> call, @NonNull Response<Asta_SilenziosaDTO> response) {
                                     if (response.isSuccessful() && response.body() != null) {
                                         String nome_asta = asta.getNome();
-                                        notifica.setNome_asta(nome_asta);
+                                        notifica.setNomeAsta(nome_asta);
                                         astaRicevuta = (Asta_Silenziosa) asta;
                                         adapter.notifyDataSetChanged();
                                     } else
@@ -395,7 +395,7 @@ public class NotificaActivity extends AppCompatActivity implements NotificaAdapt
     public Asta_Ribasso creaModelloAstaR(AstaDTO dto) {
         Asta_Ribasso asta = new Asta_Ribasso();
         asta.setId(dto.getID());
-        asta.setId_creatore(dto.getId_creatore());
+        asta.setIdCreatore(dto.getIdCreatore());
         asta.setCategoria(dto.getCategoria());
         asta.setFoto(dto.getFoto());
         asta.setNome(dto.getNome());
@@ -408,7 +408,7 @@ public class NotificaActivity extends AppCompatActivity implements NotificaAdapt
     public Asta_Silenziosa creaModelloAstaS(AstaDTO dto) {
         Asta_Silenziosa asta = new Asta_Silenziosa();
         asta.setId(dto.getID());
-        asta.setId_creatore(dto.getId_creatore());
+        asta.setIdCreatore(dto.getIdCreatore());
         asta.setCategoria(dto.getCategoria());
         asta.setFoto(dto.getFoto());
         asta.setNome(dto.getNome());
@@ -421,7 +421,7 @@ public class NotificaActivity extends AppCompatActivity implements NotificaAdapt
     public Asta_Inversa creaModelloAstaI(AstaDTO dto) {
         Asta_Inversa asta = new Asta_Inversa();
         asta.setId(dto.getID());
-        asta.setId_creatore(dto.getId_creatore());
+        asta.setIdCreatore(dto.getIdCreatore());
         asta.setCategoria(dto.getCategoria());
         asta.setFoto(dto.getFoto());
         asta.setNome(dto.getNome());
@@ -462,7 +462,7 @@ public class NotificaActivity extends AppCompatActivity implements NotificaAdapt
             @Override
             public void run() {
                 if (astaRicevuta != null)
-                    recuperaUtenteCreatore(astaRicevuta.getId_creatore(),apiService);
+                    recuperaUtenteCreatore(astaRicevuta.getIdCreatore(),apiService);
                 else
                     handler.postDelayed(this, 100);
             }
@@ -475,10 +475,10 @@ public class NotificaActivity extends AppCompatActivity implements NotificaAdapt
         segnaComeLetta(notifica, apiService);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(false);
-        if(notifica.getNome_asta() == null || notifica.getId_Asta() == 0)
+        if(notifica.getNomeAsta() == null || notifica.getIdAsta() == 0)
         builder.setMessage(notifica.getTesto());
         else
-            builder.setMessage(notifica.getTesto() + ' ' + notifica.getNome_asta());
+            builder.setMessage(notifica.getTesto() + ' ' + notifica.getNomeAsta());
 
         builder.setPositiveButton("Rimuovi", (dialog, which) -> {
             rimuoviSelezionata(notifica, apiService);

@@ -185,7 +185,7 @@ public class CreaAstaRibassoActivity extends AppCompatActivity {
 
                 if(valDecremento < valIniziale && valMinimo < valIniziale) {
                     Asta_RibassoDTO astaR = new Asta_RibassoDTO();
-                    astaR.setIdCreatore(asta.getId_creatore());
+                    astaR.setIdCreatore(asta.getIdCreatore());
                     astaR.setNome(asta.getNome());
                     astaR.setDescrizione(asta.getDescrizione());
                     astaR.setFoto(asta.getFoto());

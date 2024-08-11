@@ -5,7 +5,7 @@ import com.example.dietideals24.enums.StatoAsta;
 
 public class Asta_InversaDTO {
 
-    private int id_asta;
+    private int idAsta;
     private int idCreatore;
     private String nome;
     private String descrizione;
@@ -16,12 +16,12 @@ public class Asta_InversaDTO {
     private String scadenza;
     private StatoAsta stato;
 
-    public int getId_asta() {
-        return id_asta;
+    public int getIdAsta() {
+        return idAsta;
     }
 
-    public void setId_asta(int id_asta) {
-        this.id_asta = id_asta;
+    public void setIdAsta(int idAsta) {
+        this.idAsta = idAsta;
     }
 
     public int getIdCreatore() {
