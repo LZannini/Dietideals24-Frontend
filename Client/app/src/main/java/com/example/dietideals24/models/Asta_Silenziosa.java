@@ -8,8 +8,8 @@ public class Asta_Silenziosa extends Asta {
 
     private String scadenza;
 
-    public Asta_Silenziosa(int id_creatore, String nome, String descrizione, Categoria categoria, byte[] foto, String scadenza) {
-        super(id_creatore, nome, descrizione, categoria, foto);;
+    public Asta_Silenziosa(int idCreatore, String nome, String descrizione, Categoria categoria, byte[] foto, String scadenza) {
+        super(idCreatore, nome, descrizione, categoria, foto);;
         this.scadenza = scadenza;
     }
 

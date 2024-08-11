@@ -107,7 +107,7 @@ public class CreaAstaInversaActivity extends AppCompatActivity {
             }
             else{
                 Asta_InversaDTO astaI = new Asta_InversaDTO();
-                astaI.setIdCreatore(asta.getId_creatore());
+                astaI.setIdCreatore(asta.getIdCreatore());
                 astaI.setNome(asta.getNome());
                 astaI.setDescrizione(asta.getDescrizione());
                 astaI.setFoto(asta.getFoto());

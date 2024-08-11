@@ -1,17 +1,18 @@
 package com.example.dietideals24.dto;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 public class NotificaDTO implements Serializable {
 
     private int id;
-    private int id_utente;
+    private int idUtente;
     private String testo;
     private String data;
-    private int id_asta;
-    private String nome_asta;
+    private int idAsta;
+    private String nomeAsta;
     private boolean letta;
+
+    // Getters and Setters
 
     public int getId() {
         return id;
@@ -21,12 +22,12 @@ public class NotificaDTO implements Serializable {
         this.id = id;
     }
 
-    public int getId_utente() {
-        return id_utente;
+    public int getIdUtente() {
+        return idUtente;
     }
 
-    public void setId_utente(int id_utente) {
-        this.id_utente = id_utente;
+    public void setIdUtente(int idUtente) {
+        this.idUtente = idUtente;
     }
 
     public String getTesto() {
@@ -53,10 +54,19 @@ public class NotificaDTO implements Serializable {
         this.letta = letta;
     }
 
-    public int getId_Asta(){return id_asta;}
-    public void setId_Asta(int asta){this.id_asta = id_asta;}
+    public int getIdAsta() {
+        return idAsta;
+    }
 
-    public String getNome_asta(){return nome_asta;}
-    public void setNome_asta(String nome_asta){this.nome_asta = nome_asta;}
+    public void setIdAsta(int id_asta) {
+        this.idAsta = id_asta;
+    }
 
+    public String getNomeAsta() {
+        return nomeAsta;
+    }
+
+    public void setNomeAsta(String nome_asta) {
+        this.nomeAsta = nome_asta;
+    }
 }

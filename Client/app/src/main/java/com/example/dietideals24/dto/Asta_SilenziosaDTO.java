@@ -10,7 +10,7 @@ public class Asta_SilenziosaDTO {
     private String descrizione;
     private Categoria categoria;
     private byte[] foto;
-    private int id_asta;
+    private int idAsta;
     private String scadenza;
     private StatoAsta stato;
 
@@ -54,12 +54,12 @@ public class Asta_SilenziosaDTO {
         this.foto = foto;
     }
 
-    public int getId_asta() {
-        return id_asta;
+    public int getIdAsta() {
+        return idAsta;
     }
 
-    public void setId_asta(int id_asta) {
-        this.id_asta = id_asta;
+    public void setIdAsta(int idAsta) {
+        this.idAsta = idAsta;
     }
 
     public String getScadenza() {

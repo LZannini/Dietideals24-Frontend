@@ -9,7 +9,7 @@ import java.util.List;
 public class Asta implements Serializable {
 
     private int id;
-    private int id_creatore;
+    private int idCreatore;
     private Integer vincitore;
     private String nome;
     private String descrizione;
@@ -18,8 +18,8 @@ public class Asta implements Serializable {
     private StatoAsta stato;
     private List<Offerta> offerte;
 
-    public Asta(int id_creatore, String nome, String descrizione, Categoria categoria, byte[] foto) {
-        this.id_creatore = id_creatore;
+    public Asta(int idCreatore, String nome, String descrizione, Categoria categoria, byte[] foto) {
+        this.idCreatore = idCreatore;
         this.nome = nome;
         this.descrizione = descrizione;
         this.categoria = categoria;
@@ -38,12 +38,12 @@ public class Asta implements Serializable {
         this.id = id;
     }
 
-    public int getId_creatore() {
-        return id_creatore;
+    public int getIdCreatore() {
+        return idCreatore;
     }
 
-    public void setId_creatore(int id_creatore) {
-        this.id_creatore = id_creatore;
+    public void setIdCreatore(int idCreatore) {
+        this.idCreatore = idCreatore;
     }
 
     public String getNome() {

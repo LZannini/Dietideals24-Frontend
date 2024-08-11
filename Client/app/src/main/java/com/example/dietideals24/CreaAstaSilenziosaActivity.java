@@ -97,7 +97,7 @@ public class CreaAstaSilenziosaActivity extends AppCompatActivity {
             }
             else{
                 Asta_SilenziosaDTO astaS = new Asta_SilenziosaDTO();
-                astaS.setIdCreatore(asta.getId_creatore());
+                astaS.setIdCreatore(asta.getIdCreatore());
                 astaS.setNome(asta.getNome());
                 astaS.setDescrizione(asta.getDescrizione());
                 astaS.setFoto(asta.getFoto());

@@ -96,7 +96,7 @@ public class OfferteFatteActivity extends AppCompatActivity implements AuctionAd
                             for(Asta a : listaAste) {
                                 if(a.getStato().toString().equals("ATTIVA")) {
                                     for(Offerta o : offerte) {
-                                        if(o.getId_asta() == a.getId()) {
+                                        if(o.getIdAsta() == a.getId()) {
                                             if(o.getStato().toString().equals("ATTESA")) {
                                                 asteAttive.add(a);
                                             } else if(o.getStato().toString().equals("RIFIUTATA")) {
@@ -299,9 +299,9 @@ public class OfferteFatteActivity extends AppCompatActivity implements AuctionAd
         for (OffertaDTO dto : listaDto) {
             Offerta offerta = new Offerta();
             offerta.setId(dto.getId());
-            offerta.setId_asta(dto.getId_asta());
+            offerta.setIdAsta(dto.getIdAsta());
             offerta.setData(dto.getData());
-            offerta.setId_utente(dto.getId_utente());
+            offerta.setIdUtente(dto.getIdUtente());
             offerta.setValore(dto.getValore());
             offerta.setOfferente(dto.getOfferente());
             offerta.setStato(dto.getStato());
@@ -365,8 +365,8 @@ public class OfferteFatteActivity extends AppCompatActivity implements AuctionAd
 
 
         OffertaDTO offerta = new OffertaDTO();
-        offerta.setId_asta(asta.getId());
-        offerta.setId_utente(utente.getId());
+        offerta.setIdAsta(asta.getId());
+        offerta.setIdUtente(utente.getId());
         offerta.setValore(importo);
         offerta.setStato(StatoOfferta.ATTESA);
 

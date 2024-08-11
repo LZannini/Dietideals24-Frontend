@@ -441,7 +441,7 @@ public class ProfiloActivity extends AppCompatActivity {
     public Asta_Ribasso creaModelloAstaR(AstaDTO dto) {
         Asta_Ribasso asta = new Asta_Ribasso();
         asta.setId(dto.getID());
-        asta.setId_creatore(dto.getId_creatore());
+        asta.setIdCreatore(dto.getIdCreatore());
         asta.setCategoria(dto.getCategoria());
         asta.setFoto(dto.getFoto());
         asta.setNome(dto.getNome());
@@ -455,7 +455,7 @@ public class ProfiloActivity extends AppCompatActivity {
     public Asta_Silenziosa creaModelloAstaS(AstaDTO dto) {
         Asta_Silenziosa asta = new Asta_Silenziosa();
         asta.setId(dto.getID());
-        asta.setId_creatore(dto.getId_creatore());
+        asta.setIdCreatore(dto.getIdCreatore());
         asta.setCategoria(dto.getCategoria());
         asta.setFoto(dto.getFoto());
         asta.setNome(dto.getNome());
@@ -469,7 +469,7 @@ public class ProfiloActivity extends AppCompatActivity {
     public Asta_Inversa creaModelloAstaI(AstaDTO dto) {
         Asta_Inversa asta = new Asta_Inversa();
         asta.setId(dto.getID());
-        asta.setId_creatore(dto.getId_creatore());
+        asta.setIdCreatore(dto.getIdCreatore());
         asta.setCategoria(dto.getCategoria());
         asta.setFoto(dto.getFoto());
         asta.setNome(dto.getNome());

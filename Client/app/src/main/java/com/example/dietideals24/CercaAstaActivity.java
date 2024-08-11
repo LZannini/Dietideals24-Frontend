@@ -180,7 +180,7 @@ public class CercaAstaActivity extends AppCompatActivity {
                     List<Asta> asteList = creaListaModelloAsta(asteResponse);
                     List<Asta> aste = new ArrayList<>();
                     for (Asta a : asteList) {
-                        if (a.getId_creatore() != utente.getId())
+                        if (a.getIdCreatore() != utente.getId())
                             aste.add(a);
                     }
                     Intent intent = new Intent(CercaAstaActivity.this, RisultatiRicercaActivity.class);
@@ -208,7 +208,7 @@ public class CercaAstaActivity extends AppCompatActivity {
     public Asta_Ribasso creaModelloAstaR(AstaDTO dto) {
         Asta_Ribasso asta = new Asta_Ribasso();
         asta.setId(dto.getID());
-        asta.setId_creatore(dto.getId_creatore());
+        asta.setIdCreatore(dto.getIdCreatore());
         asta.setCategoria(dto.getCategoria());
         asta.setFoto(dto.getFoto());
         asta.setNome(dto.getNome());
@@ -221,7 +221,7 @@ public class CercaAstaActivity extends AppCompatActivity {
     public Asta_Silenziosa creaModelloAstaS(AstaDTO dto) {
         Asta_Silenziosa asta = new Asta_Silenziosa();
         asta.setId(dto.getID());
-        asta.setId_creatore(dto.getId_creatore());
+        asta.setIdCreatore(dto.getIdCreatore());
         asta.setCategoria(dto.getCategoria());
         asta.setFoto(dto.getFoto());
         asta.setNome(dto.getNome());
@@ -234,7 +234,7 @@ public class CercaAstaActivity extends AppCompatActivity {
     public Asta_Inversa creaModelloAstaI(AstaDTO dto) {
         Asta_Inversa asta = new Asta_Inversa();
         asta.setId(dto.getID());
-        asta.setId_creatore(dto.getId_creatore());
+        asta.setIdCreatore(dto.getIdCreatore());
         asta.setCategoria(dto.getCategoria());
         asta.setFoto(dto.getFoto());
         asta.setNome(dto.getNome());

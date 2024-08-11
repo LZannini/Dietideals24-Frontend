@@ -5,16 +5,16 @@ import com.example.dietideals24.enums.StatoOfferta;
 public class OffertaDTO {
 
     private int id;
-    private int id_utente;
-    private int id_asta;
+    private int idUtente;
+    private int idAsta;
     private float valore;
     private String data;
     private String offerente;
     private StatoOfferta stato;
 
-    public OffertaDTO(int id_utente, int id_asta, float valore, String data) {
-        this.id_utente = id_utente;
-        this.id_asta = id_asta;
+    public OffertaDTO(int idUtente, int idAsta, float valore, String data) {
+        this.idUtente = idUtente;
+        this.idAsta = idAsta;
         this.valore = valore;
         this.data = data;
     }
@@ -31,20 +31,20 @@ public class OffertaDTO {
         this.id = id;
     }
 
-    public int getId_utente() {
-        return id_utente;
+    public int getIdUtente() {
+        return idUtente;
     }
 
-    public void setId_utente(int id_utente) {
-        this.id_utente = id_utente;
+    public void setIdUtente(int idUtente) {
+        this.idUtente = idUtente;
     }
 
-    public int getId_asta() {
-        return id_asta;
+    public int getIdAsta() {
+        return idAsta;
     }
 
-    public void setId_asta(int id_asta) {
-        this.id_asta = id_asta;
+    public void setIdAsta(int idAsta) {
+        this.idAsta = idAsta;
     }
 
     public float getValore() {

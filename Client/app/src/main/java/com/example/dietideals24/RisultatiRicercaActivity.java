@@ -141,7 +141,7 @@ public class RisultatiRicercaActivity extends AppCompatActivity implements Aucti
 
     private void recuperaUtenteById(ApiService apiService) {
         Call<UtenteDTO> call;
-        call = apiService.recuperaUtente(astaSelezionata.getId_creatore());
+        call = apiService.recuperaUtente(astaSelezionata.getIdCreatore());
         call.enqueue(new Callback<UtenteDTO>() {
             @Override
             public void onResponse(@NonNull Call<UtenteDTO> call, @NonNull Response<UtenteDTO> response) {

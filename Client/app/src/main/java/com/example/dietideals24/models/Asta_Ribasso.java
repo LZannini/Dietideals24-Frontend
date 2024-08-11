@@ -10,8 +10,8 @@ public class Asta_Ribasso extends Asta {
     private float decremento;
     private float minimo;
 
-    public Asta_Ribasso(int id_creatore, String nome, String descrizione, Categoria categoria, byte[] foto, float prezzo, String timer, float decremento, float minimo) {
-        super(id_creatore, nome, descrizione, categoria, foto);
+    public Asta_Ribasso(int idCreatore, String nome, String descrizione, Categoria categoria, byte[] foto, float prezzo, String timer, float decremento, float minimo) {
+        super(idCreatore, nome, descrizione, categoria, foto);
         this.prezzo = prezzo;
         this.timer = timer;
         this.decremento = decremento;
