@@ -126,12 +126,7 @@ public class LoginActivity extends AppCompatActivity {
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        buttonGoogle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                accediConGoogle();
-            }
-        });
+        buttonGoogle.setOnClickListener(v -> accediConGoogle());
     }
 
     @Override

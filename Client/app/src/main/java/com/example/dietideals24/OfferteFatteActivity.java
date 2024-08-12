@@ -58,10 +58,10 @@ public class OfferteFatteActivity extends AppCompatActivity implements AuctionAd
     private MaterialButton btnVinte;
     private Button btnCrea;
     private LinearLayout layoutAttributi;
-    private Asta astaSelezionata;
     private Boolean fromDettagli;
     private Boolean modificaAvvenuta;
-    private boolean attiva, rifiutata;
+    private boolean attiva;
+    private boolean rifiutata;
     List<Offerta> offerte = new ArrayList<>();
     AuctionAdapter adapter;
 
@@ -84,7 +84,6 @@ public class OfferteFatteActivity extends AppCompatActivity implements AuctionAd
         rifiutata = false;
 
         ApiService apiService = RetrofitService.getRetrofit(this).create(ApiService.class);
-
 
         apiService.recuperaOffertePerUtente(utente.getId())
                 .enqueue(new Callback<List<OffertaDTO>>() {
@@ -152,25 +151,23 @@ public class OfferteFatteActivity extends AppCompatActivity implements AuctionAd
         recyclerView = findViewById(R.id.risultati_recycler_view);
         ImageButton homeButton = findViewById(R.id.home_button);
 
-        btnAttive.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                attiva = true;
-                rifiutata = false;
-                btnAttive.setBackgroundColor(Color.parseColor("#FF0000"));
-                btnVinte.setBackgroundColor(Color.parseColor("#0E4273"));
-                btnRifiutate.setBackgroundColor(Color.parseColor("#0E5273"));
-                btnPerse.setBackgroundColor(Color.parseColor("#0E4273"));
-                adapter.setAste(asteAttive, attiva);
-                adapter.notifyDataSetChanged();
-                if(asteAttive == null || asteAttive.isEmpty()) {
-                    noAuctionsText.setVisibility(View.VISIBLE);
-                    btnCrea.setVisibility(View.VISIBLE);
-                    int childCount = layoutAttributi.getChildCount();
-                    for (int i = 0; i < childCount; i++) {
-                        View child = layoutAttributi.getChildAt(i);
-                        child.setVisibility(View.INVISIBLE);
-                    }
+        btnAttive.setOnClickListener(view -> {
+            attiva = true;
+            rifiutata = false;
+            btnAttive.setBackgroundColor(Color.parseColor("#FF0000"));
+            btnVinte.setBackgroundColor(Color.parseColor("#0E4273"));
+            btnRifiutate.setBackgroundColor(Color.parseColor("#0E5273"));
+            btnPerse.setBackgroundColor(Color.parseColor("#0E4273"));
+            adapter.setAste(asteAttive, attiva);
+            adapter.notifyDataSetChanged();
+
+            if (asteAttive == null || asteAttive.isEmpty()) {
+                noAuctionsText.setVisibility(View.VISIBLE);
+                btnCrea.setVisibility(View.VISIBLE);
+                int childCount = layoutAttributi.getChildCount();
+                for (int i = 0; i < childCount; i++) {
+                    View child = layoutAttributi.getChildAt(i);
+                    child.setVisibility(View.INVISIBLE);
                 }
             }
         });
@@ -289,6 +286,7 @@ public class OfferteFatteActivity extends AppCompatActivity implements AuctionAd
 
     @Override
     public void onAstaClick(int position, boolean isAttive) {
+        Asta astaSelezionata;
         if (isAttive) {
             if(rifiutata) {
                 astaSelezionata = asteRifiutate.get(position);
@@ -311,27 +309,22 @@ public class OfferteFatteActivity extends AppCompatActivity implements AuctionAd
 
         AlertDialog dialog = builder.create();
 
-        buttonSubmitOffer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String importoStr = editTextOfferAmount.getText().toString();
-                if (!importoStr.isEmpty()) {
-                    float importo = Float.parseFloat(importoStr);
-                    submitNewOffer(asta, importo);
-                    dialog.dismiss();
-                } else {
-                    Toast.makeText(OfferteFatteActivity.this, "Inserisci un importo valido", Toast.LENGTH_SHORT).show();
-                }
+        buttonSubmitOffer.setOnClickListener(v -> {
+            String importoStr = editTextOfferAmount.getText().toString();
+            if (!importoStr.isEmpty()) {
+                float importo = Float.parseFloat(importoStr);
+                submitNewOffer(asta, importo);
+                dialog.dismiss();
+            } else {
+                Toast.makeText(OfferteFatteActivity.this, "Inserisci un importo valido", Toast.LENGTH_SHORT).show();
             }
         });
 
-        buttonCancelOffer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                asteRifiutate.add(asta);
-            }
+        buttonCancelOffer.setOnClickListener(v -> {
+            dialog.dismiss();
+            asteRifiutate.add(asta);
         });
+
 
         dialog.show();
     }

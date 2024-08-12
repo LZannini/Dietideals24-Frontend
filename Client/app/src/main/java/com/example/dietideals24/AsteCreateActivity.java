@@ -31,7 +31,6 @@ public class AsteCreateActivity extends AppCompatActivity implements AuctionAdap
     private Utente utenteHome;
     private List<Asta> listaAste;
     private List<Asta> asteAttive;
-    private MaterialButton btnAttive;
     private Asta astaSelezionata;
     private Boolean fromDettagli;
     private Boolean modificaAvvenuta;
@@ -62,7 +61,7 @@ public class AsteCreateActivity extends AppCompatActivity implements AuctionAdap
 
         TextView noAuctionsText = findViewById(R.id.no_auctions_text);
         ImageButton backButton = findViewById(R.id.back_button);
-        btnAttive = findViewById(R.id.btn_aste_attive);
+        MaterialButton btnAttive = findViewById(R.id.btn_aste_attive);
         MaterialButton btnConcluse = findViewById(R.id.btn_aste_concluse);
         Button btnCrea = findViewById(R.id.crea_button);
         LinearLayout layoutAttributi = findViewById(R.id.layout_attributi);

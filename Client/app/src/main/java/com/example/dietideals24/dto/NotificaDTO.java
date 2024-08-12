@@ -67,6 +67,6 @@ public class NotificaDTO implements Serializable {
     }
 
     public void setNomeAsta(String nome_asta) {
-        this.nomeAsta = nome_asta;
+        this.nomeAsta = nomeAsta;
     }
 }

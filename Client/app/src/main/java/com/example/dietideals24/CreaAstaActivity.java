@@ -36,7 +36,6 @@ import java.util.List;
 public class CreaAstaActivity extends AppCompatActivity {
 
     private ImageView fotoProdotto;
-    private Button btnAvanti;
     private byte[] imageBytes;
     private Utente utente;
     private List<Asta> listaAste;
@@ -61,7 +60,7 @@ public class CreaAstaActivity extends AppCompatActivity {
         EditText nomeProdotto = findViewById(R.id.nome_prodotto);
         EditText descrizioneProdotto = findViewById(R.id.descrizione);
         AutoCompleteTextView categoriaProdotto = findViewById(R.id.auto_complete_txt);
-        btnAvanti = findViewById(R.id.avanti_button);
+        Button btnAvanti = findViewById(R.id.avanti_button);
         ImageButton backButton = findViewById(R.id.back_button);
         ImageButton homeButton = findViewById(R.id.home_button);
 

@@ -10,6 +10,9 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 public class FormattaData {
+
+    private FormattaData() { }
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static String formatta(String data) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");

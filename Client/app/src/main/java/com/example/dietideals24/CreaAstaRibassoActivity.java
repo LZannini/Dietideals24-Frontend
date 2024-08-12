@@ -28,11 +28,8 @@ import retrofit2.Response;
 @SuppressWarnings("deprecation")
 public class CreaAstaRibassoActivity extends AppCompatActivity {
 
-    private EditText prezzoIniziale;
     private Utente utente;
     private Asta asta;
-    private ImageButton backButton;
-    private Button creaButton;
     private boolean fromHome;
 
     @Override
@@ -47,8 +44,7 @@ public class CreaAstaRibassoActivity extends AppCompatActivity {
         asta = (Asta) getIntent().getSerializableExtra("asta");
         utente = (Utente) getIntent().getSerializableExtra("utente");
 
-
-        prezzoIniziale = findViewById(R.id.prezzo_iniziale);
+        EditText prezzoIniziale = findViewById(R.id.prezzo_iniziale);
         ImageButton decrPrezzoIniziale = findViewById(R.id.decr_prezzo_iniziale);
         ImageButton incrPrezzoIniziale = findViewById(R.id.incr_prezzo_iniziale);
         EditText prezzoMinimo = findViewById(R.id.prezzo_minimo);
@@ -68,8 +64,8 @@ public class CreaAstaRibassoActivity extends AppCompatActivity {
         ImageButton decrSecondi = findViewById(R.id.decr_secondi);
         ImageButton incrSecondi = findViewById(R.id.incr_secondi);
 
-        backButton = findViewById(R.id.back_button);
-        creaButton = findViewById(R.id.crea_button);
+        ImageButton backButton = findViewById(R.id.back_button);
+        Button creaButton = findViewById(R.id.crea_button);
         ImageButton homeButton = findViewById(R.id.home_button);
 
         valoreInizialeFormattato(prezzoIniziale, 1.00f);

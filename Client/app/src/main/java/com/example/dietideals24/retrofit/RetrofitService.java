@@ -16,7 +16,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitService {
     private static RetrofitService instance;
     private static Retrofit retrofit;
-    private Gson gson;
     private Context context;
 
     public RetrofitService(Context context) {
@@ -54,7 +53,7 @@ public class RetrofitService {
             return chain.proceed(original);
         });
 
-        gson = new GsonBuilder()
+        Gson gson = new GsonBuilder()
                 .registerTypeAdapter(byte[].class, new ByteArrayToBase64TypeAdapter())
                 .create();
 
