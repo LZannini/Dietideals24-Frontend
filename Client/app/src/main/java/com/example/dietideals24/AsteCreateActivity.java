@@ -23,7 +23,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@SuppressWarnings("deprecation")
 public class AsteCreateActivity extends AppCompatActivity implements AuctionAdapter.OnAstaListener {
 
     private Utente utente;

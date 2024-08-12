@@ -33,6 +33,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("deprecation")
 public class CreaAstaActivity extends AppCompatActivity {
 
     private Asta asta;

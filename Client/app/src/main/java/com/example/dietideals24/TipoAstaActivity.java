@@ -13,6 +13,7 @@ import com.example.dietideals24.enums.TipoUtente;
 import com.example.dietideals24.models.Asta;
 import com.example.dietideals24.models.Utente;
 
+@SuppressWarnings("deprecation")
 public class TipoAstaActivity extends AppCompatActivity {
 
     private LinearLayout buttonSilenziosa;

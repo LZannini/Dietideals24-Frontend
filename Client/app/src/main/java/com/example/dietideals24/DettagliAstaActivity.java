@@ -59,6 +59,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+@SuppressWarnings("deprecation")
 public class DettagliAstaActivity extends AppCompatActivity implements OfferAdapter.OnOffertaListener {
 
     private LinearLayout userSection, creatorSection;

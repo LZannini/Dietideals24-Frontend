@@ -46,7 +46,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
+@SuppressWarnings("deprecation")
 public class ProfiloActivity extends AppCompatActivity {
 
     private ImageView menuButton;
