@@ -31,11 +31,6 @@ import retrofit2.Response;
 @SuppressWarnings("deprecation")
 public class HomeActivity extends AppCompatActivity {
 
-    private LinearLayout buttonCrea;
-    private LinearLayout buttonCerca;
-    private LinearLayout buttonProfilo;
-    private Button buttonNotifica;
-    private LinearLayout buttonDisconnetti;
     private Utente utente;
 
     @Override
@@ -45,11 +40,11 @@ public class HomeActivity extends AppCompatActivity {
 
         utente = (Utente) getIntent().getSerializableExtra("utente");
 
-        buttonCrea = findViewById(R.id.button_crea);
-        buttonCerca = findViewById(R.id.button_cerca);
-        buttonProfilo = findViewById(R.id.button_profilo);
-        buttonNotifica = findViewById(R.id.button_notifica);
-        buttonDisconnetti = findViewById(R.id.button_disconnetti);
+        LinearLayout buttonCrea = findViewById(R.id.button_crea);
+        LinearLayout buttonCerca = findViewById(R.id.button_cerca);
+        LinearLayout buttonProfilo = findViewById(R.id.button_profilo);
+        Button buttonNotifica = findViewById(R.id.button_notifica);
+        LinearLayout buttonDisconnetti = findViewById(R.id.button_disconnetti);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();

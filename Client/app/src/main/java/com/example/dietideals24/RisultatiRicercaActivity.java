@@ -38,7 +38,6 @@ public class RisultatiRicercaActivity extends AppCompatActivity implements Aucti
     private Utente utente;
     private String criterioRicerca;
     private List<Asta> listaAste;
-    private LinearLayout layoutAttributi;
     private boolean fromHome;
 
     @Override
@@ -48,7 +47,7 @@ public class RisultatiRicercaActivity extends AppCompatActivity implements Aucti
 
         TextView noResultsText = findViewById(R.id.no_results_text);
         ImageButton backButton = findViewById(R.id.back_button);
-        layoutAttributi = findViewById(R.id.layout_attributi);
+        LinearLayout layoutAttributi = findViewById(R.id.layout_attributi);
         ImageButton homeButton = findViewById(R.id.home_button);
 
         ActionBar actionBar = getSupportActionBar();

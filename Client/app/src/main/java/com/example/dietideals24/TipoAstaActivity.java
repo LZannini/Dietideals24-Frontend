@@ -15,10 +15,6 @@ import com.example.dietideals24.models.Utente;
 @SuppressWarnings("deprecation")
 public class TipoAstaActivity extends AppCompatActivity {
 
-    private LinearLayout buttonSilenziosa;
-    private LinearLayout buttonRibasso;
-    private LinearLayout buttonInversa;
-    private ImageButton backButton;
     private Utente utente;
     private Asta asta;
     private boolean fromHome;
@@ -28,11 +24,11 @@ public class TipoAstaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tipo_asta);
 
-        buttonSilenziosa = findViewById(R.id.button_silenziosa);
-        buttonRibasso = findViewById(R.id.button_ribasso);
-        buttonInversa = findViewById(R.id.button_inversa);
-        backButton = findViewById(R.id.back_button);
-        ImageButton home_button = findViewById(R.id.home_button);
+        LinearLayout buttonSilenziosa = findViewById(R.id.button_silenziosa);
+        LinearLayout buttonRibasso = findViewById(R.id.button_ribasso);
+        LinearLayout buttonInversa = findViewById(R.id.button_inversa);
+        ImageButton backButton = findViewById(R.id.back_button);
+        ImageButton homeButton = findViewById(R.id.home_button);
 
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
@@ -52,7 +48,7 @@ public class TipoAstaActivity extends AppCompatActivity {
             finish();
         });
 
-        home_button.setOnClickListener(v -> {
+        homeButton.setOnClickListener(v -> {
             openActivityHome(utente);
             finish();
         });

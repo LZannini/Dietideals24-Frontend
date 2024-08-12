@@ -24,7 +24,6 @@ import retrofit2.Response;
 @SuppressWarnings("deprecation")
 public class SceltaAccountActivity extends AppCompatActivity {
 
-    private AlertDialog.Builder builder;
     private Utente utente;
     private boolean fromLogin;
     private UtenteDTO currentUser;
@@ -142,12 +141,12 @@ public class SceltaAccountActivity extends AppCompatActivity {
     }
 
     private void change(TipoUtente nuovoTipo) {
-        builder = new AlertDialog.Builder(SceltaAccountActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(SceltaAccountActivity.this);
         builder.setMessage("Sei sicuro di voler selezionare il tuo Tipo di Account?")
                 .setCancelable(true)
                 .setPositiveButton("Si", (dialogInterface, i) -> {
                     utente.setTipo(nuovoTipo);
-                    currentUser = ConverteDTO(utente);
+                    currentUser = converteDTO(utente);
                     aggiornaTipoAccount(currentUser);
                     utente = creaUtente(currentUser);
                     if (fromLogin) {
@@ -161,7 +160,7 @@ public class SceltaAccountActivity extends AppCompatActivity {
     }
 
 
-    private UtenteDTO ConverteDTO(Utente ut){
+    private UtenteDTO converteDTO(Utente ut){
         UtenteDTO utente = new UtenteDTO();
         utente.setId(ut.getId());
         utente.setUsername(ut.getUsername());

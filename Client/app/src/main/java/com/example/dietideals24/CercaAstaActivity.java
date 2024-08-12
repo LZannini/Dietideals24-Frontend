@@ -38,15 +38,11 @@ import retrofit2.Response;
 @SuppressWarnings("deprecation")
 public class CercaAstaActivity extends AppCompatActivity {
 
-    private EditText cercaAstaInput;
     private final Categoria[] items = Categoria.values();
-    private AutoCompleteTextView autoCompleteTxt;
     private Utente utente;
     private boolean fromHome;
     private boolean modificaAvvenuta;
     private List<Asta> listaAste;
-    private ImageButton backButton;
-    private ImageButton homeButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +51,9 @@ public class CercaAstaActivity extends AppCompatActivity {
 
         Button vaiButton = findViewById(R.id.vai_button);
 
-        cercaAstaInput = findViewById(R.id.cerca_asta_input);
+        EditText cercaAstaInput = findViewById(R.id.cerca_asta_input);
 
-        autoCompleteTxt = findViewById(R.id.auto_complete_txt);
+        AutoCompleteTextView autoCompleteTxt = findViewById(R.id.auto_complete_txt);
 
         ArrayAdapter<Categoria> adapterItems = new ArrayAdapter<>(this, R.layout.activity_list_item, items);
 
@@ -71,9 +67,9 @@ public class CercaAstaActivity extends AppCompatActivity {
 
         modificaAvvenuta = getIntent().getBooleanExtra("modificaAvvenuta", false);
 
-        backButton = findViewById(R.id.back_button);
+        ImageButton backButton = findViewById(R.id.back_button);
 
-        homeButton = findViewById(R.id.home_button);
+        ImageButton homeButton = findViewById(R.id.home_button);
 
         if(!fromHome) {
             homeButton.setVisibility(View.VISIBLE);

@@ -27,8 +27,6 @@ public class ModificaPasswordActivity extends AppCompatActivity {
     private EditText vecchiaPassword;
     private EditText nuovaPassword;
     private EditText confermaPassword;
-    private Button salvaButton;
-    private ImageButton backButton;
     private Utente utente;
     private int idUtente;
 
@@ -44,8 +42,8 @@ public class ModificaPasswordActivity extends AppCompatActivity {
         vecchiaPassword = findViewById(R.id.vecchia_password);
         nuovaPassword = findViewById(R.id.nuova_password);
         confermaPassword = findViewById(R.id.conferma_password);
-        salvaButton = findViewById(R.id.salva_button);
-        backButton = findViewById(R.id.back_button);
+        Button salvaButton = findViewById(R.id.salva_button);
+        ImageButton backButton = findViewById(R.id.back_button);
         ImageButton homeButton = findViewById(R.id.home_button);
 
         ActionBar actionBar = getSupportActionBar();

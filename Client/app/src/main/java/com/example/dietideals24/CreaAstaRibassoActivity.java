@@ -29,25 +29,8 @@ import retrofit2.Response;
 public class CreaAstaRibassoActivity extends AppCompatActivity {
 
     private EditText prezzoIniziale;
-    private ImageButton decrPrezzoIniziale;
-    private ImageButton incrPrezzoIniziale;
     private Utente utente;
     private Asta asta;
-    private EditText prezzoMinimo;
-    private ImageButton decrPrezzoMinimo;
-    private ImageButton incrPrezzoMinimo;
-
-    private EditText decrementoPrezzo;
-    private ImageButton decrDecremento;
-    private ImageButton incrDecremento;
-
-    private TextView oreTextView;
-    private TextView minutiTextView;
-    private TextView secondiTextView;
-    private ImageButton decrOre, incrOre;
-    private ImageButton decrMinuti, incrMinuti;
-    private ImageButton decrSecondi, incrSecondi;
-
     private ImageButton backButton;
     private Button creaButton;
     private boolean fromHome;
@@ -66,24 +49,24 @@ public class CreaAstaRibassoActivity extends AppCompatActivity {
 
 
         prezzoIniziale = findViewById(R.id.prezzo_iniziale);
-        decrPrezzoIniziale = findViewById(R.id.decr_prezzo_iniziale);
-        incrPrezzoIniziale = findViewById(R.id.incr_prezzo_iniziale);
-        prezzoMinimo = findViewById(R.id.prezzo_minimo);
-        decrPrezzoMinimo = findViewById(R.id.decr_prezzo_minimo);
-        incrPrezzoMinimo = findViewById(R.id.incr_prezzo_minimo);
-        decrementoPrezzo = findViewById(R.id.decremento);
-        decrDecremento = findViewById(R.id.decr_decremento);
-        incrDecremento = findViewById(R.id.incr_decremento);
+        ImageButton decrPrezzoIniziale = findViewById(R.id.decr_prezzo_iniziale);
+        ImageButton incrPrezzoIniziale = findViewById(R.id.incr_prezzo_iniziale);
+        EditText prezzoMinimo = findViewById(R.id.prezzo_minimo);
+        ImageButton decrPrezzoMinimo = findViewById(R.id.decr_prezzo_minimo);
+        ImageButton incrPrezzoMinimo = findViewById(R.id.incr_prezzo_minimo);
+        EditText decrementoPrezzo = findViewById(R.id.decremento);
+        ImageButton decrDecremento = findViewById(R.id.decr_decremento);
+        ImageButton incrDecremento = findViewById(R.id.incr_decremento);
 
-        oreTextView = findViewById(R.id.ore_text_view);
-        decrOre = findViewById(R.id.decr_ore);
-        incrOre = findViewById(R.id.incr_ore);
-        minutiTextView = findViewById(R.id.minuti_text_view);
-        decrMinuti = findViewById(R.id.decr_minuti);
-        incrMinuti = findViewById(R.id.incr_minuti);
-        secondiTextView = findViewById(R.id.secondi_text_view);
-        decrSecondi = findViewById(R.id.decr_secondi);
-        incrSecondi = findViewById(R.id.incr_secondi);
+        TextView oreTextView = findViewById(R.id.ore_text_view);
+        ImageButton decrOre = findViewById(R.id.decr_ore);
+        ImageButton incrOre = findViewById(R.id.incr_ore);
+        TextView minutiTextView = findViewById(R.id.minuti_text_view);
+        ImageButton decrMinuti = findViewById(R.id.decr_minuti);
+        ImageButton incrMinuti = findViewById(R.id.incr_minuti);
+        TextView secondiTextView = findViewById(R.id.secondi_text_view);
+        ImageButton decrSecondi = findViewById(R.id.decr_secondi);
+        ImageButton incrSecondi = findViewById(R.id.incr_secondi);
 
         backButton = findViewById(R.id.back_button);
         creaButton = findViewById(R.id.crea_button);

@@ -62,22 +62,10 @@ import retrofit2.Response;
 @SuppressWarnings("deprecation")
 public class DettagliAstaActivity extends AppCompatActivity implements OfferAdapter.OnOffertaListener {
 
-    private LinearLayout userSection, creatorSection;
-    private EditText etTitle;
-    private EditText etDescription;
-    private EditText etOffer;
-    private TextView tvLowestOffer;
-    private TextView tvCategoryValue;
-    private TextView tvCreatorValue;
+    private LinearLayout userSection;
     private TextView tvPriceValue;
     private TextView tvTimerValue;
-    private TextView tvLowestOfferValue;
     private TextView tvDecrementValue;
-    private ImageView ivTypeValue;
-    private Button btnSubmitOffer;
-    private ImageView ivFoto;
-    private ImageButton btnBack;
-    private Bitmap bitmap;
     private Asta asta;
     private List<NotificaDTO> notifiche;
     private List<Asta> listaAste;
@@ -87,8 +75,6 @@ public class DettagliAstaActivity extends AppCompatActivity implements OfferAdap
     private boolean fromNotifica;
     private boolean fromDettagli;
     private boolean modificaAvvenuta;
-    private boolean isRibasso;
-    private Utente utenteProfilo;
     private Utente utenteCreatore;
     List<Offerta> offerte = new ArrayList<>();
 
@@ -112,7 +98,7 @@ public class DettagliAstaActivity extends AppCompatActivity implements OfferAdap
         assert actionBar != null;
         actionBar.hide();
 
-        isRibasso = false;
+        boolean isRibasso = false;
         modificaAvvenuta = getIntent().getBooleanExtra("modificaAvvenuta", false);
         fromDettagli = getIntent().getBooleanExtra("fromDettagli", false);
         fromHome = getIntent().getBooleanExtra("fromHome", true);
@@ -121,28 +107,28 @@ public class DettagliAstaActivity extends AppCompatActivity implements OfferAdap
         if (getIntent().getStringExtra("criterioRicerca") != null)
             criterioRicerca = getIntent().getStringExtra("criterioRicerca");
         utente = (Utente) getIntent().getSerializableExtra("utente");
-        utenteProfilo = (Utente) getIntent().getSerializableExtra("utenteProfilo");
+        Utente utenteProfilo = (Utente) getIntent().getSerializableExtra("utenteProfilo");
         fromAsteCreate = getIntent().getBooleanExtra("fromAsteCreate", false);
         utenteCreatore = (Utente) getIntent().getSerializableExtra("utenteCreatore");
         fromNotifica = getIntent().getBooleanExtra("fromNotifica", false);
         notifiche = (List<NotificaDTO>) getIntent().getSerializableExtra("listaNotifiche");
 
         userSection = findViewById(R.id.userSection);
-        creatorSection = findViewById(R.id.creatorSection);
-        ivFoto = findViewById(R.id.imageView_Foto);
-        etTitle = findViewById(R.id.etTitle);
-        etDescription = findViewById(R.id.etDescription);
-        tvCategoryValue = findViewById(R.id.tvCategoryValue);
-        ivTypeValue = findViewById(R.id.ivTypeValue);
-        tvCreatorValue = findViewById(R.id.tvCreatorValue);
-        tvPriceValue = findViewById(R.id.tvPriceValue);
-        tvDecrementValue = findViewById(R.id.tvDecrementValue);
-        tvTimerValue = findViewById(R.id.tvTimerValue);
-        tvLowestOffer = findViewById(R.id.tvLowestOffer);
-        tvLowestOfferValue = findViewById(R.id.tvLowestOfferValue);
-        etOffer = findViewById(R.id.etOffer);
-        btnSubmitOffer = findViewById(R.id.btnSubmitOffer);
-        btnBack = findViewById(R.id.back_button);
+        LinearLayout creatorSection = findViewById(R.id.creatorSection);
+        ImageView ivFoto = findViewById(R.id.imageView_Foto);
+        EditText etTitle = findViewById(R.id.etTitle);
+        EditText etDescription = findViewById(R.id.etDescription);
+        TextView tvCategoryValue = findViewById(R.id.tvCategoryValue);
+        ImageView ivTypeValue = findViewById(R.id.ivTypeValue);
+        TextView tvCreatorValue = findViewById(R.id.tvCreatorValue);
+        TextView tvPriceValue = findViewById(R.id.tvPriceValue);
+        TextView tvDecrementValue = findViewById(R.id.tvDecrementValue);
+        TextView tvTimerValue = findViewById(R.id.tvTimerValue);
+        TextView tvLowestOffer = findViewById(R.id.tvLowestOffer);
+        TextView tvLowestOfferValue = findViewById(R.id.tvLowestOfferValue);
+        EditText etOffer = findViewById(R.id.etOffer);
+        Button btnSubmitOffer = findViewById(R.id.btnSubmitOffer);
+        ImageButton btnBack = findViewById(R.id.back_button);
         ImageButton homeButton = findViewById(R.id.home_button);
 
         if (asta.getIdCreatore() == utente.getId()) {
@@ -157,7 +143,7 @@ public class DettagliAstaActivity extends AppCompatActivity implements OfferAdap
 
         byte[] fotoBytes = asta.getFoto();
         if (fotoBytes != null) {
-            bitmap = BitmapFactory.decodeByteArray(fotoBytes, 0, fotoBytes.length);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(fotoBytes, 0, fotoBytes.length);
             ivFoto.setImageBitmap(bitmap);
         }
 
@@ -194,7 +180,7 @@ public class DettagliAstaActivity extends AppCompatActivity implements OfferAdap
 
                         @Override
                         public void onFailure(@NonNull Call<AstaRibassoDTO> call, @NonNull Throwable t) {
-
+                            Logger.getLogger(DettagliAstaActivity.class.getName()).log(Level.SEVERE, "Errore rilevato", t);
                         }
                     });
         } else if (asta instanceof AstaSilenziosa) {
@@ -215,6 +201,7 @@ public class DettagliAstaActivity extends AppCompatActivity implements OfferAdap
 
                         @Override
                         public void onFailure(@NonNull Call<AstaSilenziosaDTO> call, @NonNull Throwable t) {
+                            Logger.getLogger(DettagliAstaActivity.class.getName()).log(Level.SEVERE, "Errore rilevato", t);
 
                         }
                     });
@@ -239,7 +226,7 @@ public class DettagliAstaActivity extends AppCompatActivity implements OfferAdap
 
                         @Override
                         public void onFailure(@NonNull Call<AstaInversaDTO> call, @NonNull Throwable t) {
-
+                            Logger.getLogger(DettagliAstaActivity.class.getName()).log(Level.SEVERE, "Errore rilevato", t);
                         }
                     });
         }
@@ -271,6 +258,7 @@ public class DettagliAstaActivity extends AppCompatActivity implements OfferAdap
 
                         @Override
                         public void onFailure(@NonNull Call<List<OffertaDTO>> call, @NonNull Throwable t) {
+                            Logger.getLogger(DettagliAstaActivity.class.getName()).log(Level.SEVERE, "Errore rilevato", t);
                         }
                     });
         }
@@ -278,90 +266,72 @@ public class DettagliAstaActivity extends AppCompatActivity implements OfferAdap
         adjustEditTextWidth(etTitle);
 
 
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (fromAsteCreate)
-                    openActivityAsteCreate(listaAste, false);
-                else if (fromNotifica)
-                    openActivityNotifica();
-                else
-                    openActivityRisultatiRicerca();
-                finish();
-            }
+        btnBack.setOnClickListener(v -> {
+            if (fromAsteCreate)
+                openActivityAsteCreate(listaAste, false);
+            else if (fromNotifica)
+                openActivityNotifica();
+            else
+                openActivityRisultatiRicerca();
+            finish();
         });
 
-        homeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openActivityHome();
-                finish();
-            }
+        homeButton.setOnClickListener(v -> {
+            openActivityHome();
+            finish();
         });
 
         if (asta.getIdCreatore() != utente.getId() && !fromAsteCreate) {
             tvCreatorValue.setTypeface(tvCreatorValue.getTypeface(), Typeface.BOLD);
-            tvCreatorValue.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    openActivityProfilo();
-                }
-            });
+            tvCreatorValue.setOnClickListener(view -> openActivityProfilo());
         }
 
-
-            btnSubmitOffer.setOnClickListener(v -> {
-                if (!etOffer.getText().toString().isEmpty()) {
+        btnSubmitOffer.setOnClickListener(v -> {
+            if (!etOffer.getText().toString().isEmpty()) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(DettagliAstaActivity.this);
                 builder.setMessage("Sei sicuro di voler presentare l'offerta?")
                         .setCancelable(true)
-                        .setPositiveButton("Si", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                OffertaDTO offerta = new OffertaDTO();
-                                offerta.setIdAsta(asta.getId());
-                                offerta.setIdUtente(utente.getId());
-                                offerta.setValore(Float.parseFloat(etOffer.getText().toString()));
-                                offerta.setStato(StatoOfferta.ATTESA);
+                        .setPositiveButton("Si", (dialogInterface, i) -> {
+                            OffertaDTO offerta = new OffertaDTO();
+                            offerta.setIdAsta(asta.getId());
+                            offerta.setIdUtente(utente.getId());
+                            offerta.setValore(Float.parseFloat(etOffer.getText().toString()));
+                            offerta.setStato(StatoOfferta.ATTESA);
 
-                                LocalDateTime currentDateTime = LocalDateTime.now();
-                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-                                String dateTimeString = currentDateTime.format(formatter);
+                            LocalDateTime currentDateTime = LocalDateTime.now();
+                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                            String dateTimeString = currentDateTime.format(formatter);
 
+                            offerta.setData(dateTimeString);
 
-                                offerta.setData(dateTimeString);
+                            apiService.creaOfferta(offerta)
+                                    .enqueue(new Callback<Void>() {
+                                        @Override
+                                        public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                                            Toast.makeText(DettagliAstaActivity.this, "Offerta presentata con successo!", Toast.LENGTH_SHORT).show();
+                                            if (fromAsteCreate)
+                                                openActivityAsteCreate(listaAste, false);
+                                            else if (fromNotifica)
+                                                openActivityNotifica();
+                                            else
+                                                openActivityRisultatiRicerca();
+                                            finish();
+                                        }
 
-                                apiService.creaOfferta(offerta)
-                                        .enqueue(new Callback<Void>() {
-                                            @Override
-                                            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
-                                                Toast.makeText(DettagliAstaActivity.this, "Offerta presentata con successo!", Toast.LENGTH_SHORT).show();
-                                                if (fromAsteCreate)
-                                                    openActivityAsteCreate(listaAste, false);
-                                                else if (fromNotifica)
-                                                    openActivityNotifica();
-                                                else
-                                                    openActivityRisultatiRicerca();
-                                            }
-
-                                            @Override
-                                            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
-                                                Toast.makeText(DettagliAstaActivity.this, "Errore durante la creazione dell'offerta!", Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
-                                finish();
-                            }
+                                        @Override
+                                        public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                                            Toast.makeText(DettagliAstaActivity.this, "Errore durante la creazione dell'offerta!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                            finish();
                         })
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                            }
+                        .setNegativeButton("No", (dialogInterface, i) -> {
                         })
                         .show();
-            }else
-                    Toast.makeText(DettagliAstaActivity.this, "Bisogna inserire un importo valido!", Toast.LENGTH_SHORT).show();
-
-            });
-
+            } else {
+                Toast.makeText(DettagliAstaActivity.this, "Bisogna inserire un importo valido!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -465,6 +435,7 @@ public class DettagliAstaActivity extends AppCompatActivity implements OfferAdap
 
                     @Override
                     public void onFailure(@NonNull Call<AstaRibassoDTO> call, @NonNull Throwable t) {
+                        Logger.getLogger(DettagliAstaActivity.class.getName()).log(Level.SEVERE, "Errore rilevato", t);
                     }
                 });
     }
@@ -553,78 +524,62 @@ public class DettagliAstaActivity extends AppCompatActivity implements OfferAdap
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Sei sicuro di voler accettare questa offerta?")
                 .setCancelable(true)
-                .setPositiveButton("Si", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        ApiService apiService = RetrofitService.getRetrofit(DettagliAstaActivity.this).create(ApiService.class);
+                .setPositiveButton("Si", (dialogInterface, i) -> {
+                    ApiService apiService = RetrofitService.getRetrofit(DettagliAstaActivity.this).create(ApiService.class);
 
-                        apiService.accettaOfferta(offerte.get(position).getId())
-                                .enqueue(new Callback<Void>() {
-                                    @Override
-                                    public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
-                                        Toast.makeText(DettagliAstaActivity.this, "Hai accettato l'offerta con successo!", Toast.LENGTH_SHORT).show();
-                                        if(listaAste!=null) {
-                                            for (Asta a : listaAste) {
-                                                if (a.getId() == asta.getId())
-                                                    a.setStato(StatoAsta.VENDUTA);
-                                            }
-                                            openActivityAsteCreate(listaAste, true);
+                    apiService.accettaOfferta(offerte.get(position).getId())
+                            .enqueue(new Callback<Void>() {
+                                @Override
+                                public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                                    Toast.makeText(DettagliAstaActivity.this, "Hai accettato l'offerta con successo!", Toast.LENGTH_SHORT).show();
+                                    if (listaAste != null) {
+                                        for (Asta a : listaAste) {
+                                            if (a.getId() == asta.getId())
+                                                a.setStato(StatoAsta.VENDUTA);
                                         }
-                                        else
-                                            asta.setStato(StatoAsta.VENDUTA);
-
-
+                                        openActivityAsteCreate(listaAste, true);
+                                    } else {
+                                        asta.setStato(StatoAsta.VENDUTA);
                                     }
+                                }
 
-                                    @Override
-                                    public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
-                                        Logger.getLogger(DettagliAstaActivity.class.getName()).log(Level.SEVERE, "Errore rilevato", t);
-                                    }
-                                });
-                    }
+                                @Override
+                                public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                                    Logger.getLogger(DettagliAstaActivity.class.getName()).log(Level.SEVERE, "Errore rilevato", t);
+                                }
+                            });
                 })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                })
+                .setNegativeButton("No", (dialogInterface, i) -> dialogInterface.dismiss())
                 .show();
     }
-
 
     @Override
     public void onRejectClick(int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Sei sicuro di voler rifiutare questa offerta?")
                 .setCancelable(true)
-                .setPositiveButton("Si", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        ApiService apiService = RetrofitService.getRetrofit(DettagliAstaActivity.this).create(ApiService.class);
+                .setPositiveButton("Si", (dialogInterface, i) -> {
+                    ApiService apiService = RetrofitService.getRetrofit(DettagliAstaActivity.this).create(ApiService.class);
 
-                        Offerta offerta = offerte.get(position);
-                        apiService.rifiutaOfferta(offerta.getId())
-                                .enqueue(new Callback<Void>() {
-                                    @Override
-                                    public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
-                                        offerte.remove(offerta);
-                                        adapter.notifyItemRemoved(position);
-                                        Toast.makeText(DettagliAstaActivity.this, "Hai rifiutato l'offerta con successo!", Toast.LENGTH_SHORT).show();
-                                    }
+                    Offerta offerta = offerte.get(position);
+                    apiService.rifiutaOfferta(offerta.getId())
+                            .enqueue(new Callback<Void>() {
+                                @Override
+                                public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                                    offerte.remove(offerta);
+                                    adapter.notifyItemRemoved(position);
+                                    Toast.makeText(DettagliAstaActivity.this, "Hai rifiutato l'offerta con successo!", Toast.LENGTH_SHORT).show();
+                                }
 
-                                    @Override
-                                    public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
-                                        Logger.getLogger(DettagliAstaActivity.class.getName()).log(Level.SEVERE, "Errore rilevato", t);
-                                    }
-                                });
-                    }
+                                @Override
+                                public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                                    Logger.getLogger(DettagliAstaActivity.class.getName()).log(Level.SEVERE, "Errore rilevato", t);
+                                }
+                            });
                 })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                })
+                .setNegativeButton("No", (dialogInterface, i) -> dialogInterface.dismiss())
                 .show();
     }
+
 }
 

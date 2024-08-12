@@ -42,12 +42,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 9001;
     private GoogleSignInClient mGoogleSignInClient;
-    private Button btnL;
-    private EditText emailEditText;
-    private EditText passwordEditText;
-    private TextView buttonRegistrazione;
-    private ImageView buttonGoogle;
-
     private ApiService apiService;
     private TokenManager tokenManager;
 
@@ -56,8 +50,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        emailEditText = findViewById(R.id.email_input);
-        passwordEditText = findViewById(R.id.password_input);
+        EditText emailEditText = findViewById(R.id.email_input);
+        EditText passwordEditText = findViewById(R.id.password_input);
 
         tokenManager = new TokenManager(this);
         tokenManager.deleteToken();
@@ -66,11 +60,11 @@ public class LoginActivity extends AppCompatActivity {
         assert actionBar != null;
         actionBar.hide();
 
-        buttonRegistrazione = (TextView) findViewById(R.id.textView_registrati);
+        TextView buttonRegistrazione = (TextView) findViewById(R.id.textView_registrati);
         buttonRegistrazione.setOnClickListener(view -> openActivityRegistrazione());
 
-        btnL = (Button) findViewById(R.id.login_button);
-        buttonGoogle = (ImageView) findViewById(R.id.google_button);
+        Button btnL = (Button) findViewById(R.id.login_button);
+        ImageView buttonGoogle = (ImageView) findViewById(R.id.google_button);
 
         apiService = RetrofitService.getInstance(this).getRetrofit(this).create(ApiService.class);
 

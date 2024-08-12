@@ -49,7 +49,6 @@ import retrofit2.Response;
 @SuppressWarnings("deprecation")
 public class ProfiloActivity extends AppCompatActivity {
 
-    private ImageView menuButton;
     private ImageView avatarSelector;
     private EditText emailEditText;
     private EditText bioEditText;
@@ -57,8 +56,6 @@ public class ProfiloActivity extends AppCompatActivity {
     private EditText countryEditText;
     private MaterialTextView textUsername;
     private LinearLayout pulsantiAste;
-    private Button buttonAsteCreate;
-    private Button buttonOfferteFatte;
     private Button buttonSalva;
     private Utente utenteOriginale;
     private Utente utenteModificato;
@@ -67,8 +64,6 @@ public class ProfiloActivity extends AppCompatActivity {
     private boolean fromDettagli;
     private boolean fromHome;
     private boolean modificaAvvenuta;
-    private ImageButton backButton;
-    private ImageButton homeButton;
 
     @SuppressLint({"SuspiciousIndentation", "WrongViewCast", "MissingInflatedId"})
     @Override
@@ -79,7 +74,7 @@ public class ProfiloActivity extends AppCompatActivity {
         fromDettagli = getIntent().getBooleanExtra("fromDettagli", false);
         fromHome = getIntent().getBooleanExtra("fromHome", true);
 
-        menuButton = findViewById(R.id.icona_menu);
+        ImageButton menuButton = findViewById(R.id.icona_menu);
         avatarSelector = findViewById(R.id.foto_profilo);
         emailEditText = findViewById(R.id.email);
         bioEditText = findViewById(R.id.shortBio);
@@ -87,10 +82,10 @@ public class ProfiloActivity extends AppCompatActivity {
         countryEditText = findViewById(R.id.paese);
         pulsantiAste = findViewById(R.id.pulsanti_aste);
         buttonSalva = findViewById(R.id.salva_button);
-        backButton = findViewById(R.id.back_button);
-        homeButton = findViewById(R.id.home_button);
-        buttonAsteCreate = findViewById(R.id.asteCreate_button);
-        buttonOfferteFatte = findViewById(R.id.leTueOfferte_button);
+        ImageButton backButton = findViewById(R.id.back_button);
+        ImageButton homeButton = findViewById(R.id.home_button);
+        Button buttonAsteCreate = findViewById(R.id.asteCreate_button);
+        Button buttonOfferteFatte = findViewById(R.id.leTueOfferte_button);
         textUsername = findViewById((R.id.text_nomeProfilo));
 
         ActionBar actionBar = getSupportActionBar();

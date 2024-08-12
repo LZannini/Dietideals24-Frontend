@@ -52,8 +52,10 @@ public class OfferteFatteActivity extends AppCompatActivity implements AuctionAd
     private List<Asta> astePerse;
     private TextView noAuctionsText;
     private RecyclerView recyclerView;
-    private ImageButton backButton;
-    private MaterialButton btnAttive, btnVinte, btnRifiutate, btnPerse;
+    private MaterialButton btnAttive;
+    private MaterialButton btnRifiutate;
+    private MaterialButton btnPerse;
+    private MaterialButton btnVinte;
     private Button btnCrea;
     private LinearLayout layoutAttributi;
     private Asta astaSelezionata;
@@ -73,15 +75,13 @@ public class OfferteFatteActivity extends AppCompatActivity implements AuctionAd
         utente = (Utente) getIntent().getSerializableExtra("utente_home");
         listaAste = (List<Asta>) getIntent().getSerializableExtra("listaAste");
         modificaAvvenuta = getIntent().getBooleanExtra("modificaAvvenuta", false);
-
-
+        
         asteAttive = new ArrayList<>();
         asteVinte = new ArrayList<>();
         asteRifiutate = new ArrayList<>();
         astePerse = new ArrayList<>();
         attiva = true;
         rifiutata = false;
-
 
         ApiService apiService = RetrofitService.getRetrofit(this).create(ApiService.class);
 
@@ -142,7 +142,7 @@ public class OfferteFatteActivity extends AppCompatActivity implements AuctionAd
                 });
 
         noAuctionsText = findViewById(R.id.no_auctions_text);
-        backButton = findViewById(R.id.back_button);
+        ImageButton backButton = findViewById(R.id.back_button);
         btnCrea = findViewById(R.id.cerca_button);
         btnAttive = findViewById(R.id.btn_aste_attive);
         btnVinte = findViewById(R.id.btn_aste_vinte);

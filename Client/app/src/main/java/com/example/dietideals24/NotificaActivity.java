@@ -44,16 +44,12 @@ import retrofit2.Response;
 @SuppressWarnings("deprecation")
 public class NotificaActivity extends AppCompatActivity implements NotificaAdapter.OnAstaClickListener {
 
-    private ListView listView;
     private NotificaAdapter adapter;
     private List<NotificaDTO> listaNotifiche;
     private Utente utente;
     private Utente utenteCreatore;
     private Asta astaRicevuta;
-    private ImageButton backButton;
-    private TextView noResultsText;
     private ApiService apiService;
-    private Button btnSegnaTutte, btnRimuoviLette, btnRimuoviTutte;
 
     @SuppressLint("SuspiciousIndentation")
     @Override
@@ -64,12 +60,12 @@ public class NotificaActivity extends AppCompatActivity implements NotificaAdapt
         utente = (Utente) getIntent().getSerializableExtra("utente");
         astaRicevuta = (Asta) getIntent().getSerializableExtra("asta_ricevuta");
 
-        noResultsText = findViewById(R.id.no_results_text);
+        TextView noResultsText = findViewById(R.id.no_results_text);
 
-        backButton = findViewById(R.id.back_button);
-        btnSegnaTutte = findViewById(R.id.btnSegna);
-        btnRimuoviLette = findViewById(R.id.btnRmvRead);
-        btnRimuoviTutte = findViewById(R.id.btnRmvAll);
+        ImageButton backButton = findViewById(R.id.back_button);
+        Button btnSegnaTutte = findViewById(R.id.btnSegna);
+        Button btnRimuoviLette = findViewById(R.id.btnRmvRead);
+        Button btnRimuoviTutte = findViewById(R.id.btnRmvAll);
 
         backButton.setOnClickListener(v -> {
             openActivityHome(utente);
@@ -87,7 +83,7 @@ public class NotificaActivity extends AppCompatActivity implements NotificaAdapt
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-        listView = findViewById(R.id.notifiche_list_view);
+        ListView listView = findViewById(R.id.notifiche_list_view);
 
         listaNotifiche = (List<NotificaDTO>) getIntent().getSerializableExtra("listaNotifiche");
         if (listaNotifiche == null || listaNotifiche.isEmpty()) {

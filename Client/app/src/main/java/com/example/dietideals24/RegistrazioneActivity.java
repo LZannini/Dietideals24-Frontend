@@ -31,16 +31,11 @@ import retrofit2.Response;
 @SuppressWarnings("deprecation")
 public class RegistrazioneActivity extends AppCompatActivity {
 
-    private Button btnR;
     private EditText usernameEditText;
     private EditText emailEditText;
     private EditText passwordEditText;
     private EditText confPasswordEditText;
-    private CheckBox tipoCompratore;
-    private CheckBox tipoVenditore;
     private List<TipoUtente> selezioneAccount = new ArrayList<>();
-    private TextView buttonLogin;
-    private ImageButton backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,16 +46,16 @@ public class RegistrazioneActivity extends AppCompatActivity {
         emailEditText = findViewById(R.id.email_input);
         passwordEditText = findViewById(R.id.password_input);
         confPasswordEditText = findViewById(R.id.conferma_password_input);
-        tipoCompratore = findViewById(R.id.checkbox_compratore);
-        tipoVenditore = findViewById(R.id.checkbox_venditore);
-        backButton = findViewById(R.id.back_button);
-        buttonLogin = (TextView) findViewById(R.id.textView_accedi);
+        CheckBox tipoCompratore = findViewById(R.id.checkbox_compratore);
+        CheckBox tipoVenditore = findViewById(R.id.checkbox_venditore);
+        ImageButton backButton = findViewById(R.id.back_button);
+        TextView buttonLogin = (TextView) findViewById(R.id.textView_accedi);
 
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.hide();
 
-        btnR = (Button) findViewById(R.id.registrati_button);
+        Button btnR = (Button) findViewById(R.id.registrati_button);
 
         backButton.setOnClickListener(v -> {
             openActivityLogin();

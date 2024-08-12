@@ -35,18 +35,13 @@ import java.util.List;
 @SuppressWarnings("deprecation")
 public class CreaAstaActivity extends AppCompatActivity {
 
-    private Asta asta;
     private ImageView fotoProdotto;
-    private EditText nomeProdotto;
-    private EditText descrizioneProdotto;
-    private AutoCompleteTextView categoriaProdotto;
     private Button btnAvanti;
     private byte[] imageBytes;
-    private ImageButton backButton;
-    private ImageButton homeButton;
     private Utente utente;
-    private boolean fromHome, modificaAvvenuta;
     private List<Asta> listaAste;
+    private boolean modificaAvvenuta;
+    private boolean fromHome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,15 +55,15 @@ public class CreaAstaActivity extends AppCompatActivity {
         modificaAvvenuta = getIntent().getBooleanExtra("modificaAvvenuta", false);
         fromHome = getIntent().getBooleanExtra("fromHome", true);
         listaAste = (List<Asta>) getIntent().getSerializableExtra("listaAste");
-        asta = (Asta) getIntent().getSerializableExtra("asta");
+        Asta asta = (Asta) getIntent().getSerializableExtra("asta");
 
         fotoProdotto = findViewById(R.id.aggiungi_immagine);
-        nomeProdotto = findViewById(R.id.nome_prodotto);
-        descrizioneProdotto = findViewById(R.id.descrizione);
-        categoriaProdotto = findViewById(R.id.auto_complete_txt);
+        EditText nomeProdotto = findViewById(R.id.nome_prodotto);
+        EditText descrizioneProdotto = findViewById(R.id.descrizione);
+        AutoCompleteTextView categoriaProdotto = findViewById(R.id.auto_complete_txt);
         btnAvanti = findViewById(R.id.avanti_button);
-        backButton = findViewById(R.id.back_button);
-        homeButton = findViewById(R.id.home_button);
+        ImageButton backButton = findViewById(R.id.back_button);
+        ImageButton homeButton = findViewById(R.id.home_button);
 
         if(!fromHome) {
             homeButton.setVisibility(View.VISIBLE);
@@ -134,8 +129,8 @@ public class CreaAstaActivity extends AppCompatActivity {
             } else {
                 try {
                     Categoria categoria = Categoria.valueOf(categoriaP.toUpperCase());
-                    asta = new Asta(utente.getId(), nomeP, descrizioneP, categoria, imageBytes);
-                    openActivityTipoAsta(asta, utente.getTipo(), utente);
+                    Asta auction = new Asta(utente.getId(), nomeP, descrizioneP, categoria, imageBytes);
+                    openActivityTipoAsta(auction, utente.getTipo(), utente);
                 } catch (IllegalArgumentException e) {
                     Toast.makeText(CreaAstaActivity.this, "Categoria non valida, inserisci una categoria valida", Toast.LENGTH_SHORT).show();
                 }
