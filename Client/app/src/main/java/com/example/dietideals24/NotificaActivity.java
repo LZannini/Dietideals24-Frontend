@@ -108,12 +108,8 @@ public class NotificaActivity extends AppCompatActivity implements NotificaAdapt
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(false);
         builder.setMessage("Vuoi davvero eliminare tutte le notifiche?");
-        builder.setPositiveButton("Elimina", (dialog, which) -> {
-            svuotaNotifiche(apiService);
-        });
-        builder.setNegativeButton("Annulla", (dialog, which) -> {
-            dialog.dismiss();
-        });
+        builder.setPositiveButton("Elimina", (dialog, which) -> svuotaNotifiche(apiService));
+        builder.setNegativeButton("Annulla", (dialog, which) -> dialog.dismiss());
         AlertDialog dialog = builder.create();
         dialog.show();
     }
@@ -122,12 +118,8 @@ public class NotificaActivity extends AppCompatActivity implements NotificaAdapt
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(false);
         builder.setMessage("Vuoi davvero eliminare tutte le notifiche lette?");
-        builder.setPositiveButton("Elimina", (dialog, which) -> {
-            rimuoviNotificheLette(apiService);
-        });
-        builder.setNegativeButton("Annulla", (dialog, which) -> {
-            dialog.dismiss();
-        });
+        builder.setPositiveButton("Elimina", (dialog, which) -> rimuoviNotificheLette(apiService));
+        builder.setNegativeButton("Annulla", (dialog, which) -> dialog.dismiss());
         AlertDialog dialog = builder.create();
         dialog.show();
     }
@@ -138,14 +130,13 @@ public class NotificaActivity extends AppCompatActivity implements NotificaAdapt
             @Override
             public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
                 if (response.isSuccessful()) {
-                    for(NotificaDTO notifica : listaNotifiche) {
+                    for(NotificaDTO notifica : listaNotifiche)
                         notifica.setLetta(true);
-                    }
+
                     adapter.notifyDataSetChanged();
                     Toast.makeText(NotificaActivity.this, "Tutte le notifiche sono state segnate come lette", Toast.LENGTH_SHORT).show();
-                } else {
+                } else
                     Toast.makeText(NotificaActivity.this, "Errore durante la marcatura delle notifiche, riprova!", Toast.LENGTH_SHORT).show();
-                }
             }
 
             @Override
@@ -166,9 +157,8 @@ public class NotificaActivity extends AppCompatActivity implements NotificaAdapt
                     listaNotifiche.removeIf(NotificaDTO::isLetta);
                     adapter.notifyDataSetChanged();
                     Toast.makeText(NotificaActivity.this, "Tutte le notifiche lette sono state eliminate", Toast.LENGTH_SHORT).show();
-                } else {
+                } else
                     Toast.makeText(NotificaActivity.this, "Errore durante l'eliminazione delle notifiche lette, riprova!", Toast.LENGTH_SHORT).show();
-                }
             }
 
             @Override
@@ -188,9 +178,8 @@ public class NotificaActivity extends AppCompatActivity implements NotificaAdapt
                     listaNotifiche.clear();
                     adapter.notifyDataSetChanged();
                     Toast.makeText(NotificaActivity.this, "Tutte le notifiche sono state eliminate", Toast.LENGTH_SHORT).show();
-                } else {
+                } else
                     Toast.makeText(NotificaActivity.this, "Errore durante l'eliminazione delle notifiche", Toast.LENGTH_SHORT).show();
-                }
             }
 
             @Override
@@ -210,9 +199,8 @@ public class NotificaActivity extends AppCompatActivity implements NotificaAdapt
                     if (response.isSuccessful()) {
                         adapter.removeNotifica(notifica);
                         Toast.makeText(NotificaActivity.this, "Notifica rimossa", Toast.LENGTH_SHORT).show();
-                    } else {
+                    } else
                         Toast.makeText(NotificaActivity.this, "Errore durante la rimozione della notifica", Toast.LENGTH_SHORT).show();
-                    }
                 }
 
                 @Override
@@ -233,9 +221,8 @@ public class NotificaActivity extends AppCompatActivity implements NotificaAdapt
                     if (response.isSuccessful()) {
                         notifica.setLetta(true);
                         adapter.updateNotifica();
-                    } else {
+                    } else
                         Toast.makeText(NotificaActivity.this, "Errore durante la marcatura della notifica, riprova!", Toast.LENGTH_SHORT).show();
-                    }
                 }
 
                 @Override
@@ -263,7 +250,7 @@ public class NotificaActivity extends AppCompatActivity implements NotificaAdapt
                                     if (response.isSuccessful() && response.body() != null) {
                                         String nomeAsta = asta.getNome();
                                         notifica.setNomeAsta(nomeAsta);
-                                        astaRicevuta = (AstaInversa) asta;
+                                        astaRicevuta = asta;
                                         adapter.notifyDataSetChanged();
                                     } else
                                         Toast.makeText(NotificaActivity.this, "Asta Inversa non trovata", Toast.LENGTH_SHORT).show();
@@ -281,9 +268,9 @@ public class NotificaActivity extends AppCompatActivity implements NotificaAdapt
                                 @Override
                                 public void onResponse(@NonNull Call<AstaRibassoDTO> call, @NonNull Response<AstaRibassoDTO> response) {
                                     if (response.isSuccessful() && response.body() != null) {
-                                        String nome_asta = asta.getNome();
-                                        notifica.setNomeAsta(nome_asta);
-                                        astaRicevuta = (AstaRibasso) asta;
+                                        String nomeAsta = asta.getNome();
+                                        notifica.setNomeAsta(nomeAsta);
+                                        astaRicevuta = asta;
                                         adapter.notifyDataSetChanged();
                                     } else
                                         Toast.makeText(NotificaActivity.this, "Asta Ribasso non trovata", Toast.LENGTH_SHORT).show();
@@ -301,9 +288,9 @@ public class NotificaActivity extends AppCompatActivity implements NotificaAdapt
                                 @Override
                                 public void onResponse(@NonNull Call<AstaSilenziosaDTO> call, @NonNull Response<AstaSilenziosaDTO> response) {
                                     if (response.isSuccessful() && response.body() != null) {
-                                        String nome_asta = asta.getNome();
-                                        notifica.setNomeAsta(nome_asta);
-                                        astaRicevuta = (AstaSilenziosa) asta;
+                                        String nomeAsta = asta.getNome();
+                                        notifica.setNomeAsta(nomeAsta);
+                                        astaRicevuta = asta;
                                         adapter.notifyDataSetChanged();
                                     } else
                                         Toast.makeText(NotificaActivity.this, "Asta Silenziosa non trovata", Toast.LENGTH_SHORT).show();
