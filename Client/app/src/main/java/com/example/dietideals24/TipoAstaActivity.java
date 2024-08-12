@@ -47,44 +47,28 @@ public class TipoAstaActivity extends AppCompatActivity {
             configuraBottoni(tipoUtente.toString(), buttonInversa, buttonRibasso, buttonSilenziosa);
         }
 
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openActivityCreaAsta(asta, utente);
-                finish();
-            }
+        backButton.setOnClickListener(v -> {
+            openActivityCreaAsta(asta, utente);
+            finish();
         });
 
-        home_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openActivityHome(utente);
-                finish();
-            }
+        home_button.setOnClickListener(v -> {
+            openActivityHome(utente);
+            finish();
         });
 
-        buttonSilenziosa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openActivityAstaSilenziosa(asta, utente);
-            }
-        });
+        buttonSilenziosa.setOnClickListener(view ->
+                openActivityAstaSilenziosa(asta, utente)
+        );
 
+        buttonRibasso.setOnClickListener(view ->
+                openActivityAstaRibasso(asta, utente)
+        );
 
-        buttonRibasso.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openActivityAstaRibasso(asta, utente);
-            }
-        });
+        buttonInversa.setOnClickListener(view ->
+                openActivityAstaInversa(asta, utente)
+        );
 
-
-        buttonInversa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openActivityAstaInversa(asta, utente);
-            }
-        });
     }
 
     private void configuraBottoni(String tipoUtente, LinearLayout buttonInversa, LinearLayout buttonRibasso, LinearLayout buttonSilenziosa) {

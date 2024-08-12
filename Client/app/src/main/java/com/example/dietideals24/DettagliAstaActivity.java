@@ -28,17 +28,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dietideals24.adapters.OfferAdapter;
 import com.example.dietideals24.api.ApiService;
-import com.example.dietideals24.dto.Asta_InversaDTO;
-import com.example.dietideals24.dto.Asta_RibassoDTO;
-import com.example.dietideals24.dto.Asta_SilenziosaDTO;
+import com.example.dietideals24.dto.AstaInversaDTO;
+import com.example.dietideals24.dto.AstaRibassoDTO;
+import com.example.dietideals24.dto.AstaSilenziosaDTO;
 import com.example.dietideals24.dto.NotificaDTO;
 import com.example.dietideals24.dto.OffertaDTO;
 import com.example.dietideals24.enums.StatoAsta;
 import com.example.dietideals24.enums.StatoOfferta;
 import com.example.dietideals24.models.Asta;
-import com.example.dietideals24.models.Asta_Inversa;
-import com.example.dietideals24.models.Asta_Ribasso;
-import com.example.dietideals24.models.Asta_Silenziosa;
+import com.example.dietideals24.models.AstaInversa;
+import com.example.dietideals24.models.AstaRibasso;
+import com.example.dietideals24.models.AstaSilenziosa;
 import com.example.dietideals24.models.Offerta;
 import com.example.dietideals24.models.Utente;
 import com.example.dietideals24.retrofit.RetrofitService;
@@ -62,8 +62,18 @@ import retrofit2.Response;
 public class DettagliAstaActivity extends AppCompatActivity implements OfferAdapter.OnOffertaListener {
 
     private LinearLayout userSection, creatorSection;
-    private EditText etTitle, etDescription, etOffer;
-    private TextView tvPrice, tvCategoryValue, tvCreatorValue, tvPriceValue, tvDecrementValue, tvTimerValue, tvLowestOffer, tvLowestOfferValue;
+    private EditText etTitle;
+    private EditText etDescription;
+    private EditText etOffer;
+    private TextView tvLowestOffer;
+    private TextView tvCategoryValue;
+    private TextView tvCreatorValue;
+    private TextView tvPriceValue;
+    private TextView tvPrice;
+    private TextView tvTimerValue;
+    private TextView tvLowestOfferValue;
+    private TextView tvDecrementValue;
+    private TextView getTvTimerValue;
     private ImageView ivTypeValue;
     private Button btnSubmitOffer;
     private ImageView ivFoto;
@@ -83,9 +93,9 @@ public class DettagliAstaActivity extends AppCompatActivity implements OfferAdap
     private Utente utenteCreatore;
     List<Offerta> offerte = new ArrayList<>();
 
-    private final Handler handler = new Handler(Looper.getMainLooper());
-    private final int POLLING_INTERVAL = 1000;
-    private final int TIMER_INTERVAL = 1000;
+    private static final Handler handler = new Handler(Looper.getMainLooper());
+    private static final int POLLING_INTERVAL = 1000;
+    private static final int TIMER_INTERVAL = 1000;
     private Runnable pollingRunnable;
     private Runnable timerRunnable;
     private long timerValue;
@@ -161,14 +171,14 @@ public class DettagliAstaActivity extends AppCompatActivity implements OfferAdap
         else
             tvCreatorValue.setText(utenteCreatore.getUsername());
 
-        if (asta instanceof Asta_Ribasso) {
+        if (asta instanceof AstaRibasso) {
             ivTypeValue.setImageResource(R.drawable.ribasso);
             isRibasso = true;
             apiService.recuperaDettagliAstaRibasso(asta.getId())
-                    .enqueue(new Callback<Asta_RibassoDTO>() {
+                    .enqueue(new Callback<AstaRibassoDTO>() {
                         @Override
-                        public void onResponse(@NonNull Call<Asta_RibassoDTO> call, @NonNull Response<Asta_RibassoDTO> response) {
-                            Asta_RibassoDTO astaRicevuta = response.body();
+                        public void onResponse(@NonNull Call<AstaRibassoDTO> call, @NonNull Response<AstaRibassoDTO> response) {
+                            AstaRibassoDTO astaRicevuta = response.body();
 
                             tvLowestOffer.setVisibility(View.GONE);
                             tvLowestOfferValue.setVisibility(View.GONE);
@@ -185,17 +195,17 @@ public class DettagliAstaActivity extends AppCompatActivity implements OfferAdap
                         }
 
                         @Override
-                        public void onFailure(@NonNull Call<Asta_RibassoDTO> call, @NonNull Throwable t) {
+                        public void onFailure(@NonNull Call<AstaRibassoDTO> call, @NonNull Throwable t) {
 
                         }
                     });
-        } else if (asta instanceof Asta_Silenziosa) {
+        } else if (asta instanceof AstaSilenziosa) {
             ivTypeValue.setImageResource(R.drawable.silenziosa);
             apiService.recuperaDettagliAstaSilenziosa(asta.getId())
-                    .enqueue(new Callback<Asta_SilenziosaDTO>() {
+                    .enqueue(new Callback<AstaSilenziosaDTO>() {
                         @Override
-                        public void onResponse(@NonNull Call<Asta_SilenziosaDTO> call, @NonNull Response<Asta_SilenziosaDTO> response) {
-                            Asta_SilenziosaDTO astaRicevuta = response.body();
+                        public void onResponse(@NonNull Call<AstaSilenziosaDTO> call, @NonNull Response<AstaSilenziosaDTO> response) {
+                            AstaSilenziosaDTO astaRicevuta = response.body();
 
                             tvLowestOffer.setVisibility(View.GONE);
                             tvLowestOfferValue.setVisibility(View.GONE);
@@ -206,17 +216,17 @@ public class DettagliAstaActivity extends AppCompatActivity implements OfferAdap
                         }
 
                         @Override
-                        public void onFailure(@NonNull Call<Asta_SilenziosaDTO> call, @NonNull Throwable t) {
+                        public void onFailure(@NonNull Call<AstaSilenziosaDTO> call, @NonNull Throwable t) {
 
                         }
                     });
-        } else if (asta instanceof Asta_Inversa) {
+        } else if (asta instanceof AstaInversa) {
             ivTypeValue.setImageResource(R.drawable.inversa);
             apiService.recuperaDettagliAstaInversa(asta.getId())
-                    .enqueue(new Callback<Asta_InversaDTO>() {
+                    .enqueue(new Callback<AstaInversaDTO>() {
                         @Override
-                        public void onResponse(@NonNull Call<Asta_InversaDTO> call, @NonNull Response<Asta_InversaDTO> response) {
-                            Asta_InversaDTO astaRicevuta = response.body();
+                        public void onResponse(@NonNull Call<AstaInversaDTO> call, @NonNull Response<AstaInversaDTO> response) {
+                            AstaInversaDTO astaRicevuta = response.body();
 
                             if (astaRicevuta.getOffertaMinore() != null) {
                                 tvLowestOfferValue.setText(NumberFormat.getCurrencyInstance(Locale.ITALY).format(astaRicevuta.getOffertaMinore()));
@@ -230,7 +240,7 @@ public class DettagliAstaActivity extends AppCompatActivity implements OfferAdap
                         }
 
                         @Override
-                        public void onFailure(@NonNull Call<Asta_InversaDTO> call, @NonNull Throwable t) {
+                        public void onFailure(@NonNull Call<AstaInversaDTO> call, @NonNull Throwable t) {
 
                         }
                     });
@@ -448,20 +458,20 @@ public class DettagliAstaActivity extends AppCompatActivity implements OfferAdap
 
 
         apiService.recuperaDettagliAstaRibasso(asta.getId())
-                .enqueue(new Callback<Asta_RibassoDTO>() {
+                .enqueue(new Callback<AstaRibassoDTO>() {
                     @Override
-                    public void onResponse(@NonNull Call<Asta_RibassoDTO> call, @NonNull Response<Asta_RibassoDTO> response) {
-                        Asta_RibassoDTO asta = response.body();
+                    public void onResponse(@NonNull Call<AstaRibassoDTO> call, @NonNull Response<AstaRibassoDTO> response) {
+                        AstaRibassoDTO asta = response.body();
                         updateUI(asta);
                     }
 
                     @Override
-                    public void onFailure(@NonNull Call<Asta_RibassoDTO> call, @NonNull Throwable t) {
+                    public void onFailure(@NonNull Call<AstaRibassoDTO> call, @NonNull Throwable t) {
                     }
                 });
     }
 
-    private void updateUI(Asta_RibassoDTO asta) {
+    private void updateUI(AstaRibassoDTO asta) {
         if (asta != null) {
             tvPriceValue.setText(NumberFormat.getCurrencyInstance(Locale.ITALY).format(asta.getPrezzo()));
             tvDecrementValue.setText(NumberFormat.getCurrencyInstance(Locale.ITALY).format(asta.getDecremento()));

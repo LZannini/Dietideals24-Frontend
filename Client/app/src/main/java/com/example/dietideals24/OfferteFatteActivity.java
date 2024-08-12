@@ -45,7 +45,10 @@ public class OfferteFatteActivity extends AppCompatActivity implements AuctionAd
 
     private Utente utente;
     private List<Asta> listaAste;
-    private List<Asta> asteAttive, asteVinte, asteRifiutate, astePerse;
+    private List<Asta> asteAttive;
+    private List<Asta> asteVinte;
+    private List<Asta> asteRifiutate;
+    private List<Asta> astePerse;
     private TextView noAuctionsText;
     private RecyclerView recyclerView;
     private ImageButton backButton;
@@ -171,95 +174,68 @@ public class OfferteFatteActivity extends AppCompatActivity implements AuctionAd
             }
         });
 
-        btnVinte.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                attiva = false;
-                rifiutata = false;
-                noAuctionsText.setVisibility(View.GONE);
-                btnCrea.setVisibility(View.GONE);
-                int childCount = layoutAttributi.getChildCount();
-                for (int i = 0; i < childCount; i++) {
-                    View child = layoutAttributi.getChildAt(i);
-                    child.setVisibility(View.VISIBLE);
-                }
-                btnVinte.setBackgroundColor(Color.parseColor("#FF0000"));
-                btnAttive.setBackgroundColor(Color.parseColor("#0E4273"));
-                btnRifiutate.setBackgroundColor(Color.parseColor("#0E5273"));
-                btnPerse.setBackgroundColor(Color.parseColor("#0E4273"));
-                adapter.setAste(asteVinte, attiva);
-                adapter.notifyDataSetChanged();
-            }
-        });
-
-        btnRifiutate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                attiva = false;
-                rifiutata = true;
-                noAuctionsText.setVisibility(View.GONE);
-                btnCrea.setVisibility(View.GONE);
-                int childCount = layoutAttributi.getChildCount();
-                for (int i = 0; i < childCount; i++) {
-                    View child = layoutAttributi.getChildAt(i);
-                    child.setVisibility(View.VISIBLE);
-                }
-                btnRifiutate.setBackgroundColor(Color.parseColor("#FF0000"));
-                btnAttive.setBackgroundColor(Color.parseColor("#0E4273"));
-                btnVinte.setBackgroundColor(Color.parseColor("#0E5273"));
-                btnPerse.setBackgroundColor(Color.parseColor("#0E4273"));
-                adapter.setAste(asteRifiutate, rifiutata);
-                adapter.notifyDataSetChanged();
-            }
-        });
-
-        btnPerse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                attiva = false;
-                rifiutata = false;
-                noAuctionsText.setVisibility(View.GONE);
-                btnCrea.setVisibility(View.GONE);
-                int childCount = layoutAttributi.getChildCount();
-                for (int i = 0; i < childCount; i++) {
-                    View child = layoutAttributi.getChildAt(i);
-                    child.setVisibility(View.VISIBLE);
-                }
-                btnPerse.setBackgroundColor(Color.parseColor("#FF0000"));
-                btnAttive.setBackgroundColor(Color.parseColor("#0E4273"));
-                btnRifiutate.setBackgroundColor(Color.parseColor("#0E5273"));
-                btnVinte.setBackgroundColor(Color.parseColor("#0E4273"));
-                adapter.setAste(astePerse, attiva);
-                adapter.notifyDataSetChanged();
-            }
-        });
-
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.hide();
 
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openActivityProfilo();
-                finish();
-            }
+        btnVinte.setOnClickListener(v -> {
+            attiva = false;
+            rifiutata = false;
+            mostraLayout();
+            aggiornaVistaBottoni(btnVinte);
+            adapter.setAste(asteVinte, attiva);
+            adapter.notifyDataSetChanged();
         });
 
-        homeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openActivityHome(utente);
-                finish();
-            }
+        btnRifiutate.setOnClickListener(v -> {
+            attiva = false;
+            rifiutata = true;
+            mostraLayout();
+            aggiornaVistaBottoni(btnRifiutate);
+            adapter.setAste(asteRifiutate, rifiutata);
+            adapter.notifyDataSetChanged();
         });
 
-        btnCrea.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openActivityCercaAsta();
-            }
+        btnPerse.setOnClickListener(v -> {
+            attiva = false;
+            rifiutata = false;
+            mostraLayout();
+            aggiornaVistaBottoni(btnPerse);
+            adapter.setAste(astePerse, attiva);
+            adapter.notifyDataSetChanged();
         });
+
+        backButton.setOnClickListener(v -> {
+            openActivityProfilo();
+            finish();
+        });
+
+        homeButton.setOnClickListener(v -> {
+            openActivityHome(utente);
+            finish();
+        });
+
+        btnCrea.setOnClickListener(v -> openActivityCercaAsta());
+
+    }
+
+    private void aggiornaVistaBottoni(Button bottoneAttivo) {
+        btnVinte.setBackgroundColor(Color.parseColor("#0E5273"));
+        btnRifiutate.setBackgroundColor(Color.parseColor("#0E5273"));
+        btnPerse.setBackgroundColor(Color.parseColor("#0E5273"));
+        btnAttive.setBackgroundColor(Color.parseColor("#0E4273"));
+
+        bottoneAttivo.setBackgroundColor(Color.parseColor("#FF0000"));
+    }
+
+    private void mostraLayout() {
+        noAuctionsText.setVisibility(View.GONE);
+        btnCrea.setVisibility(View.GONE);
+        int childCount = layoutAttributi.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            View child = layoutAttributi.getChildAt(i);
+            child.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

@@ -58,8 +58,8 @@ public class NotificaDTO implements Serializable {
         return idAsta;
     }
 
-    public void setIdAsta(int id_asta) {
-        this.idAsta = id_asta;
+    public void setIdAsta(int idAsta) {
+        this.idAsta = idAsta;
     }
 
     public String getNomeAsta() {

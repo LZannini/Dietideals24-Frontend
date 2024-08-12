@@ -3,7 +3,7 @@ package com.example.dietideals24.dto;
 import com.example.dietideals24.enums.Categoria;
 import com.example.dietideals24.enums.StatoAsta;
 
-public class Asta_RibassoDTO {
+public class AstaRibassoDTO {
 
     private int idCreatore;
     private String nome;

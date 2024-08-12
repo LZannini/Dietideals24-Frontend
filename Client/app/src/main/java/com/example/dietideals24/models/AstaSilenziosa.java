@@ -2,18 +2,16 @@ package com.example.dietideals24.models;
 
 import com.example.dietideals24.enums.Categoria;
 
-import java.time.LocalDateTime;
-
-public class Asta_Silenziosa extends Asta {
+public class AstaSilenziosa extends Asta {
 
     private String scadenza;
 
-    public Asta_Silenziosa(int idCreatore, String nome, String descrizione, Categoria categoria, byte[] foto, String scadenza) {
-        super(idCreatore, nome, descrizione, categoria, foto);;
+    public AstaSilenziosa(int idCreatore, String nome, String descrizione, Categoria categoria, byte[] foto, String scadenza) {
+        super(idCreatore, nome, descrizione, categoria, foto);
         this.scadenza = scadenza;
     }
 
-    public Asta_Silenziosa() {}
+    public AstaSilenziosa() {}
 
     public String getScadenza() {
         return scadenza;

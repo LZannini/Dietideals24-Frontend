@@ -17,25 +17,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ActionBar actionBar = getSupportActionBar();
-        assert actionBar != null;
-        actionBar.hide();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                View splashScreen = findViewById(R.id.screenStart);
-                splashScreen.animate()
-                        .alpha(0f)
-                        .setDuration(1000)
-                        .withEndAction(new Runnable() {
-                            @Override
-                            public void run() {
-                                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                                startActivity(intent);
-                                finish();
-                            }
-                        });
-            }
+        new Handler().postDelayed(() -> {
+            View splashScreen = findViewById(R.id.screenStart);
+            splashScreen.animate()
+                    .alpha(0f)
+                    .setDuration(1000)
+                    .withEndAction(() -> {
+                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    });
         }, 1500);
     }
 

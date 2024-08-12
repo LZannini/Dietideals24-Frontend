@@ -42,7 +42,8 @@ public class CreaAstaActivity extends AppCompatActivity {
     private AutoCompleteTextView categoriaProdotto;
     private Button btnAvanti;
     private byte[] imageBytes;
-    private ImageButton backButton, homeButton;
+    private ImageButton backButton;
+    private ImageButton homeButton;
     private Utente utente;
     private boolean fromHome, modificaAvvenuta;
     private List<Asta> listaAste;
@@ -92,68 +93,55 @@ public class CreaAstaActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, nomiCategorie);
         categoriaProdotto.setAdapter(adapter);
 
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(fromHome) {
-                    openActivityHome(utente);
-                    finish();
-                } else {
-                    openActivityAsteCreate();
-                }
-            }
-        });
-
-        homeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        backButton.setOnClickListener(v -> {
+            if (fromHome) {
                 openActivityHome(utente);
                 finish();
+            } else {
+                openActivityAsteCreate();
             }
         });
 
-        fotoProdotto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        homeButton.setOnClickListener(v -> {
+            openActivityHome(utente);
+            finish();
+        });
+
+        fotoProdotto.setOnClickListener(view ->
                 ImagePicker.with(CreaAstaActivity.this)
-                        .crop()	    			//Crop image(Optional), Check Customization for more option
-                        .compress(1024)			//Final image size will be less than 1 MB(Optional)
-                        .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
-                        .start();
-            }
-        });
-        btnAvanti.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String nomeP = nomeProdotto.getText().toString();
-                String descrizioneP = descrizioneProdotto.getText().toString();
-                String categoriaP = categoriaProdotto.getText().toString();
+                        .crop()	    			// Crop image (Optional)
+                        .compress(1024)			// Final image size will be less than 1 MB (Optional)
+                        .maxResultSize(1080, 1080)	// Final image resolution will be less than 1080 x 1080 (Optional)
+                        .start()
+        );
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(CreaAstaActivity.this);
+        btnAvanti.setOnClickListener(view -> {
+            String nomeP = nomeProdotto.getText().toString();
+            String descrizioneP = descrizioneProdotto.getText().toString();
+            String categoriaP = categoriaProdotto.getText().toString();
 
-                if(nomeP.length() == 0 || categoriaP.length() == 0) {
-                    builder.setMessage("Bisogna riempire obbligatoriamente i campi nome e categoria!")
-                            .setCancelable(false)
-                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                }
-                            });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-                    nomeProdotto.setText("");
-                    descrizioneProdotto.setText("");
-                    categoriaProdotto.setText("");
-                } else {
-                    try {
-                        Categoria categoria = Categoria.valueOf(categoriaP.toUpperCase());
-                        asta = new Asta(utente.getId(), nomeP, descrizioneP, categoria, imageBytes);
-                        openActivityTipoAsta(asta, utente.getTipo(), utente);
-                    } catch (IllegalArgumentException e) {
-                        Toast.makeText(CreaAstaActivity.this, "Categoria non valida, inserisci una categoria valida", Toast.LENGTH_SHORT).show();
-                    }
+            AlertDialog.Builder builder = new AlertDialog.Builder(CreaAstaActivity.this);
+
+            if (nomeP.isEmpty() || categoriaP.isEmpty()) {
+                builder.setMessage("Bisogna riempire obbligatoriamente i campi nome e categoria!")
+                        .setCancelable(false)
+                        .setPositiveButton("OK", (dialog, id) -> {});
+                AlertDialog alert = builder.create();
+                alert.show();
+                nomeProdotto.setText("");
+                descrizioneProdotto.setText("");
+                categoriaProdotto.setText("");
+            } else {
+                try {
+                    Categoria categoria = Categoria.valueOf(categoriaP.toUpperCase());
+                    asta = new Asta(utente.getId(), nomeP, descrizioneP, categoria, imageBytes);
+                    openActivityTipoAsta(asta, utente.getTipo(), utente);
+                } catch (IllegalArgumentException e) {
+                    Toast.makeText(CreaAstaActivity.this, "Categoria non valida, inserisci una categoria valida", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
     }
 
     @Override

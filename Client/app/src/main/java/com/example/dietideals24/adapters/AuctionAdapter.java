@@ -12,9 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dietideals24.R;
 import com.example.dietideals24.models.Asta;
-import com.example.dietideals24.models.Asta_Inversa;
-import com.example.dietideals24.models.Asta_Ribasso;
-import com.example.dietideals24.models.Asta_Silenziosa;
+import com.example.dietideals24.models.AstaInversa;
+import com.example.dietideals24.models.AstaRibasso;
+import com.example.dietideals24.models.AstaSilenziosa;
 
 import java.util.List;
 
@@ -99,11 +99,11 @@ public class AuctionAdapter extends RecyclerView.Adapter<AuctionAdapter.AuctionV
                 astaFoto.setImageResource(R.drawable.logo_text);
 
 
-            if (asta instanceof Asta_Ribasso)
+            if (asta instanceof AstaRibasso)
                 astaTipoImage.setImageResource(R.drawable.ribasso);
-             else if (asta instanceof Asta_Silenziosa)
+             else if (asta instanceof AstaSilenziosa)
                 astaTipoImage.setImageResource(R.drawable.silenziosa);
-             else if (asta instanceof Asta_Inversa)
+             else if (asta instanceof AstaInversa)
                 astaTipoImage.setImageResource(R.drawable.inversa);
 
 

@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -20,9 +19,9 @@ import com.example.dietideals24.api.ApiService;
 import com.example.dietideals24.dto.AstaDTO;
 import com.example.dietideals24.enums.Categoria;
 import com.example.dietideals24.models.Asta;
-import com.example.dietideals24.models.Asta_Inversa;
-import com.example.dietideals24.models.Asta_Ribasso;
-import com.example.dietideals24.models.Asta_Silenziosa;
+import com.example.dietideals24.models.AstaInversa;
+import com.example.dietideals24.models.AstaRibasso;
+import com.example.dietideals24.models.AstaSilenziosa;
 import com.example.dietideals24.models.Utente;
 import com.example.dietideals24.retrofit.RetrofitService;
 
@@ -45,7 +44,8 @@ public class CercaAstaActivity extends AppCompatActivity {
     private boolean fromHome;
     private boolean modificaAvvenuta;
     private List<Asta> listaAste;
-    private ImageButton backButton, homeButton;
+    private ImageButton backButton;
+    private ImageButton homeButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,46 +78,33 @@ public class CercaAstaActivity extends AppCompatActivity {
             homeButton.setVisibility(View.VISIBLE);
         }
 
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(fromHome) {
-                    openActivityHome(utente);
-                } else {
-                    openActivityOfferteFatte();
-                }
-                finish();
-            }
-        });
-
-        homeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openActivityHome(utente);
-                finish();
-            }
-        });
-
-        autoCompleteTxt.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String item = parent.getItemAtPosition(position).toString();
-                Toast.makeText(getApplicationContext(), "Filtro Selezionato: " + item, Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
         ApiService apiService = RetrofitService.getRetrofit(this).create(ApiService.class);
 
-
-        vaiButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String filtro = autoCompleteTxt.getText().toString();
-                String query = cercaAstaInput.getText().toString();
-                cercaAsta(apiService,filtro,query);
+        backButton.setOnClickListener(v -> {
+            if (fromHome) {
+                openActivityHome(utente);
+            } else {
+                openActivityOfferteFatte();
             }
+            finish();
         });
+
+        homeButton.setOnClickListener(v -> {
+            openActivityHome(utente);
+            finish();
+        });
+
+        autoCompleteTxt.setOnItemClickListener((parent, view, position, id) -> {
+            String item = parent.getItemAtPosition(position).toString();
+            Toast.makeText(getApplicationContext(), "Filtro Selezionato: " + item, Toast.LENGTH_SHORT).show();
+        });
+
+        vaiButton.setOnClickListener(v -> {
+            String filtro = autoCompleteTxt.getText().toString();
+            String query = cercaAstaInput.getText().toString();
+            cercaAsta(apiService, filtro, query);
+        });
+
 
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
@@ -205,8 +192,8 @@ public class CercaAstaActivity extends AppCompatActivity {
         });
     }
 
-    public Asta_Ribasso creaModelloAstaR(AstaDTO dto) {
-        Asta_Ribasso asta = new Asta_Ribasso();
+    public AstaRibasso creaModelloAstaR(AstaDTO dto) {
+        AstaRibasso asta = new AstaRibasso();
         asta.setId(dto.getID());
         asta.setIdCreatore(dto.getIdCreatore());
         asta.setCategoria(dto.getCategoria());
@@ -218,8 +205,8 @@ public class CercaAstaActivity extends AppCompatActivity {
         return asta;
     }
 
-    public Asta_Silenziosa creaModelloAstaS(AstaDTO dto) {
-        Asta_Silenziosa asta = new Asta_Silenziosa();
+    public AstaSilenziosa creaModelloAstaS(AstaDTO dto) {
+        AstaSilenziosa asta = new AstaSilenziosa();
         asta.setId(dto.getID());
         asta.setIdCreatore(dto.getIdCreatore());
         asta.setCategoria(dto.getCategoria());
@@ -231,8 +218,8 @@ public class CercaAstaActivity extends AppCompatActivity {
         return asta;
     }
 
-    public Asta_Inversa creaModelloAstaI(AstaDTO dto) {
-        Asta_Inversa asta = new Asta_Inversa();
+    public AstaInversa creaModelloAstaI(AstaDTO dto) {
+        AstaInversa asta = new AstaInversa();
         asta.setId(dto.getID());
         asta.setIdCreatore(dto.getIdCreatore());
         asta.setCategoria(dto.getCategoria());

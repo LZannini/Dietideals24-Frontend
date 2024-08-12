@@ -31,6 +31,7 @@ public class ModificaPasswordActivity extends AppCompatActivity {
     private Button salvaButton;
     private ImageButton backButton;
     private Utente utente;
+    private int idUtente;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +39,8 @@ public class ModificaPasswordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_modifica_password);
 
         utente = (Utente) getIntent().getSerializableExtra("utente");
-        int idUtente = utente.getId();
-        String pass_utente = utente.getPassword();
+        idUtente = utente.getId();
+        String passUtente = utente.getPassword();
 
         vecchiaPassword = findViewById(R.id.vecchia_password);
         nuovaPassword = findViewById(R.id.nuova_password);
@@ -53,80 +54,74 @@ public class ModificaPasswordActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openActivityProfilo(utente);
-                finish();
-            }
+        backButton.setOnClickListener(v -> {
+            openActivityProfilo(utente);
+            finish();
         });
 
-        homeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openActivityHome(utente);
-                finish();
-            }
+        homeButton.setOnClickListener(v -> {
+            openActivityHome(utente);
+            finish();
         });
 
-        salvaButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(nuovaPassword.getText().toString().equals(confermaPassword.getText().toString()) && vecchiaPassword.getText().toString().equals(pass_utente)) {
-                    try {
-                        UtenteDTO utente = new UtenteDTO();
-                        utente.setId(idUtente);
-                        utente.setPassword(nuovaPassword.getText().toString());
+        salvaButton.setOnClickListener(v -> {
+            String vecchiaPass = vecchiaPassword.getText().toString();
+            String nuovaPass = nuovaPassword.getText().toString();
+            String confermaPass = confermaPassword.getText().toString();
 
-                        ApiService apiService = RetrofitService.getRetrofit(ModificaPasswordActivity.this).create(ApiService.class);
+            if (!nuovaPass.equals(confermaPass)) {
+                showAlert("Le password non corrispondono, riprova.");
+                resetPasswordFields();
+            } else if (!vecchiaPass.equals(passUtente)) {
+                showAlert("Le password corrente inserita non è corretta, riprova.");
+                resetPasswordFields();
+            } else {
+                updatePassword(nuovaPass);
+            }
+        });
+    }
 
-                        apiService.modificaPassword(utente)
-                                .enqueue(new Callback<UtenteDTO>() {
-                                    @Override
-                                    public void onResponse(@NonNull Call<UtenteDTO> call, @NonNull Response<UtenteDTO> response) {
-                                        if(response.isSuccessful()) {
-                                            UtenteDTO utenteAggiornato = response.body();
-                                            Utente utente_intent = creaUtente(utenteAggiornato);
-                                            Toast.makeText(ModificaPasswordActivity.this, "Password modificata con successo!", Toast.LENGTH_SHORT).show();
-                                            openActivityHome(utente_intent);
-                                        }
-                                    }
+    private void showAlert(String message) {
+        new AlertDialog.Builder(ModificaPasswordActivity.this)
+                .setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton("OK", null)
+                .show();
+    }
 
-                                    @Override
-                                    public void onFailure(@NonNull Call<UtenteDTO> call, @NonNull Throwable t) {
-                                        Toast.makeText(ModificaPasswordActivity.this, "Errore durante la modifica della password, riprova!", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
+    private void resetPasswordFields() {
+        vecchiaPassword.setText("");
+        nuovaPassword.setText("");
+        confermaPassword.setText("");
+    }
+
+    private void updatePassword(String nuovaPass) {
+        try {
+            UtenteDTO utente = new UtenteDTO();
+            utente.setId(idUtente);
+            utente.setPassword(nuovaPass);
+
+            ApiService apiService = RetrofitService.getRetrofit(ModificaPasswordActivity.this).create(ApiService.class);
+
+            apiService.modificaPassword(utente).enqueue(new Callback<UtenteDTO>() {
+                @Override
+                public void onResponse(@NonNull Call<UtenteDTO> call, @NonNull Response<UtenteDTO> response) {
+                    if (response.isSuccessful()) {
+                        UtenteDTO utenteAggiornato = response.body();
+                        Utente utenteIntent = creaUtente(utenteAggiornato);
+                        Toast.makeText(ModificaPasswordActivity.this, "Password modificata con successo!", Toast.LENGTH_SHORT).show();
+                        openActivityHome(utenteIntent);
                     }
-                } else if(!nuovaPassword.getText().toString().equals(confermaPassword.getText().toString())){
-                    builder.setMessage("Le password non corrispondono, riprova.")
-                            .setCancelable(false)
-                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                }
-                            });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-                    vecchiaPassword.setText("");
-                    nuovaPassword.setText("");
-                    confermaPassword.setText("");
-                } else if(!vecchiaPassword.getText().toString().equals(pass_utente)) {
-                    builder.setMessage("Le password corrente inserita non è corretta, riprova.")
-                            .setCancelable(false)
-                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                }
-                            });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-                    vecchiaPassword.setText("");
-                    nuovaPassword.setText("");
-                    confermaPassword.setText("");
                 }
-            }
-        });
+
+                @Override
+                public void onFailure(@NonNull Call<UtenteDTO> call, @NonNull Throwable t) {
+                    Toast.makeText(ModificaPasswordActivity.this, "Errore durante la modifica della password, riprova!", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private Utente creaUtente(UtenteDTO utenteDTO) {

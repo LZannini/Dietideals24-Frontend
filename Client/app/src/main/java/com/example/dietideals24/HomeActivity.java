@@ -55,53 +55,26 @@ public class HomeActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-        buttonCrea.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openActivityCreaAsta(utente);
-            }
-        });
-
-        buttonCerca.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openActivityCercaAsta(utente);
-            }
-        });
-
-        buttonProfilo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openActivityProfilo(utente);
-            }
-        });
-
-
         ApiService apiService = RetrofitService.getRetrofit(this).create(ApiService.class);
-
-
         checkNotifiche(apiService);
 
-        buttonNotifica.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                recuperaNotifiche(apiService);
-            }
-        });
+        buttonCrea.setOnClickListener(v -> openActivityCreaAsta(utente));
 
-        buttonDisconnetti.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                disconnect();
-            }
-        });
+        buttonCerca.setOnClickListener(view -> openActivityCercaAsta(utente));
+
+        buttonProfilo.setOnClickListener(view -> openActivityProfilo(utente));
+
+        buttonNotifica.setOnClickListener(view -> recuperaNotifiche(apiService));
+
+        buttonDisconnetti.setOnClickListener(view -> disconnect());
+
     }
 
     private void setVisibilityRedNot(boolean pallino){
-        View red_not = findViewById(R.id.pallino_notifiche);
+        View redNot = findViewById(R.id.pallino_notifiche);
 
-        if(pallino) red_not.setVisibility(View.VISIBLE);
-        else red_not.setVisibility(View.GONE);
+        if(pallino) redNot.setVisibility(View.VISIBLE);
+        else redNot.setVisibility(View.GONE);
     }
 
     private void checkNotifiche(ApiService apiService) {
@@ -172,21 +145,16 @@ public class HomeActivity extends AppCompatActivity {
         //
     }
 
-
     private void disconnect() {
-        builder = new AlertDialog.Builder(HomeActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
         builder.setMessage("Sei sicuro di voler uscire?")
                 .setCancelable(true)
-                .setPositiveButton("Si", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        openActivityLogin();
-                        finish();
-                    }
+                .setPositiveButton("Si", (dialogInterface, i) -> {
+                    openActivityLogin();
+                    finish();
                 })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                    }
+                .setNegativeButton("No", (dialogInterface, i) -> {
+                    // Nessuna azione da eseguire
                 })
                 .show();
     }

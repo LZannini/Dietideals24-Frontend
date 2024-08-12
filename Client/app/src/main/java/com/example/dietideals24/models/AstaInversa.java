@@ -2,21 +2,19 @@ package com.example.dietideals24.models;
 
 import com.example.dietideals24.enums.Categoria;
 
-import java.time.LocalDateTime;
-
-public class Asta_Inversa extends Asta {
+public class AstaInversa extends Asta {
 
         private float prezzo;
         private Float offertaMinore;
         private String scadenza;
 
-        public Asta_Inversa(int idCreatore, String nome, String descrizione, Categoria categoria, byte[] foto, float prezzo, String scadenza) {
+        public AstaInversa(int idCreatore, String nome, String descrizione, Categoria categoria, byte[] foto, float prezzo, String scadenza) {
             super(idCreatore, nome, descrizione, categoria, foto);
             this.prezzo = prezzo;
             this.scadenza = scadenza;
         }
 
-        public Asta_Inversa() {
+        public AstaInversa() {
 
         }
 

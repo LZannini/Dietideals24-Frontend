@@ -49,7 +49,8 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferViewHol
     public static class OfferViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView valOfferta;
-        Button btnAccept, btnReject;
+        Button btnAccept;
+        Button btnReject;
         OnOffertaListener onOffertaListener;
 
         public OfferViewHolder(@NonNull View itemView, OnOffertaListener onOffertaListener) {

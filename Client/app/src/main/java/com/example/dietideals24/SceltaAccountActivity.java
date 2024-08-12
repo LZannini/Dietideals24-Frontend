@@ -51,58 +51,35 @@ public class SceltaAccountActivity extends AppCompatActivity {
         assert actionBar != null;
         actionBar.hide();
 
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (fromLogin) {
-                    openActivityLogin();
-                } else {
-                    openActivityProfilo(utente);
-                }
-                finish();
+        backButton.setOnClickListener(v -> {
+            if (fromLogin) {
+                openActivityLogin();
+            } else {
+                openActivityProfilo(utente);
             }
+            finish();
         });
 
-        if(fromLogin) {
+        if (fromLogin) {
             homeButton.setVisibility(View.INVISIBLE);
         } else {
-            homeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    openActivityHome(utente);
-                    finish();
-                }
+            homeButton.setOnClickListener(v -> {
+                openActivityHome(utente);
+                finish();
             });
         }
 
-        venditoreButt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                change(TipoUtente.VENDITORE);
-            }
-        });
+        venditoreButt.setOnClickListener(v -> change(TipoUtente.VENDITORE));
+        compratoreButt.setOnClickListener(v -> change(TipoUtente.COMPRATORE));
+        completoButt.setOnClickListener(v -> change(TipoUtente.COMPLETO));
 
-        compratoreButt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                change(TipoUtente.COMPRATORE);
-            }
-        });
-
-        completoButt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                change(TipoUtente.COMPLETO);
-            }
-        });
-
-        AggiornaButton();
+        aggiornaButton();
     }
 
     @Override
     public void onResume(){
         super.onResume();
-        AggiornaButton();
+        aggiornaButton();
     }
 
     @Override
@@ -135,7 +112,7 @@ public class SceltaAccountActivity extends AppCompatActivity {
         startActivity(intentR);
     }
 
-    private void AggiornaButton(){
+    private void aggiornaButton(){
 
         venditoreButt = findViewById(R.id.button_vendi);
         compratoreButt = findViewById(R.id.button_compra);
@@ -169,27 +146,21 @@ public class SceltaAccountActivity extends AppCompatActivity {
         builder = new AlertDialog.Builder(SceltaAccountActivity.this);
         builder.setMessage("Sei sicuro di voler selezionare il tuo Tipo di Account?")
                 .setCancelable(true)
-                .setPositiveButton("Si", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        utente.setTipo(nuovoTipo);
-                        currentUser = ConverteDTO(utente);
-                        aggiornaTipoAccount(currentUser);
-                        utente = creaUtente(currentUser);
-                        if(fromLogin) {
-                            openActivityHome(utente);
-                        } else {
-                            AggiornaButton();
-                        }
+                .setPositiveButton("Si", (dialogInterface, i) -> {
+                    utente.setTipo(nuovoTipo);
+                    currentUser = ConverteDTO(utente);
+                    aggiornaTipoAccount(currentUser);
+                    utente = creaUtente(currentUser);
+                    if (fromLogin) {
+                        openActivityHome(utente);
+                    } else {
+                        aggiornaButton();
                     }
                 })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                })
+                .setNegativeButton("No", (dialogInterface, i) -> dialogInterface.dismiss())
                 .show();
     }
+
 
     private UtenteDTO ConverteDTO(Utente ut){
         UtenteDTO utente = new UtenteDTO();

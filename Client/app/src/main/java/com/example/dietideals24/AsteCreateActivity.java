@@ -32,15 +32,16 @@ public class AsteCreateActivity extends AppCompatActivity implements AuctionAdap
     private List<Asta> asteAttive;
     private List<Asta> asteConcluse;
     private TextView noAuctionsText;
-    private RecyclerView recyclerView;
     private ImageButton backButton;
-    private MaterialButton btnAttive, btnConcluse;
+    private MaterialButton btnAttive;
+    private MaterialButton btnConcluse;
     private Button btnCrea;
     private LinearLayout layoutAttributi;
     private Asta astaSelezionata;
     private Boolean fromDettagli;
     private Boolean modificaAvvenuta;
-    private boolean attiva, fromHome;
+    private boolean attiva;
+    private boolean fromHome;
     private AuctionAdapter adapter;
 
     @Override
@@ -72,7 +73,7 @@ public class AsteCreateActivity extends AppCompatActivity implements AuctionAdap
         btnConcluse = findViewById(R.id.btn_aste_concluse);
         btnCrea = findViewById(R.id.crea_button);
         layoutAttributi = findViewById(R.id.layout_attributi);
-        recyclerView = findViewById(R.id.risultati_recycler_view);
+        RecyclerView recyclerView = findViewById(R.id.risultati_recycler_view);
         ImageButton homeButton = findViewById(R.id.home_button);
 
         attiva = true;
@@ -80,72 +81,55 @@ public class AsteCreateActivity extends AppCompatActivity implements AuctionAdap
         adapter = new AuctionAdapter(asteAttive,this, true, true);
         recyclerView.setAdapter(adapter);
 
-        btnAttive.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                attiva = true;
-                btnAttive.setBackgroundColor(Color.parseColor("#FF0000"));
-                btnConcluse.setBackgroundColor(Color.parseColor("#0E4273"));
-                adapter.setAste(asteAttive, attiva);
-                adapter.notifyDataSetChanged();
-                if(asteAttive == null || asteAttive.isEmpty()) {
-                    noAuctionsText.setVisibility(View.VISIBLE);
-                    if(utenteHome.getId() == utente.getId()) {
-                        btnCrea.setVisibility(View.VISIBLE);
-                    }
-                    int childCount = layoutAttributi.getChildCount();
-                    for (int i = 0; i < childCount; i++) {
-                        View child = layoutAttributi.getChildAt(i);
-                        child.setVisibility(View.INVISIBLE);
-                    }
-                }
-            }
-        });
-
-        btnConcluse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                attiva = false;
-                noAuctionsText.setVisibility(View.GONE);
-                btnCrea.setVisibility(View.GONE);
-                int childCount = layoutAttributi.getChildCount();
-                for (int i = 0; i < childCount; i++) {
-                    View child = layoutAttributi.getChildAt(i);
-                    child.setVisibility(View.VISIBLE);
-                }
-                btnConcluse.setBackgroundColor(Color.parseColor("#FF0000"));
-                btnAttive.setBackgroundColor(Color.parseColor("#0E4273"));
-                adapter.setAste(asteConcluse, attiva);
-                adapter.notifyDataSetChanged();
-            }
-        });
-
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.hide();
 
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openActivityProfilo();
-                finish();
+        btnAttive.setOnClickListener(view -> {
+            attiva = true;
+            btnAttive.setBackgroundColor(Color.parseColor("#FF0000"));
+            btnConcluse.setBackgroundColor(Color.parseColor("#0E4273"));
+            adapter.setAste(asteAttive, attiva);
+            adapter.notifyDataSetChanged();
+            if (asteAttive == null || asteAttive.isEmpty()) {
+                noAuctionsText.setVisibility(View.VISIBLE);
+                if (utenteHome.getId() == utente.getId()) {
+                    btnCrea.setVisibility(View.VISIBLE);
+                }
+                int childCount = layoutAttributi.getChildCount();
+                for (int i = 0; i < childCount; i++) {
+                    View child = layoutAttributi.getChildAt(i);
+                    child.setVisibility(View.INVISIBLE);
+                }
             }
         });
 
-        homeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openActivityHome(utente);
-                finish();
+        btnConcluse.setOnClickListener(view -> {
+            attiva = false;
+            noAuctionsText.setVisibility(View.GONE);
+            btnCrea.setVisibility(View.GONE);
+            int childCount = layoutAttributi.getChildCount();
+            for (int i = 0; i < childCount; i++) {
+                View child = layoutAttributi.getChildAt(i);
+                child.setVisibility(View.VISIBLE);
             }
+            btnConcluse.setBackgroundColor(Color.parseColor("#FF0000"));
+            btnAttive.setBackgroundColor(Color.parseColor("#0E4273"));
+            adapter.setAste(asteConcluse, attiva);
+            adapter.notifyDataSetChanged();
         });
 
-        btnCrea.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openActivityCreaAsta();
-            }
+        backButton.setOnClickListener(v -> {
+            openActivityProfilo();
+            finish();
         });
+
+        homeButton.setOnClickListener(v -> {
+            openActivityHome();
+            finish();
+        });
+
+        btnCrea.setOnClickListener(view -> openActivityCreaAsta());
 
         if(attiva && (asteAttive == null || asteAttive.isEmpty())) {
             noAuctionsText.setVisibility(View.VISIBLE);
@@ -170,7 +154,7 @@ public class AsteCreateActivity extends AppCompatActivity implements AuctionAdap
         finish();
     }
 
-    public void openActivityHome(Utente utente) {
+    public void openActivityHome() {
         Intent intentR = new Intent(this, HomeActivity.class);
         intentR.putExtra("utente", utenteHome);
         startActivity(intentR);

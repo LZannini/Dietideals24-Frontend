@@ -2,10 +2,8 @@ package com.example.dietideals24;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -18,7 +16,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.dietideals24.api.ApiService;
-import com.example.dietideals24.dto.Asta_InversaDTO;
+import com.example.dietideals24.dto.AstaInversaDTO;
 import com.example.dietideals24.models.Asta;
 import com.example.dietideals24.models.Utente;
 import com.example.dietideals24.retrofit.RetrofitService;
@@ -61,23 +59,15 @@ public class CreaAstaInversaActivity extends AppCompatActivity {
         String valFormattato = NumberFormat.getCurrencyInstance(Locale.ITALY).format(1.0);
         prezzoEditText.setHint(valFormattato);
         prezzoEditText.setText("");
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openActivityTipoAsta(utente, asta);
-                finish();
-            }
+        backButton.setOnClickListener(v -> {
+            openActivityTipoAsta(utente, asta);
+            finish();
         });
 
-        homeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openActivityHome(utente);
-                finish();
-            }
+        homeButton.setOnClickListener(v -> {
+            openActivityHome(utente);
+            finish();
         });
-
-        timePicker.setIs24HourView(true);
 
         createButton.setOnClickListener(v -> {
             int day = datePicker.getDayOfMonth();
@@ -86,27 +76,22 @@ public class CreaAstaInversaActivity extends AppCompatActivity {
             int hour = timePicker.getHour();
             int minute = timePicker.getMinute();
 
-            String scadenza = String.format("%d-%02d-%02d %02d:%02d:00", year, month, day, hour, minute);
+            String scadenza = String.format("%d-%02d-%02d %02d:%02d:00", year, month + 1, day, hour, minute);
             Calendar currentTime = Calendar.getInstance();
             Calendar scadenzaTime = Calendar.getInstance();
             scadenzaTime.set(year, month, day, hour, minute);
             Float prezzo = Float.parseFloat(prezzoEditText.getText().toString());
 
             if (currentTime.after(scadenzaTime)) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(CreaAstaInversaActivity.this);
-
-                builder.setMessage("Errore, la data di scadenza non è valida.")
+                new AlertDialog.Builder(CreaAstaInversaActivity.this)
+                        .setMessage("Errore, la data di scadenza non è valida.")
                         .setCancelable(false)
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                            }
-                        });
-                AlertDialog alert = builder.create();
-                alert.show();
+                        .setPositiveButton("OK", (dialog, id) -> {})
+                        .create()
+                        .show();
                 return;
-            }
-            else{
-                Asta_InversaDTO astaI = new Asta_InversaDTO();
+            } else {
+                AstaInversaDTO astaI = new AstaInversaDTO();
                 astaI.setIdCreatore(asta.getIdCreatore());
                 astaI.setNome(asta.getNome());
                 astaI.setDescrizione(asta.getDescrizione());
@@ -134,6 +119,7 @@ public class CreaAstaInversaActivity extends AppCompatActivity {
                         });
             }
         });
+
     }
 
     @Override

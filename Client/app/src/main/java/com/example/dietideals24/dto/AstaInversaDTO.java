@@ -3,7 +3,7 @@ package com.example.dietideals24.dto;
 import com.example.dietideals24.enums.Categoria;
 import com.example.dietideals24.enums.StatoAsta;
 
-public class Asta_InversaDTO {
+public class AstaInversaDTO {
 
     private int idAsta;
     private int idCreatore;

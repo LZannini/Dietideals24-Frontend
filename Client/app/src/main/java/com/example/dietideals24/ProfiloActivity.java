@@ -26,9 +26,9 @@ import com.example.dietideals24.api.ApiService;
 import com.example.dietideals24.dto.AstaDTO;
 import com.example.dietideals24.dto.UtenteDTO;
 import com.example.dietideals24.models.Asta;
-import com.example.dietideals24.models.Asta_Inversa;
-import com.example.dietideals24.models.Asta_Ribasso;
-import com.example.dietideals24.models.Asta_Silenziosa;
+import com.example.dietideals24.models.AstaInversa;
+import com.example.dietideals24.models.AstaRibasso;
+import com.example.dietideals24.models.AstaSilenziosa;
 import com.example.dietideals24.models.Utente;
 import com.example.dietideals24.retrofit.RetrofitService;
 import com.github.dhaval2404.imagepicker.ImagePicker;
@@ -57,14 +57,18 @@ public class ProfiloActivity extends AppCompatActivity {
     private EditText countryEditText;
     private MaterialTextView textUsername;
     private LinearLayout pulsantiAste;
-    private Button buttonSalva, buttonAsteCreate, buttonOfferteFatte;
+    private Button buttonAsteCreate;
+    private Button buttonOfferteFatte;
+    private Button buttonSalva;
     private Utente utenteOriginale;
     private Utente utenteModificato;
     private Boolean infoMod = false;
     private byte[] imageBytes;
-    private boolean fromDettagli, fromHome;
+    private boolean fromDettagli;
+    private boolean fromHome;
     private boolean modificaAvvenuta;
-    private ImageButton backButton, homeButton;
+    private ImageButton backButton;
+    private ImageButton homeButton;
 
     @SuppressLint({"SuspiciousIndentation", "WrongViewCast", "MissingInflatedId"})
     @Override
@@ -121,134 +125,96 @@ public class ProfiloActivity extends AppCompatActivity {
         webSiteEditText.setText(utenteOriginale.getSitoweb());
         countryEditText.setText(utenteOriginale.getPaese());
 
-        buttonAsteCreate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ApiService apiService = RetrofitService.getRetrofit(ProfiloActivity.this).create(ApiService.class);
-                trovaAsteCreate(apiService);
-            }
-        });
+        buttonAsteCreate.setOnClickListener(v -> trovaAsteCreate(getApiService()));
 
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!fromDettagli)
-                    openActivityHome();
-                finish();
-            }
-        });
-
-        homeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        backButton.setOnClickListener(v -> {
+            if (!fromDettagli) {
                 openActivityHome();
             }
+            finish();
         });
 
-        if(!fromDettagli)
-            menuButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    openMenuProfilo(v, utenteOriginale);
-                }
-            });
+        homeButton.setOnClickListener(v -> openActivityHome());
 
-            buttonOfferteFatte.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ApiService apiService = RetrofitService.getRetrofit(ProfiloActivity.this).create(ApiService.class);
+        if (!fromDettagli) {
+            menuButton.setOnClickListener(v -> openMenuProfilo(v, utenteOriginale));
+        }
 
-                    trovaOfferteFatte(apiService);
-                }
-            });
+        buttonOfferteFatte.setOnClickListener(v -> trovaOfferteFatte(getApiService()));
 
-            buttonSalva.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ApiService apiService = RetrofitService.getRetrofit(ProfiloActivity.this).create(ApiService.class);
+        buttonSalva.setOnClickListener(v -> salvaModificheUtente());
+    }
 
-                    utenteModificato = new Utente();
+    private ApiService getApiService() {
+        return RetrofitService.getRetrofit(ProfiloActivity.this).create(ApiService.class);
+    }
 
-                    utenteModificato.setId(utenteOriginale.getId());
-                    utenteModificato.setPassword(utenteOriginale.getPassword());
-                    utenteModificato.setTipo(utenteOriginale.getTipo());
-                    if (imageBytes != null) {
-                        utenteModificato.setAvatar(imageBytes);
-                        infoMod = true;
-                    } else if(utenteOriginale.getAvatar() != null){
-                        utenteModificato.setAvatar(utenteOriginale.getAvatar());
-                    }
-                    if (!textUsername.getText().toString().equals(utenteOriginale.getUsername())) {
-                        utenteModificato.setUsername(textUsername.getText().toString());
-                        infoMod = true;
-                    } else {
-                        utenteModificato.setUsername(utenteOriginale.getUsername());
-                    }
-                    if (!emailEditText.getText().toString().equals(utenteOriginale.getEmail())) {
-                        utenteModificato.setEmail(emailEditText.getText().toString());
-                        infoMod = true;
-                    } else {
-                        utenteModificato.setEmail(utenteOriginale.getEmail());
-                    }
-                    if (!bioEditText.getText().toString().equals(utenteOriginale.getBiografia()) && !bioEditText.getText().toString().equals("")) {
-                        utenteModificato.setBiografia(bioEditText.getText().toString());
-                        infoMod = true;
-                    } else if(utenteOriginale.getBiografia() != null) {
-                        utenteModificato.setBiografia(utenteOriginale.getBiografia());
-                    }
-                    if (!webSiteEditText.getText().toString().equals(utenteOriginale.getSitoweb()) && !webSiteEditText.getText().toString().equals("")) {
-                        utenteModificato.setSitoweb(webSiteEditText.getText().toString());
-                        infoMod = true;
-                    } else if(utenteOriginale.getSitoweb() != null) {
-                        utenteModificato.setSitoweb(utenteOriginale.getSitoweb());
-                    }
-                    if (!countryEditText.getText().toString().equals(utenteOriginale.getPaese()) && !countryEditText.getText().toString().equals("")) {
-                        utenteModificato.setPaese(countryEditText.getText().toString());
-                        infoMod = true;
-                    } else if(utenteOriginale.getPaese() != null) {
-                        utenteModificato.setPaese(utenteOriginale.getPaese());
+    private void salvaModificheUtente() {
+        Utente utenteModificato = new Utente();
+        utenteModificato.setId(utenteOriginale.getId());
+        utenteModificato.setPassword(utenteOriginale.getPassword());
+        utenteModificato.setTipo(utenteOriginale.getTipo());
+
+        if (imageBytes != null) {
+            utenteModificato.setAvatar(imageBytes);
+            infoMod = true;
+        } else if (utenteOriginale.getAvatar() != null) {
+            utenteModificato.setAvatar(utenteOriginale.getAvatar());
+        }
+
+        utenteModificato.setUsername(getUpdatedField(textUsername.getText().toString(), utenteOriginale.getUsername()));
+        utenteModificato.setEmail(getUpdatedField(emailEditText.getText().toString(), utenteOriginale.getEmail()));
+        utenteModificato.setBiografia(getUpdatedField(bioEditText.getText().toString(), utenteOriginale.getBiografia()));
+        utenteModificato.setSitoweb(getUpdatedField(webSiteEditText.getText().toString(), utenteOriginale.getSitoweb()));
+        utenteModificato.setPaese(getUpdatedField(countryEditText.getText().toString(), utenteOriginale.getPaese()));
+
+        ApiService apiService = getApiService();
+        UtenteDTO utenteModificatoDTO = creaUtenteDTO(utenteModificato);
+        apiService.aggiornaUtente(utenteModificatoDTO)
+                .enqueue(new Callback<UtenteDTO>() {
+                    @Override
+                    public void onResponse(@NonNull Call<UtenteDTO> call, @NonNull Response<UtenteDTO> response) {
+                        if (response.isSuccessful()) {
+                            UtenteDTO utenteRicevuto = response.body();
+                            if (utenteRicevuto != null && utenteRicevuto.getAvatar() != null) {
+                                Bitmap avatarBitmap = BitmapFactory.decodeByteArray(utenteRicevuto.getAvatar(), 0, utenteRicevuto.getAvatar().length);
+                                avatarSelector.setImageBitmap(avatarBitmap);
+                            }
+
+                            aggiornaUIConUtente(utenteModificato);
+                            Toast.makeText(ProfiloActivity.this, "Modifica effettuata con successo!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(ProfiloActivity.this, "Errore durante la modifica dei dati, riprova.", Toast.LENGTH_SHORT).show();
+                        }
                     }
 
-                    UtenteDTO utenteModificatoDTO = creaUtenteDTO(utenteModificato);
-                    apiService.aggiornaUtente(utenteModificatoDTO)
-                            .enqueue(new Callback<UtenteDTO>() {
-                                @Override
-                                public void onResponse(@NonNull Call<UtenteDTO> call, @NonNull Response<UtenteDTO> response) {
-                                    if(response.isSuccessful()) {
-                                        UtenteDTO utenteRicevuto = response.body();
-                                        if (utenteRicevuto != null && utenteRicevuto.getAvatar() != null) {
-                                            Bitmap avatarBitmap = BitmapFactory.decodeByteArray(utenteRicevuto.getAvatar(), 0, utenteRicevuto.getAvatar().length);
-                                            avatarSelector.setImageBitmap(avatarBitmap);
-                                        }
+                    @Override
+                    public void onFailure(@NonNull Call<UtenteDTO> call, @NonNull Throwable t) {
+                        Toast.makeText(ProfiloActivity.this, "Errore di connessione", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
 
-                                        textUsername.setText(utenteModificato.getUsername());
-                                        emailEditText.setText(utenteModificato.getEmail());
-                                        bioEditText.setText(utenteModificato.getBiografia());
-                                        webSiteEditText.setText(utenteModificato.getSitoweb());
-                                        countryEditText.setText(utenteModificato.getPaese());
+    private String getUpdatedField(String nuovoValore, String valoreOriginale) {
+        return (!nuovoValore.equals(valoreOriginale) && !nuovoValore.isEmpty()) ? nuovoValore : valoreOriginale;
+    }
 
-                                        textUsername.setEnabled(false);
-                                        emailEditText.setEnabled(false);
-                                        bioEditText.setEnabled(false);
-                                        webSiteEditText.setEnabled(false);
-                                        countryEditText.setEnabled(false);
-                                        buttonSalva.setVisibility(View.INVISIBLE);
-                                        pulsantiAste.setVisibility(View.VISIBLE);
-                                        utenteOriginale = utenteModificato;
+    private void aggiornaUIConUtente(Utente utente) {
+        textUsername.setText(utente.getUsername());
+        emailEditText.setText(utente.getEmail());
+        bioEditText.setText(utente.getBiografia());
+        webSiteEditText.setText(utente.getSitoweb());
+        countryEditText.setText(utente.getPaese());
 
-                                        Toast.makeText(ProfiloActivity.this, "Modifica effettuata con successo!", Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        Toast.makeText(ProfiloActivity.this, "Errore durante la modifica dei dati, riprova.", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
+        textUsername.setEnabled(false);
+        emailEditText.setEnabled(false);
+        bioEditText.setEnabled(false);
+        webSiteEditText.setEnabled(false);
+        countryEditText.setEnabled(false);
+        buttonSalva.setVisibility(View.INVISIBLE);
+        pulsantiAste.setVisibility(View.VISIBLE);
 
-                                @Override
-                                public void onFailure(@NonNull Call<UtenteDTO> call, @NonNull Throwable t) {
-                                    Toast.makeText(ProfiloActivity.this, "Errore di connessione", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                }
-            });
+        utenteOriginale = utente;
     }
 
     private void openMenuProfilo(View view, Utente utente) {
@@ -438,8 +404,8 @@ public class ProfiloActivity extends AppCompatActivity {
         });
     }
 
-    public Asta_Ribasso creaModelloAstaR(AstaDTO dto) {
-        Asta_Ribasso asta = new Asta_Ribasso();
+    public AstaRibasso creaModelloAstaR(AstaDTO dto) {
+        AstaRibasso asta = new AstaRibasso();
         asta.setId(dto.getID());
         asta.setIdCreatore(dto.getIdCreatore());
         asta.setCategoria(dto.getCategoria());
@@ -452,8 +418,8 @@ public class ProfiloActivity extends AppCompatActivity {
         return asta;
     }
 
-    public Asta_Silenziosa creaModelloAstaS(AstaDTO dto) {
-        Asta_Silenziosa asta = new Asta_Silenziosa();
+    public AstaSilenziosa creaModelloAstaS(AstaDTO dto) {
+        AstaSilenziosa asta = new AstaSilenziosa();
         asta.setId(dto.getID());
         asta.setIdCreatore(dto.getIdCreatore());
         asta.setCategoria(dto.getCategoria());
@@ -466,8 +432,8 @@ public class ProfiloActivity extends AppCompatActivity {
         return asta;
     }
 
-    public Asta_Inversa creaModelloAstaI(AstaDTO dto) {
-        Asta_Inversa asta = new Asta_Inversa();
+    public AstaInversa creaModelloAstaI(AstaDTO dto) {
+        AstaInversa asta = new AstaInversa();
         asta.setId(dto.getID());
         asta.setIdCreatore(dto.getIdCreatore());
         asta.setCategoria(dto.getCategoria());

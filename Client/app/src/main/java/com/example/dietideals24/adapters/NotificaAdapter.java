@@ -145,7 +145,7 @@ public class NotificaAdapter extends ArrayAdapter<NotificaDTO> {
         notifyDataSetChanged();
     }
 
-    public void updateNotifica(NotificaDTO notifica) {
+    public void updateNotifica() {
         notifyDataSetChanged();
     }
 }

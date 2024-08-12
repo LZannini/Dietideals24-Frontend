@@ -65,20 +65,14 @@ public class RisultatiRicercaActivity extends AppCompatActivity implements Aucti
         else
             risultatiRicerca.setText("Risultati per "+ criterioRicerca);
 
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openActivityCercaAsta();
-                finish();
-            }
+        backButton.setOnClickListener(v -> {
+            openActivityCercaAsta();
+            finish();
         });
 
-        homeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openActivityHome(utente);
-                finish();
-            }
+        homeButton.setOnClickListener(v -> {
+            openActivityHome(utente);
+            finish();
         });
 
         RecyclerView recyclerView = findViewById(R.id.risultati_recycler_view);

@@ -56,134 +56,106 @@ public class RegistrazioneActivity extends AppCompatActivity {
         tipoCompratore = findViewById(R.id.checkbox_compratore);
         tipoVenditore = findViewById(R.id.checkbox_venditore);
         backButton = findViewById(R.id.back_button);
-
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openActivityLogin();
-                finish();
-            }
-        });
-
-        tipoCompratore.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    selezioneAccount.add(TipoUtente.COMPRATORE);
-                } else {
-                    selezioneAccount.remove(TipoUtente.COMPRATORE);
-                }
-            }
-        });
-
-        tipoVenditore.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    selezioneAccount.add(TipoUtente.VENDITORE);
-                } else {
-                    selezioneAccount.remove(TipoUtente.VENDITORE);
-                }
-            }
-        });
+        buttonLogin = (TextView) findViewById(R.id.textView_accedi);
 
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.hide();
 
-        buttonLogin = (TextView) findViewById(R.id.textView_accedi);
-        buttonLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openActivityLogin();
-            }
-        });
-
         btnR = (Button) findViewById(R.id.registrati_button);
 
         ApiService apiService = RetrofitService.getRetrofit(this).create(ApiService.class);
 
-        btnR.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        backButton.setOnClickListener(v -> {
+            openActivityLogin();
+            finish();
+        });
 
-                String username = usernameEditText.getText().toString();
-                String email = emailEditText.getText().toString();
-                String password = passwordEditText.getText().toString();
-                String confPass = confPasswordEditText.getText().toString();
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(RegistrazioneActivity.this);
-
-                if (username.length() == 0 || email.length() == 0 || password.length() == 0 || confPass.length() == 0 || selezioneAccount.size() == 0) {
-                    builder.setMessage("Bisogna riempire tutti i campi!")
-                            .setCancelable(false)
-                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                }
-                            });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-                    usernameEditText.setText("");
-                    emailEditText.setText("");
-                    passwordEditText.setText("");
-                    confPasswordEditText.setText("");
-                    return;
-                }
-
-                if (password.equals(confPass)) {
-                    try {
-                        UtenteDTO utente = new UtenteDTO();
-                        utente.setUsername(username);
-                        utente.setEmail(email);
-                        utente.setPassword(password);
-
-                        if (selezioneAccount.size() == 1) {
-                            TipoUtente tipoUtente = selezioneAccount.get(0);
-                            utente.setTipo(tipoUtente);
-                        } else {
-                            utente.setTipo(TipoUtente.COMPLETO);
-                        }
-
-                        apiService.registraUtente(utente)
-                                .enqueue(new Callback<UtenteDTO>() {
-                                    @Override
-                                    public void onResponse(@NonNull Call<UtenteDTO> call, @NonNull Response<UtenteDTO> response) {
-                                        if(response.isSuccessful()) {
-                                            Toast.makeText(RegistrazioneActivity.this, "Registrazione effettuata con successo!", Toast.LENGTH_SHORT).show();
-                                            openActivityLogin();
-                                        } else if(response.code() == 409) {
-                                            Toast.makeText(RegistrazioneActivity.this, "Email o username già registrati, prova ad effettuare il login!", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onFailure(@NonNull Call<UtenteDTO> call, @NonNull Throwable t) {
-                                        Toast.makeText(RegistrazioneActivity.this, "Errore durante la registrazione!", Toast.LENGTH_SHORT).show();
-                                        Logger.getLogger(RegistrazioneActivity.class.getName()).log(Level.SEVERE, "Errore rilevato", t);
-                                    }
-                                });
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-
-
-                } else {
-                    builder.setMessage("Le password non corrispondono, riprova")
-                            .setCancelable(false)
-                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                }
-                            });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-                    usernameEditText.setText("");
-                    emailEditText.setText("");
-                    passwordEditText.setText("");
-                    confPasswordEditText.setText("");
-                }
+        tipoCompratore.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                selezioneAccount.add(TipoUtente.COMPRATORE);
+            } else {
+                selezioneAccount.remove(TipoUtente.COMPRATORE);
             }
         });
 
+        tipoVenditore.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                selezioneAccount.add(TipoUtente.VENDITORE);
+            } else {
+                selezioneAccount.remove(TipoUtente.VENDITORE);
+            }
+        });
+
+        buttonLogin.setOnClickListener(v -> openActivityLogin());
+
+        btnR.setOnClickListener(v -> handleRegistration());
+    }
+
+    private void handleRegistration() {
+        String username = usernameEditText.getText().toString().trim();
+        String email = emailEditText.getText().toString().trim();
+        String password = passwordEditText.getText().toString().trim();
+        String confPass = confPasswordEditText.getText().toString().trim();
+
+        if (!validateInputs(username, email, password, confPass)) {
+            return;
+        }
+
+        if (password.equals(confPass)) {
+            UtenteDTO utente = new UtenteDTO();
+            utente.setUsername(username);
+            utente.setEmail(email);
+            utente.setPassword(password);
+            utente.setTipo(getTipoUtente());
+
+            ApiService apiService = RetrofitService.getRetrofit(this).create(ApiService.class);
+            apiService.registraUtente(utente).enqueue(new Callback<UtenteDTO>() {
+                @Override
+                public void onResponse(@NonNull Call<UtenteDTO> call, @NonNull Response<UtenteDTO> response) {
+                    if (response.isSuccessful()) {
+                        Toast.makeText(RegistrazioneActivity.this, "Registrazione effettuata con successo!", Toast.LENGTH_SHORT).show();
+                        openActivityLogin();
+                    } else if (response.code() == 409) {
+                        showAlert("Email o username già registrati, prova ad effettuare il login!");
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<UtenteDTO> call, @NonNull Throwable t) {
+                    showAlert("Errore durante la registrazione!");
+                    Logger.getLogger(RegistrazioneActivity.class.getName()).log(Level.SEVERE, "Errore rilevato", t);
+                }
+            });
+        } else {
+            showAlert("Le password non corrispondono, riprova");
+        }
+    }
+
+    private boolean validateInputs(String username, String email, String password, String confPass) {
+        if (username.isEmpty() || email.isEmpty() || password.isEmpty() || confPass.isEmpty() || selezioneAccount.isEmpty()) {
+            showAlert("Bisogna riempire tutti i campi!");
+            return false;
+        }
+        return true;
+    }
+
+    private TipoUtente getTipoUtente() {
+        if (selezioneAccount.size() == 1) {
+            return selezioneAccount.iterator().next();
+        } else {
+            return TipoUtente.COMPLETO;
+        }
+    }
+
+    private void showAlert(String message) {
+        new AlertDialog.Builder(this)
+                .setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton("OK", (dialog, id) -> {
+                    // Optional: add any action on button click
+                })
+                .show();
     }
 
     @Override

@@ -67,71 +67,62 @@ public class LoginActivity extends AppCompatActivity {
         actionBar.hide();
 
         buttonRegistrazione = (TextView) findViewById(R.id.textView_registrati);
-        buttonRegistrazione.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openActivityRegistrazione();
-            }
-        });
+        buttonRegistrazione.setOnClickListener(view -> openActivityRegistrazione());
+
         btnL = (Button) findViewById(R.id.login_button);
         buttonGoogle = (ImageView) findViewById(R.id.google_button);
 
         apiService = RetrofitService.getInstance(this).getRetrofit(this).create(ApiService.class);
-        btnL.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String email = emailEditText.getText().toString();
-                String password = passwordEditText.getText().toString();
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+        btnL.setOnClickListener(view -> {
+            String email = emailEditText.getText().toString();
+            String password = passwordEditText.getText().toString();
 
-                if (email.length() == 0 || password.length() == 0) {
-                    builder.setMessage("Bisogna riempire tutti i campi!")
-                            .setCancelable(false)
-                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                }
-                            });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-                    emailEditText.setText("");
-                    passwordEditText.setText("");
-                    return;
-                }
+            AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
 
-                tokenManager = new TokenManager(LoginActivity.this);
-
-                UtenteDTO utente = new UtenteDTO();
-                utente.setEmail(email);
-                utente.setPassword(password);
-
-                apiService.loginUtente(utente)
-                        .enqueue(new Callback<JwtAuthenticationResponse>() {
-                            @Override
-                            public void onResponse(@NonNull Call<JwtAuthenticationResponse> call, @NonNull Response<JwtAuthenticationResponse> response) {
-                                if(response.isSuccessful()) {
-                                    JwtAuthenticationResponse authResponse = response.body();
-                                    if (authResponse != null && authResponse.getAccessToken() != null) {
-                                        tokenManager.saveToken(authResponse.getAccessToken());
-
-                                        RetrofitService.resetInstance();
-                                        apiService = RetrofitService.getInstance(LoginActivity.this).getRetrofit(LoginActivity.this).create(ApiService.class);
-
-                                        recuperaDatiUtente();
-                                    }else {
-                                        Toast.makeText(LoginActivity.this, "Token non valido ricevuto", Toast.LENGTH_SHORT).show();
-                                        }
-                                } else if(response.code() == 401) {
-                                    Toast.makeText(LoginActivity.this, "Email e/o password non corretti, riprova!", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(@NonNull Call<JwtAuthenticationResponse> call, @NonNull Throwable t) {
-                                Logger.getLogger(LoginActivity.class.getName()).log(Level.SEVERE, "Errore rilevato", t);
-                            }
-                        });
+            if (email.isEmpty() || password.isEmpty()) {
+                builder.setMessage("Bisogna riempire tutti i campi!")
+                        .setCancelable(false)
+                        .setPositiveButton("OK", (dialog, id) -> {})
+                        .create()
+                        .show();
+                emailEditText.setText("");
+                passwordEditText.setText("");
+                return;
             }
+
+            tokenManager = new TokenManager(LoginActivity.this);
+
+            UtenteDTO utente = new UtenteDTO();
+            utente.setEmail(email);
+            utente.setPassword(password);
+
+            apiService.loginUtente(utente)
+                    .enqueue(new Callback<JwtAuthenticationResponse>() {
+                        @Override
+                        public void onResponse(@NonNull Call<JwtAuthenticationResponse> call, @NonNull Response<JwtAuthenticationResponse> response) {
+                            if (response.isSuccessful()) {
+                                JwtAuthenticationResponse authResponse = response.body();
+                                if (authResponse != null && authResponse.getAccessToken() != null) {
+                                    tokenManager.saveToken(authResponse.getAccessToken());
+
+                                    RetrofitService.resetInstance();
+                                    apiService = RetrofitService.getInstance(LoginActivity.this).getRetrofit(LoginActivity.this).create(ApiService.class);
+
+                                    recuperaDatiUtente();
+                                } else {
+                                    Toast.makeText(LoginActivity.this, "Token non valido ricevuto", Toast.LENGTH_SHORT).show();
+                                }
+                            } else if (response.code() == 401) {
+                                Toast.makeText(LoginActivity.this, "Email e/o password non corretti, riprova!", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(@NonNull Call<JwtAuthenticationResponse> call, @NonNull Throwable t) {
+                            Logger.getLogger(LoginActivity.class.getName()).log(Level.SEVERE, "Errore rilevato", t);
+                        }
+                    });
         });
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -188,11 +179,11 @@ public class LoginActivity extends AppCompatActivity {
                             if(response.isSuccessful()) {
                                 Toast.makeText(LoginActivity.this, "Login effettuato con successo", Toast.LENGTH_SHORT).show();
                                 UtenteDTO utenteDTO = response.body();
-                                Utente utente_intent = creaUtente(utenteDTO);
-                                if (utente_intent.getTipo().toString().equals(TipoUtente.NESSUNO.toString())) {
-                                    openActivitySceltaAccount(utente_intent);
+                                Utente utenteIntent = creaUtente(utenteDTO);
+                                if (utenteIntent.getTipo().toString().equals(TipoUtente.NESSUNO.toString())) {
+                                    openActivitySceltaAccount(utenteIntent);
                                 } else {
-                                    openActivityHome(utente_intent);
+                                    openActivityHome(utenteIntent);
                                 }
                             } else {
                                 Toast.makeText(LoginActivity.this, "Errore nel recupero dei dati utente", Toast.LENGTH_SHORT).show();

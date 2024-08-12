@@ -2,15 +2,14 @@ package com.example.dietideals24.models;
 
 import com.example.dietideals24.enums.Categoria;
 
-
-public class Asta_Ribasso extends Asta {
+public class AstaRibasso extends Asta {
 
     private float prezzo;
     private String timer;
     private float decremento;
     private float minimo;
 
-    public Asta_Ribasso(int idCreatore, String nome, String descrizione, Categoria categoria, byte[] foto, float prezzo, String timer, float decremento, float minimo) {
+    public AstaRibasso(int idCreatore, String nome, String descrizione, Categoria categoria, byte[] foto, float prezzo, String timer, float decremento, float minimo) {
         super(idCreatore, nome, descrizione, categoria, foto);
         this.prezzo = prezzo;
         this.timer = timer;
@@ -18,7 +17,7 @@ public class Asta_Ribasso extends Asta {
         this.minimo = minimo;
     }
 
-    public Asta_Ribasso() {}
+    public AstaRibasso() {}
 
     public float getPrezzo() {
         return prezzo;

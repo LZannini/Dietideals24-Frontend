@@ -2,10 +2,8 @@ package com.example.dietideals24;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
@@ -17,7 +15,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.dietideals24.api.ApiService;
-import com.example.dietideals24.dto.Asta_SilenziosaDTO;
+import com.example.dietideals24.dto.AstaSilenziosaDTO;
 import com.example.dietideals24.models.Asta;
 import com.example.dietideals24.models.Utente;
 import com.example.dietideals24.retrofit.RetrofitService;
@@ -53,50 +51,41 @@ public class CreaAstaSilenziosaActivity extends AppCompatActivity {
         ImageButton backButton = findViewById(R.id.back_button);
         ImageButton homeButton = findViewById(R.id.home_button);
 
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openActivityTipoAsta(utente, asta);
-                finish();
-            }
-        });
-
-        homeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openActivityHome(utente);
-                finish();
-            }
-        });
-
         timePicker.setIs24HourView(true);
+
+        backButton.setOnClickListener(v -> {
+            openActivityTipoAsta(utente, asta);
+            finish();
+        });
+
+        homeButton.setOnClickListener(v -> {
+            openActivityHome(utente);
+            finish();
+        });
 
         createButton.setOnClickListener(v -> {
             int day = datePicker.getDayOfMonth();
-            int month = datePicker.getMonth() + 1;
+            int month = datePicker.getMonth() + 1;  // Aggiunta +1 per il mese
             int year = datePicker.getYear();
             int hour = timePicker.getHour();
             int minute = timePicker.getMinute();
+
             String scadenza = String.format("%d-%02d-%02d %02d:%02d:00", year, month, day, hour, minute);
+
             Calendar currentTime = Calendar.getInstance();
             Calendar scadenzaTime = Calendar.getInstance();
-            scadenzaTime.set(year, month, day, hour, minute);
+            scadenzaTime.set(year, month - 1, day, hour, minute);  // Mese corretto per Calendar
 
             if (currentTime.after(scadenzaTime)) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(CreaAstaSilenziosaActivity.this);
-
-                builder.setMessage("Errore, la data di scadenza non è valida.")
+                new AlertDialog.Builder(CreaAstaSilenziosaActivity.this)
+                        .setMessage("Errore, la data di scadenza non è valida.")
                         .setCancelable(false)
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                            }
-                        });
-                AlertDialog alert = builder.create();
-                alert.show();
+                        .setPositiveButton("OK", (dialog, id) -> {})
+                        .create()
+                        .show();
                 return;
-            }
-            else{
-                Asta_SilenziosaDTO astaS = new Asta_SilenziosaDTO();
+            } else {
+                AstaSilenziosaDTO astaS = new AstaSilenziosaDTO();
                 astaS.setIdCreatore(asta.getIdCreatore());
                 astaS.setNome(asta.getNome());
                 astaS.setDescrizione(asta.getDescrizione());
@@ -104,23 +93,22 @@ public class CreaAstaSilenziosaActivity extends AppCompatActivity {
                 astaS.setCategoria(asta.getCategoria());
                 astaS.setScadenza(scadenza);
 
-                ApiService apiService = RetrofitService.getRetrofit(this).create(ApiService.class);
+                ApiService apiService = RetrofitService.getRetrofit(CreaAstaSilenziosaActivity.this).create(ApiService.class);
 
-                apiService.creaAstaSilenziosa(astaS)
-                        .enqueue(new Callback<Void>() {
-                            @Override
-                            public void onResponse(Call<Void> call, Response<Void> response) {
-                                if (response.isSuccessful()) {
-                                    Toast.makeText(CreaAstaSilenziosaActivity.this, "Asta creata con successo!", Toast.LENGTH_SHORT).show();
-                                    openActivityHome(utente);
-                                }
-                            }
+                apiService.creaAstaSilenziosa(astaS).enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(CreaAstaSilenziosaActivity.this, "Asta creata con successo!", Toast.LENGTH_SHORT).show();
+                            openActivityHome(utente);
+                        }
+                    }
 
-                            @Override
-                            public void onFailure(Call<Void> call, Throwable t) {
-                                Toast.makeText(CreaAstaSilenziosaActivity.this, "Errore durante la creazione dell'asta!", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Toast.makeText(CreaAstaSilenziosaActivity.this, "Errore durante la creazione dell'asta!", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
     }
