@@ -161,32 +161,32 @@ public class SceltaAccountActivity extends AppCompatActivity {
 
 
     private UtenteDTO converteDTO(Utente ut){
-        UtenteDTO utente = new UtenteDTO();
-        utente.setId(ut.getId());
-        utente.setUsername(ut.getUsername());
-        utente.setEmail(ut.getEmail());
-        utente.setPassword(ut.getPassword());
-        utente.setBiografia(ut.getBiografia());
-        utente.setSitoweb(ut.getSitoweb());
-        utente.setPaese(ut.getPaese());
-        utente.setTipo(ut.getTipo());
-        utente.setAvatar(ut.getAvatar());
+        UtenteDTO utenteDTO = new UtenteDTO();
+        utenteDTO.setId(ut.getId());
+        utenteDTO.setUsername(ut.getUsername());
+        utenteDTO.setEmail(ut.getEmail());
+        utenteDTO.setPassword(ut.getPassword());
+        utenteDTO.setBiografia(ut.getBiografia());
+        utenteDTO.setSitoweb(ut.getSitoweb());
+        utenteDTO.setPaese(ut.getPaese());
+        utenteDTO.setTipo(ut.getTipo());
+        utenteDTO.setAvatar(ut.getAvatar());
 
-        return utente;
+        return utenteDTO;
     }
 
     private Utente creaUtente(UtenteDTO u) {
-        Utente utente = new Utente();
-        utente.setId(u.getId());
-        utente.setUsername(u.getUsername());
-        utente.setEmail(u.getEmail());
-        utente.setPassword(u.getPassword());
-        utente.setBiografia(u.getBiografia());
-        utente.setSitoweb(u.getSitoweb());
-        utente.setPaese(u.getPaese());
-        utente.setTipo(u.getTipo());
-        utente.setAvatar(u.getAvatar());
-        return utente;
+        Utente user = new Utente();
+        user.setId(u.getId());
+        user.setUsername(u.getUsername());
+        user.setEmail(u.getEmail());
+        user.setPassword(u.getPassword());
+        user.setBiografia(u.getBiografia());
+        user.setSitoweb(u.getSitoweb());
+        user.setPaese(u.getPaese());
+        user.setTipo(u.getTipo());
+        user.setAvatar(u.getAvatar());
+        return user;
     }
 
     private void aggiornaTipoAccount(UtenteDTO utente) {

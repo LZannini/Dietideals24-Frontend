@@ -145,7 +145,7 @@ public class ProfiloActivity extends AppCompatActivity {
     }
 
     private void salvaModificheUtente() {
-        Utente utenteModificato = new Utente();
+        utenteModificato = new Utente();
         utenteModificato.setId(utenteOriginale.getId());
         utenteModificato.setPassword(utenteOriginale.getPassword());
         utenteModificato.setTipo(utenteOriginale.getTipo());
@@ -216,43 +216,38 @@ public class ProfiloActivity extends AppCompatActivity {
         PopupMenu popup = new PopupMenu(this, view);
 
         popup.getMenuInflater().inflate(R.menu.menu_profilo, popup.getMenu());
-        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.action_edit_profile:
-                        textUsername.setEnabled(true);
-                        emailEditText.setEnabled(true);
-                        bioEditText.setEnabled(true);
-                        webSiteEditText.setEnabled(true);
-                        countryEditText.setEnabled(true);
-                        avatarSelector.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                ImagePicker.with(ProfiloActivity.this)
-                                        .crop()	    			//Crop image(Optional), Check Customization for more option
-                                        .compress(1024)			//Final image size will be less than 1 MB(Optional)
-                                        .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
-                                        .start();
-                            }
-                        });
+        popup.setOnMenuItemClickListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.action_edit_profile:
+                    textUsername.setEnabled(true);
+                    emailEditText.setEnabled(true);
+                    bioEditText.setEnabled(true);
+                    webSiteEditText.setEnabled(true);
+                    countryEditText.setEnabled(true);
+                    avatarSelector.setOnClickListener(v -> {
+                        ImagePicker.with(ProfiloActivity.this)
+                                .crop()	    			// Crop image(Optional), Check Customization for more option
+                                .compress(1024)			// Final image size will be less than 1 MB(Optional)
+                                .maxResultSize(1080, 1080)	// Final image resolution will be less than 1080 x 1080(Optional)
+                                .start();
+                    });
 
-                        pulsantiAste.setVisibility(View.GONE);
-                        buttonSalva.setVisibility(View.VISIBLE);
-                        return true;
-                    case R.id.action_change_password:
-                        openActivityModificaPassword(utente);
-                        return true;
-                    case R.id.action_switch_account:
-                        openActivitySceltaAccount(utente);
-                        return true;
-                    default:
-                        return false;
-                }
+                    pulsantiAste.setVisibility(View.GONE);
+                    buttonSalva.setVisibility(View.VISIBLE);
+                    return true;
+                case R.id.action_change_password:
+                    openActivityModificaPassword(utente);
+                    return true;
+                case R.id.action_switch_account:
+                    openActivitySceltaAccount(utente);
+                    return true;
+                default:
+                    return false;
             }
         });
         popup.show();
     }
+
 
 
     @Override

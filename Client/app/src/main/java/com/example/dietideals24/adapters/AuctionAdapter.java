@@ -28,8 +28,6 @@ public class AuctionAdapter extends RecyclerView.Adapter<AuctionAdapter.AuctionV
     public AuctionAdapter(List<Asta> auctionList, OnAstaListener onAstaListener, boolean isAttive, boolean fromCreate) {
         this.auctionList = auctionList;
         this.onAstaListener = onAstaListener;
-        this.isAttive = isAttive;
-        this.fromCreate = fromCreate;
     }
 
     public void setAste(List<Asta> listaAste, boolean isAttive) {

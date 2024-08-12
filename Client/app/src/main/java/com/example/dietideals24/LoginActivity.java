@@ -154,7 +154,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void recuperaDatiUtente() {
-        TokenManager tokenManager = new TokenManager(LoginActivity.this);
+
+        tokenManager = new TokenManager(LoginActivity.this);
         int userId = tokenManager.getUserIdFromToken();
 
         if (userId != -1) {
@@ -233,7 +234,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<JwtAuthenticationResponse> call, @NonNull Response<JwtAuthenticationResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     JwtAuthenticationResponse authResponse = response.body();
-                    TokenManager tokenManager = new TokenManager(LoginActivity.this);
+                    tokenManager = new TokenManager(LoginActivity.this);
                     tokenManager.saveToken(authResponse.getAccessToken());
                     RetrofitService.resetInstance();
                     apiService = RetrofitService.getInstance(LoginActivity.this).getRetrofit(LoginActivity.this).create(ApiService.class);

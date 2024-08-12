@@ -445,13 +445,8 @@ public class NotificaActivity extends AppCompatActivity implements NotificaAdapt
         else
             builder.setMessage(notifica.getTesto() + ' ' + notifica.getNomeAsta());
 
-        builder.setPositiveButton("Rimuovi", (dialog, which) -> {
-            rimuoviSelezionata(notifica, apiService);
-        });
-
-        builder.setNegativeButton("Chiudi", (dialog, which) -> {
-            dialog.dismiss();
-        });
+        builder.setPositiveButton("Rimuovi", (dialog, which) ->  rimuoviSelezionata(notifica, apiService));
+        builder.setNegativeButton("Chiudi", (dialog, which) -> dialog.dismiss());
 
         AlertDialog dialog = builder.create();
         dialog.show();

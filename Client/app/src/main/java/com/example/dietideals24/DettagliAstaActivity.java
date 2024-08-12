@@ -120,9 +120,9 @@ public class DettagliAstaActivity extends AppCompatActivity implements OfferAdap
         TextView tvCategoryValue = findViewById(R.id.tvCategoryValue);
         ImageView ivTypeValue = findViewById(R.id.ivTypeValue);
         TextView tvCreatorValue = findViewById(R.id.tvCreatorValue);
-        TextView tvPriceValue = findViewById(R.id.tvPriceValue);
-        TextView tvDecrementValue = findViewById(R.id.tvDecrementValue);
-        TextView tvTimerValue = findViewById(R.id.tvTimerValue);
+        tvPriceValue = findViewById(R.id.tvPriceValue);
+        tvDecrementValue = findViewById(R.id.tvDecrementValue);
+        tvTimerValue = findViewById(R.id.tvTimerValue);
         TextView tvLowestOffer = findViewById(R.id.tvLowestOffer);
         TextView tvLowestOfferValue = findViewById(R.id.tvLowestOfferValue);
         EditText etOffer = findViewById(R.id.etOffer);
@@ -428,8 +428,8 @@ public class DettagliAstaActivity extends AppCompatActivity implements OfferAdap
                 .enqueue(new Callback<AstaRibassoDTO>() {
                     @Override
                     public void onResponse(@NonNull Call<AstaRibassoDTO> call, @NonNull Response<AstaRibassoDTO> response) {
-                        AstaRibassoDTO asta = response.body();
-                        updateUI(asta);
+                        AstaRibassoDTO astaR = response.body();
+                        updateUI(astaR);
                     }
 
                     @Override

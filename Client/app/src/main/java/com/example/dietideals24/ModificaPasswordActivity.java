@@ -92,13 +92,13 @@ public class ModificaPasswordActivity extends AppCompatActivity {
 
     private void updatePassword(String nuovaPass) {
         try {
-            UtenteDTO utente = new UtenteDTO();
-            utente.setId(idUtente);
-            utente.setPassword(nuovaPass);
+            UtenteDTO utenteDTO = new UtenteDTO();
+            utenteDTO.setId(idUtente);
+            utenteDTO.setPassword(nuovaPass);
 
             ApiService apiService = RetrofitService.getRetrofit(ModificaPasswordActivity.this).create(ApiService.class);
 
-            apiService.modificaPassword(utente).enqueue(new Callback<UtenteDTO>() {
+            apiService.modificaPassword(utenteDTO).enqueue(new Callback<UtenteDTO>() {
                 @Override
                 public void onResponse(@NonNull Call<UtenteDTO> call, @NonNull Response<UtenteDTO> response) {
                     if (response.isSuccessful()) {
@@ -120,17 +120,17 @@ public class ModificaPasswordActivity extends AppCompatActivity {
     }
 
     private Utente creaUtente(UtenteDTO utenteDTO) {
-        Utente utente = new Utente();
-        utente.setId(utenteDTO.getId());
-        utente.setUsername(utenteDTO.getUsername());
-        utente.setEmail(utenteDTO.getEmail());
-        utente.setPassword(utenteDTO.getPassword());
-        utente.setBiografia(utenteDTO.getBiografia());
-        utente.setSitoweb(utenteDTO.getSitoweb());
-        utente.setPaese(utenteDTO.getPaese());
-        utente.setTipo(utenteDTO.getTipo());
-        utente.setAvatar(utenteDTO.getAvatar());
-        return utente;
+        Utente utenteNew = new Utente();
+        utenteNew.setId(utenteDTO.getId());
+        utenteNew.setUsername(utenteDTO.getUsername());
+        utenteNew.setEmail(utenteDTO.getEmail());
+        utenteNew.setPassword(utenteDTO.getPassword());
+        utenteNew.setBiografia(utenteDTO.getBiografia());
+        utenteNew.setSitoweb(utenteDTO.getSitoweb());
+        utenteNew.setPaese(utenteDTO.getPaese());
+        utenteNew.setTipo(utenteDTO.getTipo());
+        utenteNew.setAvatar(utenteDTO.getAvatar());
+        return utenteNew;
     }
 
     @Override
