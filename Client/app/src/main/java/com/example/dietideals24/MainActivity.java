@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 
-
+@SuppressWarnings("deprecation")
 public class MainActivity extends AppCompatActivity {
 
     @Override

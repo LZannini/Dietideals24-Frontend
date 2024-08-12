@@ -5,13 +5,10 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -64,8 +61,6 @@ public class RegistrazioneActivity extends AppCompatActivity {
         actionBar.hide();
 
         btnR = (Button) findViewById(R.id.registrati_button);
-
-        ApiService apiService = RetrofitService.getRetrofit(this).create(ApiService.class);
 
         backButton.setOnClickListener(v -> {
             openActivityLogin();

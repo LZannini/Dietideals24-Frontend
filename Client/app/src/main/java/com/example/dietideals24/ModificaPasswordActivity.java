@@ -5,10 +5,8 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -49,8 +47,6 @@ public class ModificaPasswordActivity extends AppCompatActivity {
         salvaButton = findViewById(R.id.salva_button);
         backButton = findViewById(R.id.back_button);
         ImageButton homeButton = findViewById(R.id.home_button);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(ModificaPasswordActivity.this);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();

@@ -5,7 +5,6 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -37,7 +36,6 @@ public class HomeActivity extends AppCompatActivity {
     private LinearLayout buttonProfilo;
     private Button buttonNotifica;
     private LinearLayout buttonDisconnetti;
-    private AlertDialog.Builder builder;
     private Utente utente;
 
     @Override

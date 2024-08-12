@@ -70,11 +70,9 @@ public class DettagliAstaActivity extends AppCompatActivity implements OfferAdap
     private TextView tvCategoryValue;
     private TextView tvCreatorValue;
     private TextView tvPriceValue;
-    private TextView tvPrice;
     private TextView tvTimerValue;
     private TextView tvLowestOfferValue;
     private TextView tvDecrementValue;
-    private TextView getTvTimerValue;
     private ImageView ivTypeValue;
     private Button btnSubmitOffer;
     private ImageView ivFoto;
@@ -138,7 +136,6 @@ public class DettagliAstaActivity extends AppCompatActivity implements OfferAdap
         ivTypeValue = findViewById(R.id.ivTypeValue);
         tvCreatorValue = findViewById(R.id.tvCreatorValue);
         tvPriceValue = findViewById(R.id.tvPriceValue);
-        tvPrice = findViewById(R.id.tvPrice);
         tvDecrementValue = findViewById(R.id.tvDecrementValue);
         tvTimerValue = findViewById(R.id.tvTimerValue);
         tvLowestOffer = findViewById(R.id.tvLowestOffer);

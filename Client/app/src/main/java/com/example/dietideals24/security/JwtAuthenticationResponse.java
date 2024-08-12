@@ -1,6 +1,5 @@
 package com.example.dietideals24.security;
 
-import com.example.dietideals24.enums.StatoAsta;
 
 public class JwtAuthenticationResponse {
     private String accessToken;
