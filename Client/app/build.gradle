@@ -25,7 +25,8 @@ android {
         abortOnError false
         checkReleaseBuilds false
         baseline file("lint-baseline.xml")
-        disable 'ScopedStorage', 'NewApi' // Disabilita i controlli specifici di Lint
+        disable 'ScopedStorage', 'NewApi'
+        disable 'ScrollViewSize' 
     }
 
     compileOptions {
