@@ -136,6 +136,8 @@ public class SceltaAccountActivity extends AppCompatActivity {
                 case COMPLETO:
                     completoButt.setEnabled(false);
                     completoButt.setAlpha(0.5f);
+                default:
+                    return;
             }
         }
     }

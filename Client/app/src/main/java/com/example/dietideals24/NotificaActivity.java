@@ -98,10 +98,9 @@ public class NotificaActivity extends AppCompatActivity implements NotificaAdapt
             listView.setAdapter(adapter);
 
             for (NotificaDTO notifica : listaNotifiche) {
-                if(notifica.getIdAsta()!=0)
-                recuperaAsta(notifica, apiService);
+                if (notifica.getIdAsta() != 0)
+                    recuperaAsta(notifica, apiService);
             }
-
     }
 
     private void mostraDialogoEliminaTutte() {
@@ -409,6 +408,8 @@ public class NotificaActivity extends AppCompatActivity implements NotificaAdapt
             case "INVERSA":
                 a = creaModelloAstaI(asta);
                 break;
+            default:
+                return null;
         }
 
         return a;
@@ -426,10 +427,11 @@ public class NotificaActivity extends AppCompatActivity implements NotificaAdapt
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (astaRicevuta != null)
-                    recuperaUtenteCreatore(astaRicevuta.getIdCreatore(),apiService);
-                else
+                if (astaRicevuta != null) {
+                    recuperaUtenteCreatore(astaRicevuta.getIdCreatore(), apiService);
+                } else {
                     handler.postDelayed(this, 100);
+                }
             }
         }, 100);
 

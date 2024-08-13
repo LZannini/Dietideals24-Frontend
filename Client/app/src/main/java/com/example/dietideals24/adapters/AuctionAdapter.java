@@ -49,14 +49,15 @@ public class AuctionAdapter extends RecyclerView.Adapter<AuctionAdapter.AuctionV
         Asta asta = auctionList.get(position);
         holder.bind(asta);
 
-        if(fromCreate)
-            if(asta.getStato().toString().equals("VENDUTA")) {
+        if (fromCreate) {
+            if (asta.getStato().toString().equals("VENDUTA")) {
                 holder.itemView.setBackgroundResource(R.drawable.border_venduta);
-            } else if(asta.getStato().toString().equals("FALLITA")) {
+            } else if (asta.getStato().toString().equals("FALLITA")) {
                 holder.itemView.setBackgroundResource(R.drawable.border_fallita);
             } else {
                 holder.itemView.setBackgroundResource(0);
             }
+        }
     }
 
     @Override

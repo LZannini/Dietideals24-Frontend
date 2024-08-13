@@ -12,7 +12,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -224,14 +223,13 @@ public class ProfiloActivity extends AppCompatActivity {
                     bioEditText.setEnabled(true);
                     webSiteEditText.setEnabled(true);
                     countryEditText.setEnabled(true);
-                    avatarSelector.setOnClickListener(v -> {
-                        ImagePicker.with(ProfiloActivity.this)
-                                .crop()	    			// Crop image(Optional), Check Customization for more option
-                                .compress(1024)			// Final image size will be less than 1 MB(Optional)
-                                .maxResultSize(1080, 1080)	// Final image resolution will be less than 1080 x 1080(Optional)
-                                .start();
-                    });
-
+                    avatarSelector.setOnClickListener(v ->
+                            ImagePicker.with(ProfiloActivity.this)
+                                    .crop()                    // Crop image (Optional), Check Customization for more option
+                                    .compress(1024)            // Final image size will be less than 1 MB (Optional)
+                                    .maxResultSize(1080, 1080) // Final image resolution will be less than 1080 x 1080 (Optional)
+                                    .start()
+                    );
                     pulsantiAste.setVisibility(View.GONE);
                     buttonSalva.setVisibility(View.VISIBLE);
                     return true;
@@ -449,6 +447,8 @@ public class ProfiloActivity extends AppCompatActivity {
                 case "INVERSA":
                     asteList.add(creaModelloAstaI(dto));
                     break;
+                default:
+                    return null;
             }
         }
         return asteList;

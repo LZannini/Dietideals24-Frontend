@@ -68,14 +68,14 @@ public class TipoAstaActivity extends AppCompatActivity {
     }
 
     private void configuraBottoni(String tipoUtente, LinearLayout buttonInversa, LinearLayout buttonRibasso, LinearLayout buttonSilenziosa) {
-        switch(tipoUtente) {
-            case "VENDITORE":
+        if  (tipoUtente.equals("VENDITORE"))
                 disabilitaBottone(buttonInversa);
-                break;
-            case "COMPRATORE":
+        else if (tipoUtente.equals("COMPRATORE")) {
                 disabilitaBottone(buttonRibasso);
                 disabilitaBottone(buttonSilenziosa);
-        }
+            }
+        else
+            return;
     }
 
     @Override
