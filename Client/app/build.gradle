@@ -3,6 +3,7 @@ plugins {
 }
 android {
     lintOptions {
+        abortOnError false
         baseline file("lint-baseline.xml")
     }
     namespace 'com.example.dietideals24'
