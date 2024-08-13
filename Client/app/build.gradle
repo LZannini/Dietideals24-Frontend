@@ -26,6 +26,8 @@ android {
         checkReleaseBuilds false
         baseline file("lint-baseline.xml")
         warningsAsErrors false 
+        baselineEnabled false
+
     }
 
     compileOptions {
