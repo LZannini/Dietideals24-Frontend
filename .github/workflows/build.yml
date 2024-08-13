@@ -41,4 +41,5 @@ jobs:
         run: |
           cd Client  
           chmod +x ./gradlew  
-          ./gradlew build sonar --info
+          ./gradlew clean build sonarqube -Dsonar.projectKey=your_project_key -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN --info
+
