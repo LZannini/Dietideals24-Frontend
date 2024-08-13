@@ -448,7 +448,7 @@ public class ProfiloActivity extends AppCompatActivity {
                     asteList.add(creaModelloAstaI(dto));
                     break;
                 default:
-                    return null;
+                    return new ArrayList<>();
             }
         }
         return asteList;

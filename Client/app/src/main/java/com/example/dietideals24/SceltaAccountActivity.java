@@ -123,8 +123,8 @@ public class SceltaAccountActivity extends AppCompatActivity {
         compratoreButt.setAlpha(1.0f);
         completoButt.setAlpha(1.0f);
 
-        if(utente != null){
-            switch (utente.getTipo()){
+        if (utente != null) {
+            switch (utente.getTipo()) {
                 case VENDITORE:
                     venditoreButt.setEnabled(false);
                     venditoreButt.setAlpha(0.5f);
@@ -136,6 +136,7 @@ public class SceltaAccountActivity extends AppCompatActivity {
                 case COMPLETO:
                     completoButt.setEnabled(false);
                     completoButt.setAlpha(0.5f);
+                    break;
                 default:
                     return;
             }

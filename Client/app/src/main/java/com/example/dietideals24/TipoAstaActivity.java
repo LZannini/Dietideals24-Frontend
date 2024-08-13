@@ -74,8 +74,6 @@ public class TipoAstaActivity extends AppCompatActivity {
                 disabilitaBottone(buttonRibasso);
                 disabilitaBottone(buttonSilenziosa);
             }
-        else
-            return;
     }
 
     @Override

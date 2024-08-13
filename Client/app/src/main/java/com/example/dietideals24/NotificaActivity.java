@@ -396,7 +396,7 @@ public class NotificaActivity extends AppCompatActivity implements NotificaAdapt
     }
 
     public Asta converteToModel(AstaDTO asta) {
-        Asta a = new Asta();
+        Asta a;
 
         switch (asta.getTipo()) {
             case "RIBASSO":
